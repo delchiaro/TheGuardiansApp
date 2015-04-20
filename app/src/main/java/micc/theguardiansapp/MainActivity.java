@@ -1,12 +1,17 @@
 package micc.theguardiansapp;
 
+import android.media.MediaPlayer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
+
+import java.io.IOException;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -16,7 +21,8 @@ public class MainActivity extends ActionBarActivity {
     private ScrollView scrollView;
     private ViewGroup contentView;
     private ViewGroup[] fragContainer;
-
+private MediaPlayer mPlayer;
+    private boolean audioStarted = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +54,34 @@ public class MainActivity extends ActionBarActivity {
 
 
         FragmentHelper.setMainActivity(this);
+
+
+//         mPlayer = MediaPlayer.create(this, R.raw.hero_florence);
+//        try {
+//            mPlayer.prepare();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floating_action_button);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(audioStarted == false)
+//                {
+//                    mPlayer.start();
+//                    audioStarted = true;
+//                }
+//                else{
+//                    mPlayer.stop();
+//                    audioStarted = false;
+//                }
+//            }
+//        });
+//
+
 
 
 
