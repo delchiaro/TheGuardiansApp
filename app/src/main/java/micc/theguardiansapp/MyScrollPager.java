@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Scroller;
 
@@ -89,6 +90,8 @@ public class MyScrollPager implements OnTouchListener
             @Override
             public void onGlobalLayout() {
                 initGUI();
+                //FragmentHelper.swapFragment(R.id.fragContainer0, new Fragment0());
+
                 ViewTreeObserver obs = mScrollView.getViewTreeObserver();
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -124,7 +127,8 @@ public class MyScrollPager implements OnTouchListener
             nPageTotal += nPage;
             //int nDisplay = (int) Math.ceil(v.getHeight() / displayHeight);
             v.setMinimumHeight(nPage*displayHeight);
-            v.setPadding(0, 100, 0, 100);
+
+            //v.setPadding(0, 100, 0, 100);
 
             fragmentNPageMap[i] = nPage;
             i++;

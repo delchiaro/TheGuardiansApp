@@ -37,7 +37,6 @@ public class MainActivity extends ActionBarActivity {
         scrollView.setOnTouchListener(scrollPager);
 
 
-
         scrollView.post(new Runnable()
         {
             public void run()
@@ -45,6 +44,10 @@ public class MainActivity extends ActionBarActivity {
                 scrollView.scrollTo(0, contentView.getPaddingTop());
             }
         });
+
+
+
+        FragmentHelper.setMainActivity(this);
 
 
 

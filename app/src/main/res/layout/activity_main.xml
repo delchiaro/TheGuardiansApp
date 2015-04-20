@@ -22,41 +22,58 @@
 
 
 
-        <LinearLayout
-            android:id="@+id/scrolledLayout"
+    <LinearLayout
+        android:id="@+id/scrolledLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="0dip"
+        android:paddingBottom="0dp"
+        android:weightSum="1"
+        android:paddingRight="0dp"
+        android:padding="0dp"
+        android:paddingLeft="0dp">
+
+
+
+
+
+    <LinearLayout
+        android:id="@+id/fragContainer0"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:minHeight="300dp">
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:paddingTop="0dip"
-            android:paddingBottom="0dp"
-            android:weightSum="1"
-            android:paddingRight="0dp"
-            android:padding="0dp"
-            android:paddingLeft="0dp">
-
-
-
-
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="3dp"
+            card_view:cardElevation="2dp"
+            android:layout_weight="1">
 
             <LinearLayout
-                android:id="@+id/fragContainer0"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="vertical"
-                android:paddingTop="0dip"
-                android:paddingBottom="200dip"
-                android:weightSum="1">
-
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Large Text"
-                    android:id="@+id/textView"
-                    android:layout_gravity="center_horizontal" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="6dp"
+                    android:singleLine="false"
+                    android:text="@string/Text1Slide1" />
+
 
             </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+    </LinearLayout>
 
 
 
