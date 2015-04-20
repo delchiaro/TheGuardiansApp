@@ -25,13 +25,11 @@ public class MainActivity extends ActionBarActivity {
 
         scrollView = (ScrollView) findViewById(R.id.scroll_view);
         contentView = (ViewGroup) findViewById(R.id.scrolledLayout);
-        fragContainer = new ViewGroup[5];
+        fragContainer = new ViewGroup[3];
 
         fragContainer[0] = (ViewGroup) findViewById(R.id.fragContainer0);
         fragContainer[1] = (ViewGroup) findViewById(R.id.fragContainer1);
         fragContainer[2] = (ViewGroup) findViewById(R.id.fragContainer2);
-        fragContainer[3] = (ViewGroup) findViewById(R.id.fragContainer3);
-        fragContainer[4] = (ViewGroup) findViewById(R.id.fragContainer4);
 
 
 
