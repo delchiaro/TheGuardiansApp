@@ -1,4 +1,4 @@
-package micc.theguardiansapp.beaconHelper;
+package micc.theguardiansapp.beaconServiceHelper;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -32,7 +32,6 @@ public class BeaconHelper
 
     private BeaconHelper instance = null;
     private final Context context;
-    private final Activity activity;
     private BeaconManager  beaconManager = null;
 
 
@@ -42,45 +41,30 @@ public class BeaconHelper
 
     private static final int REQUEST_ENABLE_BT = 1234;
 
-    public BeaconHelper(Activity activity) {
-        this(activity, ALL_BEACONS_UUID);
+    public BeaconHelper(Context context) {
+        this(context, ALL_BEACONS_UUID);
     }
-    public BeaconHelper(Activity activity, String Alternative_UUID) {
-        this.context = activity;
-        this.activity = activity;
-        beaconManager = new BeaconManager(activity);
+    public BeaconHelper(Context context, String Alternative_UUID) {
+        this.context = context;
+        beaconManager = new BeaconManager(context);
         ALL_UUID_BEACONS = new Region("rid", Alternative_UUID, null, null);
 
 
 
-
-
-        final Activity myActivity = activity;
-
-
-        beaconManager.setRangingListener(new BeaconManager.RangingListener()
-        {
+        beaconManager.setRangingListener(new BeaconManager.RangingListener() {
 
             @Override
             public void onBeaconsDiscovered(Region region, final List<Beacon> beacons) {
-                myActivity.runOnUiThread(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        foundBeacons = beacons;
-                        if (beacons != null && beacons.size() > 0)
-                        {
-                            int nListeners = proximityListeners.size();
-                            for (int i = 0; i < nListeners; i++)
-                            {
-                                proximityListeners.get(i).OnBeaconProximity(beacons);
-                            }
-                        }
+                foundBeacons = beacons;
+                if (beacons != null && beacons.size() > 0) {
+                    int nListeners = proximityListeners.size();
+                    for (int i = 0; i < nListeners; i++) {
+                        proximityListeners.get(i).OnBeaconProximity(beacons);
                     }
-                });
+                }
 
             }
+
         });
 
 
@@ -107,7 +91,7 @@ public class BeaconHelper
         if(!beaconManager.isBluetoothEnabled())
         {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            activity.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+            //activity.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
         else
         {

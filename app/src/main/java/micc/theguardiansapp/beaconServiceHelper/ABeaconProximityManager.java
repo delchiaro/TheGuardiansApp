@@ -1,6 +1,7 @@
-package micc.theguardiansapp.beaconHelper;
+package micc.theguardiansapp.beaconServiceHelper;
 
 import android.app.Activity;
+import android.content.Context;
 
 import com.estimote.sdk.Beacon;
 import com.estimote.sdk.Utils;
@@ -21,9 +22,9 @@ public abstract class ABeaconProximityManager implements BeaconProximityListener
 
     BeaconHelper helper;
 
-    public ABeaconProximityManager (Activity activity, BeaconBestProximityListener listener) {
+    public ABeaconProximityManager (Context context, BeaconBestProximityListener listener) {
         proximityBestListener = listener;
-        helper  = new BeaconHelper(activity);
+        helper  = new BeaconHelper(context);
         helper.addProximityListener(this);
     }
 

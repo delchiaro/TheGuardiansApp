@@ -1,5 +1,6 @@
 package micc.theguardiansapp;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -54,6 +55,11 @@ private MediaPlayer mPlayer;
 
 
         FragmentHelper.setMainActivity(this);
+
+        Intent intent = new Intent(this, BeaconService.class);
+        if (intent != null) {
+            this.startService(intent);
+        }
 
 
 //         mPlayer = MediaPlayer.create(this, R.raw.hero_florence);

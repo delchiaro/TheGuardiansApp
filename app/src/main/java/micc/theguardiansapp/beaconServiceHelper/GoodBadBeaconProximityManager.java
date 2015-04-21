@@ -1,6 +1,7 @@
-package micc.theguardiansapp.beaconHelper;
+package micc.theguardiansapp.beaconServiceHelper;
 
 import android.app.Activity;
+import android.content.Context;
 
 import com.estimote.sdk.Beacon;
 
@@ -116,8 +117,8 @@ public class GoodBadBeaconProximityManager extends ABeaconProximityManager {
 
 
 
-    public GoodBadBeaconProximityManager(Activity activity, BeaconBestProximityListener listener) {
-        super(activity, listener);
+    public GoodBadBeaconProximityManager(Context context, BeaconBestProximityListener listener) {
+        super(context, listener);
     }
 
     @Override

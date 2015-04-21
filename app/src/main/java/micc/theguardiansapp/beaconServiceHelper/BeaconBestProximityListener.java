@@ -1,4 +1,4 @@
-package micc.theguardiansapp.beaconHelper;
+package micc.theguardiansapp.beaconServiceHelper;
 
 import com.estimote.sdk.Beacon;
 
