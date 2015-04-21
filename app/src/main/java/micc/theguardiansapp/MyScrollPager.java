@@ -49,15 +49,18 @@ public class MyScrollPager implements OnTouchListener
 
     // The height of scroll view, in pixels
     private int displayHeight;
-
-	public MyScrollPager(ScrollView aScrollView, ViewGroup aContentView, ViewGroup[] aFragmentContainer)
+    private boolean stdScrollIfHigher = false;
+    private boolean fastScrollJumpFragment = false;
+	public MyScrollPager(ScrollView aScrollView, ViewGroup aContentView, ViewGroup[] aFragmentContainer,
+                         boolean stdScrollIfHigher, boolean fastScrollJumpFragment)
 	{
 		mScrollView = aScrollView;
         mContentView = aContentView;
         mFragmentContainers = aFragmentContainer;
         nFragments = mFragmentContainers.length;
         activeFragment = 0;
-
+        this.stdScrollIfHigher = stdScrollIfHigher;
+        this.fastScrollJumpFragment = fastScrollJumpFragment;
 
 		scroller = new Scroller(mScrollView.getContext(), null);
         pageScrollTask = new Runnable()
@@ -264,19 +267,29 @@ public class MyScrollPager implements OnTouchListener
                 if( Dy < -treshold_Dy_scrolling ) {
                     // scorro in basso
 
-                    if(activeFragment < fragmentFirstPageMap.length - 1)
+                    if(fastScrollJumpFragment)
                     {
-                        // se non è l'ultimo fragment
-                        activeFragment++;
-                        nextPage = fragmentFirstPageMap[activeFragment];
+                        if (activeFragment < fragmentFirstPageMap.length - 1)
+                        {
+                            // se non è l'ultimo fragment
+                            activeFragment++;
+                            nextPage = fragmentFirstPageMap[activeFragment];
+                        }
+                        else
+                        {
+                            // altrimenti se è l'ultimo fragment, va all'ultima pagina dell'ultimo fragment
+                            nextPage = fragmentFirstPageMap[activeFragment] + fragmentNPageMap[activeFragment] - 1;
+                        }
+                        fastScroll = true;
                     }
                     else
                     {
-                        // altrimenti se è l'ultimo fragment, va all'ultima pagina dell'ultimo fragment
-                        nextPage = fragmentFirstPageMap[activeFragment] + fragmentNPageMap[activeFragment]-1;
+                        if(nextPage < pageFragmentMap.length - 1)
+                        {
+                            nextPage++;
+                            activeFragment = pageFragmentMap[nextPage];
+                        }
                     }
-                    fastScroll = true;
-
                 }
                 else if( Dy > treshold_Dy_scrolling ) {
                     // scorro in alto
@@ -310,7 +323,7 @@ public class MyScrollPager implements OnTouchListener
 
                     double zonaInvasioneMiddle = displayHeight * ( fragmentFirstPageMap[activeFragment] + 1 ) - displayHeight/2;
 
-                    if( currScrollMiddleY < zonaInvasioneMiddle || pageFragmentMap[nextPage] != activeFragment|| fastScroll )
+                    if( stdScrollIfHigher || currScrollMiddleY < zonaInvasioneMiddle || pageFragmentMap[nextPage] != activeFragment|| fastScroll )
                     {
                         // The top of next page, in pixels.
                         int nextPageTop = contentTop + nextPage * displayHeight;
@@ -330,7 +343,7 @@ public class MyScrollPager implements OnTouchListener
                     double zonaInvasioneMiddle = displayHeight * (fragmentNPageMap[activeFragment] + fragmentFirstPageMap[activeFragment] ) - displayHeight/2;
 
 
-                    if(currScrollMiddleY > zonaInvasioneMiddle || pageFragmentMap[nextPage] != activeFragment|| fastScroll )
+                    if(stdScrollIfHigher || currScrollMiddleY > zonaInvasioneMiddle || pageFragmentMap[nextPage] != activeFragment|| fastScroll )
                     {
                         // The top of next page, in pixels.
                         int nextPageTop = contentTop + nextPage * displayHeight;

@@ -114,6 +114,11 @@ public class BeaconService extends IntentService implements BeaconBestProximityL
                     public void onClick(DialogInterface arg,
                                         int which) {
                         dialog.cancel();
+                        Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                        intent.putExtra("showinfo", true);
+                        if (intent != null) {
+                            getBaseContext().startActivity(intent);
+                        }
                     }
                 });
 

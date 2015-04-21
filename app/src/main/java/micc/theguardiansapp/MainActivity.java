@@ -22,74 +22,82 @@ public class MainActivity extends ActionBarActivity {
     private ScrollView scrollView;
     private ViewGroup contentView;
     private ViewGroup[] fragContainer;
-private MediaPlayer mPlayer;
+    private MediaPlayer mPlayer;
     private boolean audioStarted = false;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        boolean emulazioneBeacon = true;
+        if(getIntent().getBooleanExtra("showinfo", false) || emulazioneBeacon ) {
+
+            setContentView(R.layout.activity_main);
 
 
-        scrollView = (ScrollView) findViewById(R.id.scroll_view);
-        contentView = (ViewGroup) findViewById(R.id.scrolledLayout);
-        fragContainer = new ViewGroup[3];
+            scrollView = (ScrollView) findViewById(R.id.scroll_view);
+            contentView = (ViewGroup) findViewById(R.id.scrolledLayout);
+            fragContainer = new ViewGroup[4];
 
-        fragContainer[0] = (ViewGroup) findViewById(R.id.fragContainer0);
-        fragContainer[1] = (ViewGroup) findViewById(R.id.fragContainer1);
-        fragContainer[2] = (ViewGroup) findViewById(R.id.fragContainer2);
-
-
-
-        MyScrollPager scrollPager = new MyScrollPager(scrollView, contentView, fragContainer);
-        scrollView.setOnTouchListener(scrollPager);
+            fragContainer[0] = (ViewGroup) findViewById(R.id.fragContainer0);
+            fragContainer[1] = (ViewGroup) findViewById(R.id.fragContainer1);
+            fragContainer[2] = (ViewGroup) findViewById(R.id.fragContainer2);
+            fragContainer[3] = (ViewGroup) findViewById(R.id.fragContainer3);
 
 
-        scrollView.post(new Runnable()
-        {
-            public void run()
-            {
-                scrollView.scrollTo(0, contentView.getPaddingTop());
+            MyScrollPager scrollPager = new MyScrollPager(scrollView, contentView, fragContainer, true, false);
+            scrollView.setOnTouchListener(scrollPager);
+
+
+            scrollView.post(new Runnable() {
+                public void run() {
+                    scrollView.scrollTo(0, contentView.getPaddingTop());
+                }
+            });
+
+
+            FragmentHelper.setMainActivity(this);
+
+            Intent intent = new Intent(this, BeaconService.class);
+            if (intent != null) {
+                this.startService(intent);
+            }
+
+
+
+
+
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floating_action_button);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(audioStarted == false)
+                {
+                    mPlayer = MediaPlayer.create(getBaseContext(), R.raw.hero_florence);
+                    mPlayer.start();
+                    audioStarted = true;
+                }
+                else{
+                    mPlayer.stop();
+                    mPlayer.reset();
+                    audioStarted = false;
+                }
             }
         });
 
 
 
-        FragmentHelper.setMainActivity(this);
-
-        Intent intent = new Intent(this, BeaconService.class);
-        if (intent != null) {
-            this.startService(intent);
         }
+        else
+        {
 
+            setContentView(R.layout.activity_main_noinfo);
 
-//         mPlayer = MediaPlayer.create(this, R.raw.hero_florence);
-//        try {
-//            mPlayer.prepare();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floating_action_button);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(audioStarted == false)
-//                {
-//                    mPlayer.start();
-//                    audioStarted = true;
-//                }
-//                else{
-//                    mPlayer.stop();
-//                    audioStarted = false;
-//                }
-//            }
-//        });
-//
-
-
-
+        }
 
     }
 
