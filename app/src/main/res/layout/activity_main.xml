@@ -54,50 +54,65 @@
                     android:orientation="vertical">
 
 
-                    <com.getbase.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/fab_NY"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:baselineAlignBottom="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginRight="30dp"
-                        android:layout_marginTop="80dp"
-                        fab:fab_size="mini"/>
-
-                    <com.getbase.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/fab_MI"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:baselineAlignBottom="true"
-                        android:layout_alignParentTop="true"
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="150dp"
+                        android:id="@+id/relativeLayout"
+                        android:layout_alignWithParentIfMissing="false"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="30dp"
-                        android:layout_marginTop="60dp"
-                        fab:fab_size="mini"/>
+                        android:layout_alignParentEnd="true">
 
-                    <com.getbase.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/fab_FI"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        <com.getbase.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab_NY"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
 
-                        android:baselineAlignBottom="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="40dp"
-                        android:layout_marginBottom="100dp"
-                        fab:fab_size="mini"/>
+                            android:baselineAlignBottom="true"
+                            fab:fab_size="mini"
+                            android:layout_above="@+id/fab_FI"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            fab:fab_colorNormal="#60FF9800"
+                            fab:fab_colorPressed="#A0FF9800"/>
+
+                        <com.getbase.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab_MI"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:baselineAlignBottom="true"
+                            fab:fab_size="mini"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginRight="38dp"
+                            android:layout_marginEnd="38dp"
+                            fab:fab_colorNormal="#60B71C1C"
+                            fab:fab_colorPressed="#A0B71C1C"/>
+
+                        <com.getbase.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab_FI"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:baselineAlignBottom="true"
+                            fab:fab_size="mini"
+                            android:layout_alignParentBottom="true"
+                            android:layout_toLeftOf="@+id/fab_MI"
+                            android:layout_toStartOf="@+id/fab_MI"
+                            fab:fab_colorNormal="#609C27B0"
+                            fab:fab_colorPressed="#A09C27B0"/>
+                    </RelativeLayout>
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="300dp"
+                        android:layout_height="500dp"
                         android:id="@+id/imageView"
-                        android:src="@drawable/david_hero"
-                        android:layout_alignParentTop="true"
+                        android:src="@drawable/guardian_hero"
+                        android:layout_marginTop="128dp"
+                        android:layout_below="@+id/relativeLayout"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="323dp" />
+                        android:adjustViewBounds="true"/>
 
 
                 </RelativeLayout>
@@ -237,7 +252,11 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginBottom="10dp"
+        fab:fab_colorNormal="#F44336"
+        fab:fab_colorPressed="#E53935"
+
+        />
 
 
     <!-- fab:fab_icon="@drawable/white_museum"

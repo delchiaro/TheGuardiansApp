@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ScrollView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -36,8 +37,9 @@ public class MainActivity extends ActionBarActivity {
         if(getIntent().getBooleanExtra("showinfo", false) || emulazioneBeacon ) {
 
             setContentView(R.layout.activity_main);
+            setTitle("Hero");
 
-
+            setEventListeners();
             scrollView = (ScrollView) findViewById(R.id.scroll_view);
             contentView = (ViewGroup) findViewById(R.id.scrolledLayout);
             fragContainer = new ViewGroup[4];
@@ -71,23 +73,23 @@ public class MainActivity extends ActionBarActivity {
 
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floating_action_button);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(audioStarted == false)
-                {
-                    mPlayer = MediaPlayer.create(getBaseContext(), R.raw.hero_florence);
-                    mPlayer.start();
-                    audioStarted = true;
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floating_action_button);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(audioStarted == false)
+                    {
+                        mPlayer = MediaPlayer.create(getBaseContext(), R.raw.hero_florence);
+                        mPlayer.start();
+                        audioStarted = true;
+                    }
+                    else{
+                        mPlayer.stop();
+                        mPlayer.reset();
+                        audioStarted = false;
+                    }
                 }
-                else{
-                    mPlayer.stop();
-                    mPlayer.reset();
-                    audioStarted = false;
-                }
-            }
-        });
+            });
 
 
 
@@ -127,4 +129,50 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
+
+
+
+    private void setEventListeners() {
+        FloatingActionButton miButton = (FloatingActionButton) findViewById(R.id.fab_MI);
+        FloatingActionButton fiButton = (FloatingActionButton) findViewById(R.id.fab_FI);
+        FloatingActionButton nyButton = (FloatingActionButton) findViewById(R.id.fab_NY);
+
+        miButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickMI();
+            }
+        });
+
+        fiButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickFI();
+            }
+        });
+
+        nyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickNY();
+            }
+        });
+
+    }
+
+    private void onClickMI() {
+        Intent intent = new Intent(this, MiActivity.class);
+        startActivity(intent);
+    }
+
+
+    private void onClickFI() {
+        Intent intent = new Intent(this, FiActivity.class);
+        startActivity(intent);
+    }
+
+    private void onClickNY() {
+        Intent intent = new Intent(this, MiActivity.class);
+        startActivity(intent);
+    }
 }

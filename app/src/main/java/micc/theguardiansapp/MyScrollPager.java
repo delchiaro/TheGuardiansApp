@@ -51,6 +51,11 @@ public class MyScrollPager implements OnTouchListener
     private int displayHeight;
     private boolean stdScrollIfHigher = false;
     private boolean fastScrollJumpFragment = false;
+
+
+
+
+
 	public MyScrollPager(ScrollView aScrollView, ViewGroup aContentView, ViewGroup[] aFragmentContainer,
                          boolean stdScrollIfHigher, boolean fastScrollJumpFragment)
 	{
@@ -61,6 +66,7 @@ public class MyScrollPager implements OnTouchListener
         activeFragment = 0;
         this.stdScrollIfHigher = stdScrollIfHigher;
         this.fastScrollJumpFragment = fastScrollJumpFragment;
+
 
 		scroller = new Scroller(mScrollView.getContext(), null);
         pageScrollTask = new Runnable()
@@ -118,9 +124,11 @@ public class MyScrollPager implements OnTouchListener
 
         int nPageTotal = 0;
         int i = 0;
+
         for( ViewGroup v : mFragmentContainers)
         {
 
+            if(v==null) continue;
             // set the heght for each fragment container as a multiple of displayHeight
             double vHeight = v.getHeight();
             double rapporto = vHeight / displayHeight;
@@ -317,7 +325,7 @@ public class MyScrollPager implements OnTouchListener
                 if(currScrollMiddleY < currentPageMiddleY)
                 {
                     if(!fastScroll && currScrollPageRelative < displayHeight * treshold_y_scrolling_percent)
-                        nextPage = currentPage -1;
+                        nextPage = currentPage - 1;
 
                     if(nextPage <= 0) nextPage = 0;
 
