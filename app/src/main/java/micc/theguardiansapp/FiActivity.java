@@ -1,5 +1,7 @@
 package micc.theguardiansapp;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -43,10 +45,11 @@ public class FiActivity extends ActionBarActivity {
 
         scrollView = (ScrollView) findViewById(R.id.scroll_view_fi);
         contentView = (ViewGroup) findViewById(R.id.scrolledLayout_fi);
-        fragContainer = new ViewGroup[2];
 
+        fragContainer = new ViewGroup[2];
         fragContainer[0] = (ViewGroup) findViewById(R.id.fragContainer0_fi);
         fragContainer[1] = (ViewGroup) findViewById(R.id.fragContainer1_fi);
+
 
         MyScrollPager scrollPager = new MyScrollPager(scrollView, contentView, fragContainer, true, false);
         scrollView.setOnTouchListener(scrollPager);
@@ -79,9 +82,11 @@ public class FiActivity extends ActionBarActivity {
     private void setUpSliders()
     {
 
+
         MyTextSliderView textSliderView = new MyTextSliderView(this);
         MyTextSliderView textSliderView0 = new MyTextSliderView(this);
         MyTextSliderView textSliderView2 = new MyTextSliderView(this);
+
 
 
         //textSliderView.description("Hero").image(R.drawable.guardian_hero);
@@ -95,6 +100,8 @@ public class FiActivity extends ActionBarActivity {
                 .description("David in Accademia Gallery")
                 .image("http://www.miragu.com/dbFoto/David.JPG")
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
+
+
 
         textSliderView2
                 .description("Accademia Gallery")
@@ -117,27 +124,62 @@ public class FiActivity extends ActionBarActivity {
 
         // HERO
 
-        MyTextSliderView textSliderView3 = new MyTextSliderView(this);
-        MyTextSliderView textSliderView4 = new MyTextSliderView(this);
+        MyTextSliderView tsv_hero1 = new MyTextSliderView(this);
+        MyTextSliderView tsv_hero2 = new MyTextSliderView(this);
+        MyTextSliderView tsv_hero3 = new MyTextSliderView(this);
+        MyTextSliderView tsv_hero4 = new MyTextSliderView(this);
+        MyTextSliderView tsv_hero5 = new MyTextSliderView(this);
+        MyTextSliderView tsv_hero6 = new MyTextSliderView(this);
+
 
 
         //textSliderView.description("Hero").image(R.drawable.guardian_hero);
 
-        textSliderView3
-                .description("Game of Thrones")
-                .image("http://images.boomsbeat.com/data/images/full/19640/game-of-thrones-season-4-jpg.jpg")
-                .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
-        textSliderView4
+
+
+
+
+        tsv_hero1
                 .description("Hero")
                 .image(R.drawable.guardian_hero)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
+        tsv_hero2
+                .description("Carrara: cave")
+                .image(R.drawable.cava_carrara)
+                .setScaleType(BaseSliderView.ScaleType.CenterInside);
+
+        tsv_hero3
+                .description("Carrara")
+                .image(R.drawable.panorama_carrara)
+                .setScaleType(BaseSliderView.ScaleType.CenterInside);
+
+        tsv_hero4
+                .description("Block of Carrara's marble")
+                .image(R.drawable.blocco_carrara)
+                .setScaleType(BaseSliderView.ScaleType.CenterInside);
+
+        tsv_hero5
+                .description("Artisan of marble")
+                .image(R.drawable.lavorazione)
+                .setScaleType(BaseSliderView.ScaleType.CenterInside);
+
+        tsv_hero6
+                .description("Marble pieces finished")
+                .image(R.drawable.lavorati)
+                .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
 
 
-        sliderShowHero.addSlider(textSliderView4);
-        sliderShowHero.addSlider(textSliderView3);
+
+
+        sliderShowHero.addSlider(tsv_hero1);
+        sliderShowHero.addSlider(tsv_hero2);
+        sliderShowHero.addSlider(tsv_hero3);
+        sliderShowHero.addSlider(tsv_hero4);
+        sliderShowHero.addSlider(tsv_hero5);
+        sliderShowHero.addSlider(tsv_hero6);
 
 
         sliderShowHero.stopAutoCycle();

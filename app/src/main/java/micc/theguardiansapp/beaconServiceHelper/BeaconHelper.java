@@ -16,6 +16,8 @@ import com.estimote.sdk.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import micc.theguardiansapp.MainActivity;
+
 /**
  * Created by Riccardo Del Chiaro & Franco Yang (25/02/2015)
  */
@@ -85,19 +87,21 @@ public class BeaconHelper
     {
 
 
-        if(! beaconManager.hasBluetooth()) {
-            Toast.makeText(context, "Device does not have bluetooth low energy", Toast.LENGTH_LONG).show();
-        }
-        if(!beaconManager.isBluetoothEnabled())
-        {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            //activity.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-        }
-        else
-        {
-            connect();
-        }
+//        if(! beaconManager.hasBluetooth()) {
+//            Toast.makeText(context, "Device does not have bluetooth low energy", Toast.LENGTH_LONG).show();
+//        }
+//        if(!beaconManager.isBluetoothEnabled())
+//        {
+//            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+//            MainActivity act = new MainActivity();
+//            act.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+//        }
+//        else
+//        {
+//            connect();
+//        }
 
+        connect();
 
     }
 

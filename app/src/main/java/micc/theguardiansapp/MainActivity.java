@@ -2,6 +2,8 @@ package micc.theguardiansapp;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,13 +12,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ScrollView;
+import micc.theguardiansapp.beaconHelper.*;
+import micc.theguardiansapp.beaconHelper.GoodBadBeaconProximityManager;
+import micc.theguardiansapp.beaconServiceHelper.*;
+import micc.theguardiansapp.beaconServiceHelper.BeaconBestProximityListener;
 
+import com.estimote.sdk.Beacon;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements BeaconBestProximityListener {
 
 
 
@@ -26,6 +33,9 @@ public class MainActivity extends ActionBarActivity {
     private MediaPlayer mPlayer;
     private boolean audioStarted = false;
 
+
+
+    private GoodBadBeaconProximityManager proximityManager;
 
 
 
@@ -64,6 +74,7 @@ public class MainActivity extends ActionBarActivity {
             FragmentHelper.setMainActivity(this);
 
             Intent intent = new Intent(this, BeaconService.class);
+
             if (intent != null) {
                 this.startService(intent);
             }
@@ -100,6 +111,12 @@ public class MainActivity extends ActionBarActivity {
             setContentView(R.layout.activity_main_noinfo);
 
         }
+
+
+
+
+        proximityManager = new micc.theguardiansapp.beaconServiceHelper.GoodBadBeaconProximityManager(this, this);
+        proximityManager.scan();
 
     }
 
@@ -174,5 +191,22 @@ public class MainActivity extends ActionBarActivity {
     private void onClickNY() {
         Intent intent = new Intent(this, MiActivity.class);
         startActivity(intent);
+    }
+
+
+
+
+
+
+
+
+    @Override
+    public void OnNewBeaconBestProximity(Beacon bestProximity, Beacon oldBestProximity) {
+
+    }
+
+    @Override
+    public void OnNoneBeaconBestProximity(Beacon oldBestProximity) {
+
     }
 }

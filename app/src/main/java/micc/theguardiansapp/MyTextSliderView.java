@@ -18,11 +18,16 @@ public class MyTextSliderView extends BaseSliderView {
     }
     @Override
     public View getView() {
+
+
         View v = LayoutInflater.from(getContext()).inflate(R.layout.my_text_slider_layout,null);
         ImageView target = (ImageView)v.findViewById(R.id.daimajia_slider_image);
         TextView description = (TextView)v.findViewById(R.id.description);
         description.setText(getDescription());
         bindEventAndShow(v, target);
+
+
+
         return v;
     }
 }
