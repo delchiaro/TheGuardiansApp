@@ -16,8 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import micc.theguardiansapp.beaconHelper.MyBeaconListener;
-
 /**
  * Created by nagash on 01/05/15.
  */
@@ -30,9 +28,25 @@ public class ForegroundBeaconManager
     private static final int MAJOR = 27910;
     private static final Region MY_BEACONS = new Region("regionId", ESTIMOTE_PROXIMITY_UUID, MAJOR, null);
 
-    private int BEACON_TIMEOUT = 5000; // millisecondi
-    private int SCANNING_PERIOD = 1000;
-    private int SCANNING_DELAY = 0;
+
+
+
+
+    // non usiamo questo valore direttamente nel codice, è il valore che i beacons dovrebbero avere
+    // nella loro memoria, usando questo valore possiamo ottimizzare i valori del tempo di scan nei
+    // telefoni.
+    private int BEACON_PULSE_INTERVAL = 1000;
+
+    // dopo BEACON_MAX_TIMEOUT volte che un beacon non è
+    // reperibile si scarta
+    // --> si scarta dopo (millisecondi):
+    // CASO PESSIMO:  (SCANNING_PERIOD + SCANNING_DELAY) * BEACON_MAX_TIMEOUT + SCANNING_PERIOD
+    // CASO OTTIMO:   (SCANNING_PERIOD + SCANNING_DELAY) * BEACON_MAX_TIMEOUT
+    private int BEACON_MAX_TIMEOUT = 2; // caso pessimo = 6 secondi
+    private int SCANNING_PERIOD = BEACON_PULSE_INTERVAL + BEACON_PULSE_INTERVAL/2;
+    private int SCANNING_DELAY = BEACON_PULSE_INTERVAL/2;
+
+
 
     private int REFRESH_BEACON_SLEEP_TIME = 3000;
 
@@ -44,7 +58,7 @@ public class ForegroundBeaconManager
     private MyBeaconListener listener;
 
     private volatile Map<Integer, Beacon> proximityBeacons;
-    private Map<Integer, Long> minor_istant_map = new HashMap<>(10);
+    private Map<Integer, Integer> beacon_retry_map = new HashMap<>(10);
 
     private BeaconManager beaconManager;
     Context context;
@@ -144,7 +158,6 @@ public class ForegroundBeaconManager
 
     private void onBeaconProximity(List<Beacon> detectedBeacons)
     {
-        long istant = System.currentTimeMillis();
 
 
         // proximityBeaconsNewList: COSTRUISCO LA LISTA DI TUTTI I BEACONS ENTRO LA PROSSIMITÁ SCELTA
@@ -189,13 +202,13 @@ public class ForegroundBeaconManager
         {
             // voglio refreshare tutti gli istanti di last refresh di ogni beacon considerato vicino
             // se necessario eliminarlo e poi re inserirlo, altrimenti re inserirlo e basta (se fa..)
-            minor_istant_map.remove(b.getMinor());
-            minor_istant_map.put(b.getMinor(), istant );
+            beacon_retry_map.remove(b.getMinor());
+            beacon_retry_map.put(b.getMinor(), 0);
         }
         for( Beacon b : newNotInOld)
         {
             // Inserisco tutti i nuovi beacon rilevati che non erano giá in lista
-            minor_istant_map.put(b.getMinor(), istant);
+            beacon_retry_map.put(b.getMinor(), 0);
             proximityBeacons.put(b.getMinor(), b);
         }
 
@@ -208,13 +221,15 @@ public class ForegroundBeaconManager
             // per ogni beacon vecchio che a questo refresh non è presente,
             // se è passato troppo tempo dall'ultimo refresh verrá eliminato.
 
-            long bIstant =  minor_istant_map.get(b.getMinor());
-            if(istant-bIstant > BEACON_TIMEOUT)
+            int nRetry =  beacon_retry_map.get(b.getMinor());
+            nRetry++;
+            if(nRetry > BEACON_MAX_TIMEOUT)
             {
                 proximityBeacons.remove(b.getMinor());
-                minor_istant_map.remove(b.getMinor());
+                beacon_retry_map.remove(b.getMinor());
                 removedBeacons.add(b);
             }
+            else beacon_retry_map.put(b.getMinor(), nRetry);
         }
 
 
@@ -248,12 +263,14 @@ public class ForegroundBeaconManager
                 // per ogni beacon, se è passato troppo tempo dall'ultima volta che è stato trovato
                 // col bluetooth, verrá eliminato.
 
-                long bIstant =  minor_istant_map.get(b.getMinor());
-                if(istant-bIstant < BEACON_TIMEOUT)
+                int nRetry =  beacon_retry_map.get(b.getMinor());
+                nRetry++;
+                if(nRetry > BEACON_MAX_TIMEOUT)
                 {
                     proximityBeacons.remove(b);
                     removedBeacons.add(b);
                 }
+                else beacon_retry_map.put(b.getMinor(), nRetry);
             }
             return( removedBeacons.size() > 0);
         }

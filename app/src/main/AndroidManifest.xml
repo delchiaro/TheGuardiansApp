@@ -7,7 +7,9 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
 
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
+    <uses-feature android:name="android.hardware.sensor.PROXIMITY" android:required="true" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 

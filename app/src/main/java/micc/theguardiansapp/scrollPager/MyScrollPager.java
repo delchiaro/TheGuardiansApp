@@ -1,5 +1,5 @@
 
-package micc.theguardiansapp;
+package micc.theguardiansapp.scrollPager;
 
 import android.os.Build;
 import android.view.MotionEvent;
@@ -53,7 +53,7 @@ public class MyScrollPager implements OnTouchListener
     private boolean fastScrollJumpFragment = false;
 
 
-
+    ScrollPagerListener scrollListener = null;
 
 
 	public MyScrollPager(ScrollView aScrollView, ViewGroup aContentView, ViewGroup[] aFragmentContainer,
@@ -164,7 +164,48 @@ public class MyScrollPager implements OnTouchListener
     }
 
 
-	
+
+    public void setOnScrollListener(ScrollPagerListener listener) {
+        this.scrollListener = listener;
+    }
+
+
+    public void gotoFragment(int fragmentNumber)
+    {
+        gotoPage(fragmentFirstPageMap[fragmentNumber]);
+    }
+    public void gotoPage(int pageNumber)
+    {
+        int contentTop = mContentView.getPaddingTop();
+        int contentBottom = mContentView.getHeight() - mContentView.getPaddingBottom();
+        int lastPageTop = contentBottom - displayHeight;
+
+        int nextPageTop = contentTop + pageNumber * displayHeight;
+        int min = Math.min(lastPageTop, nextPageTop);
+        int max = Math.max(min, contentTop);
+        int currScrollY = mScrollView.getScrollY();
+        scroller.startScroll(0, currScrollY, 0, max - currScrollY, 500);// Start scrolling calculation.
+        mScrollView.post(pageScrollTask);// Start animation.
+
+
+        if(currentPage != pageNumber)
+        {
+            //scrollListener.onPageChanged(beforeTouchPage, beforeTouchFragment, currentPage, pageFragmentMap[currentPage] );
+            // EVENTO: abbiamo cambiato pagina
+            if(pageFragmentMap[currentPage] != pageFragmentMap[pageNumber])
+            {
+                scrollListener.onFragmentChanged(pageFragmentMap[currentPage] , pageFragmentMap[currentPage]);
+                // EVENTO: abbiam ocambiato fragment
+            }
+        }
+
+
+        this.currentPage = pageNumber;
+        this.activeFragment = pageFragmentMap[pageNumber];
+
+
+    }
+
 	@Override
 	public boolean onTouch(View v, MotionEvent event)
 	{
@@ -211,6 +252,11 @@ public class MyScrollPager implements OnTouchListener
 
             case MotionEvent.ACTION_UP:
             {
+                int beforeTouchPage = currentPage;
+                int beforeTouchFragment = pageFragmentMap[currentPage];
+
+
+
                 // The top of content view, in pixels.
                 //int contentTop = mFragmentContainers[activeFragment].getPaddingTop();
                 int contentTop = mContentView.getPaddingTop();
@@ -245,33 +291,10 @@ public class MyScrollPager implements OnTouchListener
                 boolean fastScroll = false;
                 scrollDirection = (event.getY() - first_y) / (event.getEventTime() - first_time);
 
-//
-//               // FAST SCROLL MODE 1: SCROLLA SOLO SE IL FRAGMENT HA UNA SOLA PAGINA
-//                if(Dy > treshold_Dy_scrolling )
-//                {
-//                    if(fragmentNPageMap[activeFragment] == 1)
-//                    {
-//                        // PER ADESSO DISABILITO FAST SCROLL SU FRAGMENT CON PIÙ PAGINE
-//                        fastScroll = true;
-//                        nextPage--;
-//                    }
-//                }
-//                else if( Dy < -treshold_Dy_scrolling)
-//                {
-//
-//                    if(fragmentNPageMap[activeFragment] == 1)
-//                    {
-//                        // PER ADESSO DISABILITO FAST SCROLL SU FRAGMENT CON PIÙ PAGINE
-//                        fastScroll = true;
-//                        nextPage++;
-//                    }
-//
-//                }
 
 
 
                 //FAST SCROLL MODE 2: SCROLLA TUTTO IL FRAGMENT
-                // NON FUNZIONA ANCORA BENE.. FIXARE!!(certe volte scrolla la pagina nello stesso fragment)
                 if( Dy < -treshold_Dy_scrolling ) {
                     // scorro in basso
 
@@ -368,9 +391,31 @@ public class MyScrollPager implements OnTouchListener
                 currentPage = nextPage;
                 activeFragment = pageFragmentMap[currentPage];
 
+
+
+
+                if(beforeTouchPage != currentPage)
+                {
+                    //scrollListener.onPageChanged(beforeTouchPage, beforeTouchFragment, currentPage, pageFragmentMap[currentPage] );
+                    // EVENTO: abbiamo cambiato pagina
+                    if(beforeTouchFragment != pageFragmentMap[currentPage])
+                    {
+                        scrollListener.onFragmentChanged(beforeTouchFragment, pageFragmentMap[currentPage]);
+                        // EVENTO: abbiam ocambiato fragment
+                    }
+                }
+
+
+
+
                 return true;
             }
+
+
         }
+
+
+
 		
 		return false;
 	}

@@ -24,9 +24,6 @@ import com.estimote.sdk.Beacon;
 
 import java.util.List;
 
-import micc.theguardiansapp.beaconHelper.MyBeaconListener;
-import micc.theguardiansapp.beaconServiceHelper.BeaconBestProximityListener;
-import micc.theguardiansapp.beaconServiceHelper.GoodBadBeaconProximityManager;
 
 
 public class BeaconService extends IntentService implements MyBeaconListener

@@ -1,7 +1,8 @@
 package micc.theguardiansapp;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,6 +13,8 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 import micc.theguardiansapp.beaconHelper.*;
+import micc.theguardiansapp.scrollPager.MyScrollPager;
+import micc.theguardiansapp.scrollPager.ScrollPagerListener;
 
 import com.estimote.sdk.Beacon;
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -19,16 +22,23 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity implements MyBeaconListener {
+public class MainActivity extends ActionBarActivity implements MyBeaconListener, ScrollPagerListener {
 
 
 
     private static final int REFRESH_BEACON_DELAY = 5000;
+
+
+
+    private static SensorManager sensorManager;
+    private static Sensor proximitySensor;
+
+
+
+    MyScrollPager scrollPager;
     private ScrollView scrollView;
     private ViewGroup contentView;
     private ViewGroup[] fragContainer;
-    private MediaPlayer mPlayer;
-    private boolean audioStarted = false;
 
     private boolean atLeastOneBeacon = false;
 
@@ -40,16 +50,25 @@ public class MainActivity extends ActionBarActivity implements MyBeaconListener 
     private ForegroundBeaconManager beaconManager;
 
 
+    AudioPlayer ap;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
 
         boolean emulazioneBeacon = true;
         if(getIntent().getBooleanExtra("showinfo", false) || emulazioneBeacon ) {
 
             setContentView(R.layout.activity_main);
             setTitle("Hero");
+
+
+            ap = new AudioPlayer(getBaseContext());
+            ap.loadAudio(R.raw.hero_florence);
 
             setEventListeners();
             scrollView = (ScrollView) findViewById(R.id.scroll_view);
@@ -62,7 +81,8 @@ public class MainActivity extends ActionBarActivity implements MyBeaconListener 
             fragContainer[3] = (ViewGroup) findViewById(R.id.fragContainer3);
 
 
-            MyScrollPager scrollPager = new MyScrollPager(scrollView, contentView, fragContainer, true, false);
+            scrollPager = new MyScrollPager(scrollView, contentView, fragContainer, true, false);
+            scrollPager.setOnScrollListener(this);
             scrollView.setOnTouchListener(scrollPager);
 
 
@@ -73,7 +93,8 @@ public class MainActivity extends ActionBarActivity implements MyBeaconListener 
             });
 
 
-            FragmentHelper.setMainActivity(this);
+
+            //FragmentHelper.setMainActivity(this);
 
 //            Intent intent = new Intent(this, BeaconService.class);
 //
@@ -84,22 +105,26 @@ public class MainActivity extends ActionBarActivity implements MyBeaconListener 
 
 
 
-
-
             FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floating_action_button);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(audioStarted == false)
+
+                    scrollPager.gotoPage(2);
+                    if(ap.isPlaying() == false)
                     {
-                        mPlayer = MediaPlayer.create(getBaseContext(), R.raw.hero_florence);
-                        mPlayer.start();
-                        audioStarted = true;
+//
+//                         AudioManager m_amAudioManager;
+//                        m_amAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+//                        m_amAudioManager.setMode(AudioManager.MODE_IN_CALL);
+//                        m_amAudioManager.setSpeakerphoneOn(false);
+//
+                        ap.play();
+                        //ap.switchToEarpieces();
+
                     }
                     else{
-                        mPlayer.stop();
-                        mPlayer.reset();
-                        audioStarted = false;
+                        ap.stop();
                     }
                 }
             });
@@ -124,10 +149,21 @@ public class MainActivity extends ActionBarActivity implements MyBeaconListener 
 
     }
 
+
+
+    @Override
+    public void onFragmentChanged(int oldFragment, int newFragment) {
+
+    }
+
+
+
+
     @Override
     protected void onStart() {
         super.onStart();
         beaconManager.start();
+        ap.onActivityStarted();
     }
 
 
@@ -135,6 +171,7 @@ public class MainActivity extends ActionBarActivity implements MyBeaconListener 
     protected void onStop() {
         super.onStop();
         beaconManager.stop();
+        ap.onActivityStopped();
     }
 
     @Override
@@ -235,4 +272,5 @@ public class MainActivity extends ActionBarActivity implements MyBeaconListener 
             deactivateBeaconContents();
         }
     }
+
 }
