@@ -6,11 +6,21 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+
     <!-- if you want to load images from the internet -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- if you want to load images from a file OR from the internet -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+
+
+    <service android:name="com.estimote.sdk.service.BeaconService"
+        android:exported="false"/>
 
     <application
         android:allowBackup="true"
@@ -27,11 +37,11 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".BeaconService"
-            android:enabled="true"
-            android:exported="true" >
-        </service>
+        <!--<service-->
+            <!--android:name=".BeaconService"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="true" >-->
+        <!--</service>-->
 
         <activity
             android:name=".MiActivity"
@@ -41,6 +51,13 @@
             android:name=".FiActivity"
             android:label="@string/title_activity_fi" >
         </activity>
+
+
+
+
+        <service android:name="com.estimote.sdk.service.BeaconService"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

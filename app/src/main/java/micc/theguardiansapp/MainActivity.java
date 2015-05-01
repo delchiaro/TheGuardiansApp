@@ -2,40 +2,42 @@ package micc.theguardiansapp;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ScrollView;
+import android.widget.Toast;
+
 import micc.theguardiansapp.beaconHelper.*;
-import micc.theguardiansapp.beaconHelper.GoodBadBeaconProximityManager;
-import micc.theguardiansapp.beaconServiceHelper.*;
-import micc.theguardiansapp.beaconServiceHelper.BeaconBestProximityListener;
 
 import com.estimote.sdk.Beacon;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
-import java.io.IOException;
+import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity implements BeaconBestProximityListener {
+public class MainActivity extends ActionBarActivity implements MyBeaconListener {
 
 
 
+    private static final int REFRESH_BEACON_DELAY = 5000;
     private ScrollView scrollView;
     private ViewGroup contentView;
     private ViewGroup[] fragContainer;
     private MediaPlayer mPlayer;
     private boolean audioStarted = false;
 
+    private boolean atLeastOneBeacon = false;
+
+    private static final int REQUEST_ENABLE_BT = 1234;
 
 
-    private GoodBadBeaconProximityManager proximityManager;
+    private BackgroundBeaconManager backgroundBeaconManager;
+
+    private ForegroundBeaconManager beaconManager;
 
 
 
@@ -73,11 +75,11 @@ public class MainActivity extends ActionBarActivity implements BeaconBestProximi
 
             FragmentHelper.setMainActivity(this);
 
-            Intent intent = new Intent(this, BeaconService.class);
-
-            if (intent != null) {
-                this.startService(intent);
-            }
+//            Intent intent = new Intent(this, BeaconService.class);
+//
+//            if (intent != null) {
+//                this.startService(intent);
+//            }
 
 
 
@@ -114,14 +116,26 @@ public class MainActivity extends ActionBarActivity implements BeaconBestProximi
 
 
 
+       // backgroundBeaconManager = new BackgroundBeaconManager(this);
+        beaconManager = new ForegroundBeaconManager(this, this);
 
-        proximityManager = new micc.theguardiansapp.beaconServiceHelper.GoodBadBeaconProximityManager(this, this);
-        proximityManager.scan();
+
+
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        beaconManager.start();
+    }
 
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        beaconManager.stop();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -182,7 +196,6 @@ public class MainActivity extends ActionBarActivity implements BeaconBestProximi
         startActivity(intent);
     }
 
-
     private void onClickFI() {
         Intent intent = new Intent(this, FiActivity.class);
         startActivity(intent);
@@ -193,20 +206,33 @@ public class MainActivity extends ActionBarActivity implements BeaconBestProximi
         startActivity(intent);
     }
 
-
-
-
-
-
-
-
-    @Override
-    public void OnNewBeaconBestProximity(Beacon bestProximity, Beacon oldBestProximity) {
-
+    private void deactivateBeaconContents(){
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(this, "Beacon Lontano", duration);
+        toast.show();
+    }
+    private void activateBeaconContents(){
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(this, "Beacon Vicino", duration);
+        toast.show();
     }
 
     @Override
-    public void OnNoneBeaconBestProximity(Beacon oldBestProximity) {
+    public void onNewBeacons(List<Beacon> newInProximityBeaconList) {
+        if(atLeastOneBeacon == false && beaconManager.getBeaconSize() > 0)
+        {
+            atLeastOneBeacon = true;
+            activateBeaconContents();
+        }
+    }
 
+    @Override
+    public void onRemovedBeacons(List<Beacon> removedBeacons)
+    {
+        if(atLeastOneBeacon == true && beaconManager.getBeaconSize() == 0)
+        {
+            atLeastOneBeacon = false;
+            deactivateBeaconContents();
+        }
     }
 }
