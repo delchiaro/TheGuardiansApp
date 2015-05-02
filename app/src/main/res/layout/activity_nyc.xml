@@ -1,0 +1,126 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="micc.theguardiansapp.NYCActivity">
+
+    <ScrollView
+        android:id="@+id/scroll_view_nyc"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:padding="0dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true">
+
+
+
+        <LinearLayout
+            android:id="@+id/scrolledLayout_nyc"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="0dip"
+            android:paddingBottom="0dp"
+            android:weightSum="1"
+            android:paddingRight="0dp"
+            android:padding="0dp"
+            android:paddingLeft="0dp">
+
+
+
+
+
+            <RelativeLayout
+                android:id="@+id/fragContainer0_nyc"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/card_container_padding_top"
+                android:paddingRight="@dimen/card_container_padding_right"
+                android:paddingLeft="@dimen/card_container_padding_left"
+                android:paddingBottom="@dimen/card_container_padding_bottom">
+
+
+                <com.daimajia.slider.library.SliderLayout
+                    android:id="@+id/slider_nyc"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    />
+
+                <ImageView
+                    android:id="@+id/audio_1_button"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/play"
+                    android:background="@drawable/layout_audio_button"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="5dp"
+
+                    />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/fragContainer1_nyc"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/card_container_padding_top"
+                android:paddingRight="@dimen/card_container_padding_right"
+                android:paddingLeft="@dimen/card_container_padding_left"
+                android:paddingBottom="@dimen/card_container_padding_bottom">
+
+                <com.daimajia.slider.library.SliderLayout
+                    android:id="@+id/slider_nyc_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    />
+
+
+
+                <ImageView
+                    android:id="@+id/audio_2_button"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/play"
+                    android:background="@drawable/layout_audio_button"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="5dp"
+
+                    />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/fragContainer2_nyc"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/card_container_padding_top"
+                android:paddingRight="@dimen/card_container_padding_right"
+                android:paddingLeft="@dimen/card_container_padding_left"
+                android:paddingBottom="@dimen/card_container_padding_bottom">
+
+
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider_nyc_3"
+                android:layout_width="match_parent"
+                android:layout_height="520dp"
+                />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</RelativeLayout>
