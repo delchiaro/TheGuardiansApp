@@ -11,7 +11,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.PowerManager;
-import android.view.WindowManager;
 
 import java.io.IOException;
 
@@ -25,7 +24,12 @@ public class AudioPlayer implements SensorEventListener
     //      AudioManager.STREAM_VOICE_CALL
 
     private int currentStreamType = DEFAULT_STREAM_TYPE;
-    private MediaPlayer mPlayer;
+    private MediaPlayer speakerPlayer;
+    private MediaPlayer earpiecePlayer;
+
+    private MediaPlayer activePlayer;
+    private MediaPlayer notActivePlayer;
+
     private final Context context;
     private final Resources res;
 
@@ -45,7 +49,10 @@ public class AudioPlayer implements SensorEventListener
     public AudioPlayer(Context context) {
         this.context = context;
         res = context.getResources();
-        mPlayer = new MediaPlayer();
+        speakerPlayer = new MediaPlayer();
+        earpiecePlayer = new MediaPlayer();
+        activePlayer = speakerPlayer;
+        notActivePlayer = earpiecePlayer;
 
         if(sensorManager == null)
         {
@@ -64,13 +71,6 @@ public class AudioPlayer implements SensorEventListener
 
         }
 
-
-        mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            public void onCompletion(MediaPlayer mp) {
-                mp.release();
-
-            }
-        });
 
     }
 
@@ -102,100 +102,86 @@ public class AudioPlayer implements SensorEventListener
 
 
     public void setOnCompletionListener( MediaPlayer.OnCompletionListener listener ){
-        mPlayer.setOnCompletionListener(listener);
+        speakerPlayer.setOnCompletionListener(listener);
     }
 
     public void loadAudio(int resource) {
         loadAudio(resourceToUri(resource));
     }
     public void loadAudio(Uri uri) {
-        loadAudio(uri, DEFAULT_STREAM_TYPE);
-    }
-    public void loadAudio(Uri uri,  int streamType) {
-        mPlayer.reset();
-        // mPlayer.setOnCompletionListener(this);
-
-        this.currentStreamType = streamType;
-        mPlayer.setAudioStreamType(streamType);
+        speakerPlayer.reset();
+        speakerPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
-            mPlayer.setDataSource(context, uri);
-            mPlayer.prepare();
+            speakerPlayer.setDataSource(context, uri);
+            speakerPlayer.prepare();
             currentTrackUri = uri;
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
 
 
-
-    public void playAudio(int resource) {
-        playAudio(resource, 0, AudioManager.STREAM_MUSIC );
-    }
-    private void playAudio(int resource, int offset, int streamType ) {
-        playAudio(resourceToUri(resource), offset, streamType);
-    }
-    private void playAudio(Uri uri, int offset, int streamType ) {
-        loadAudio(uri, streamType);
-        mPlayer.seekTo(offset);
-        mPlayer.start();
-    }
-
-
-
-    public void switchToStreamType( int streamType ) {
-        this.currentStreamType = streamType;
-
-        boolean isPlaying = mPlayer.isPlaying();
-        int current = mPlayer.getCurrentPosition();
-
-
+        earpiecePlayer.reset();
+        earpiecePlayer.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
         try {
-
-            if(isPlaying) {
-                playAudio(this.currentTrackUri, current, streamType);
-                //mPlayer.start();
-            }
-            else
-            {
-                mPlayer.stop();
-                mPlayer.setAudioStreamType(currentStreamType);
-                mPlayer.prepare();
-            }
+            earpiecePlayer.setDataSource(context, uri);
+            earpiecePlayer.prepare();
+            currentTrackUri = uri;
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
 
+
+
+
+    public void playAudio(int resource) {
+        playAudio(resource, 0);
     }
-    public final void switchToEarpieces() {
-        switchToStreamType(AudioManager.STREAM_VOICE_CALL);
+    private void playAudio(int resource, int offset ) {
+        playAudio(resourceToUri(resource), offset);
     }
-    public void switchToSpeaker() {
-        switchToStreamType(AudioManager.STREAM_MUSIC);
+    private void playAudio(Uri uri, int offset ) {
+        loadAudio(uri);
+        activePlayer.seekTo(offset);
+        activePlayer.start();
+    }
+
+
+
+    public final void switchPlayer() {
+        int seek = activePlayer.getCurrentPosition();
+        stop();
+        MediaPlayer m = activePlayer;
+        activePlayer = notActivePlayer;
+        notActivePlayer = m;
+
+        activePlayer.seekTo(seek);
+        activePlayer.start();
+
     }
 
 
 
     public void pause() {
-        mPlayer.pause();
+        activePlayer.pause();
     }
     public void play() {
-        mPlayer.start();
+        activePlayer.start();
     }
     public void stop() {
-        mPlayer.stop();
-        mPlayer.release();
+        activePlayer.stop();
 
         try {
-            mPlayer.prepare();
+            activePlayer.prepare();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mPlayer.seekTo(0);
+        activePlayer.seekTo(0);
     }
 
     public boolean isPlaying() {
-        return mPlayer.isPlaying();
+        return activePlayer.isPlaying();
     }
 
 
@@ -209,14 +195,14 @@ public class AudioPlayer implements SensorEventListener
         if( lastScreenSwitchTime == 0 || currentTime - lastScreenSwitchTime < MIN_TIME_BETWEEN_SWITCH_SCREEN )
         {
             if (event.values[0] < event.sensor.getMaximumRange()) {
-                if (mPlayer.isPlaying() && !wakeLock.isHeld()) {
-                    this.switchToEarpieces();
+                if (speakerPlayer.isPlaying() && !wakeLock.isHeld()) {
+                    this.switchPlayer();
                     screenOffPlaying = true;
                     wakeLock.acquire();
                 }
             } else {
                 if (wakeLock.isHeld()) {
-                    this.switchToSpeaker();
+                    this.switchPlayer();
                     screenOffPlaying = false;
                     wakeLock.release();
                 }
