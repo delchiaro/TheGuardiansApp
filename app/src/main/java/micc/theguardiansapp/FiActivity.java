@@ -32,6 +32,7 @@ public class FiActivity extends ActionBarActivity {
     MediaPlayer mPlayer;
 
     SliderLayout sliderShowAccademia;
+    SliderLayout sliderShowAccademia2;
     SliderLayout sliderShowHero;
 
 
@@ -39,16 +40,17 @@ public class FiActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fi);
-        setTitle("Florence City");
+        setTitle("City of Florence");
 
 
 
         scrollView = (ScrollView) findViewById(R.id.scroll_view_fi);
         contentView = (ViewGroup) findViewById(R.id.scrolledLayout_fi);
 
-        fragContainer = new ViewGroup[2];
+        fragContainer = new ViewGroup[3];
         fragContainer[0] = (ViewGroup) findViewById(R.id.fragContainer0_fi);
         fragContainer[1] = (ViewGroup) findViewById(R.id.fragContainer1_fi);
+        fragContainer[2] = (ViewGroup) findViewById(R.id.fragContainer2_fi);
 
 
         MyScrollPager scrollPager = new MyScrollPager(scrollView, contentView, fragContainer, true, false);
@@ -69,6 +71,7 @@ public class FiActivity extends ActionBarActivity {
         fabAudio2 = (FloatingActionButton) findViewById(R.id.fab_fi_audio_2);
 
         sliderShowAccademia = (SliderLayout) findViewById(R.id.slider_accademia);
+        sliderShowAccademia2 = (SliderLayout) findViewById(R.id.slider_accademia_2);
         sliderShowHero = (SliderLayout) findViewById(R.id.slider_hero_in_accademia);
 
 
@@ -83,34 +86,32 @@ public class FiActivity extends ActionBarActivity {
     {
 
 
-        MyTextSliderView textSliderView = new MyTextSliderView(this);
-        MyTextSliderView textSliderView0 = new MyTextSliderView(this);
-        MyTextSliderView textSliderView2 = new MyTextSliderView(this);
+        MyTextSliderView tsv_accademia = new MyTextSliderView(this);
+        MyTextSliderView tsv_accademia1 = new MyTextSliderView(this);
+        MyTextSliderView tsv_accademia2 = new MyTextSliderView(this);
 
 
 
         //textSliderView.description("Hero").image(R.drawable.guardian_hero);
 
-        textSliderView
-                .description("David of Michelangelo")
-                .image("http://upload.wikimedia.org/wikipedia/commons/d/d7/Michelangelo's_David.JPG")
+        tsv_accademia
+                .description("Michelangelo's David")
+                .image(R.drawable.david)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
-        textSliderView0
-                .description("David in Accademia Gallery")
-                .image("http://www.miragu.com/dbFoto/David.JPG")
+        tsv_accademia1
+                .description("Saracino's Hero")
+                .image(R.drawable.hero)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
-
-
-        textSliderView2
-                .description("Accademia Gallery")
-                .image(" http://www.guidedflorencetour.com/data/uploads/accademia_gallery_tour/006-accademia_florence.jpg\n")
+        tsv_accademia2
+                .description("Hero (Another View)")
+                .image(R.drawable.hero_2)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
-        sliderShowAccademia.addSlider(textSliderView);
-        sliderShowAccademia.addSlider(textSliderView0);
-        sliderShowAccademia.addSlider(textSliderView2);
+        sliderShowAccademia.addSlider(tsv_accademia);
+        sliderShowAccademia.addSlider(tsv_accademia1);
+        sliderShowAccademia.addSlider(tsv_accademia2);
 
         sliderShowAccademia.stopAutoCycle();
         sliderShowAccademia.setPresetTransformer(SliderLayout.Transformer.DepthPage);
@@ -120,6 +121,15 @@ public class FiActivity extends ActionBarActivity {
 
 
 
+        sliderShowAccademia2.addSlider(tsv_accademia);
+        sliderShowAccademia2.addSlider(tsv_accademia1);
+        sliderShowAccademia2.addSlider(tsv_accademia2);
+
+        sliderShowAccademia2.stopAutoCycle();
+        sliderShowAccademia2.setPresetTransformer(SliderLayout.Transformer.DepthPage);
+        //sliderShow.setCustomIndicator((PagerIndicator) findViewById(R.id.custom_indicator));
+        sliderShowAccademia2.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
+        sliderShowAccademia2.setCustomAnimation(new DescriptionAnimation());
 
 
         // HERO
@@ -141,33 +151,33 @@ public class FiActivity extends ActionBarActivity {
 
 
         tsv_hero1
-                .description("Hero")
-                .image(R.drawable.guardian_hero)
+                .description("Genesis of Hero")
+                .image(R.drawable.cava)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
         tsv_hero2
-                .description("Carrara: cave")
-                .image(R.drawable.cava_carrara)
+                .description("Genesis of Hero")
+                .image(R.drawable.blocco)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
         tsv_hero3
-                .description("Carrara")
-                .image(R.drawable.panorama_carrara)
+                .description("Genesis of Hero")
+                .image(R.drawable.blocco2)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
         tsv_hero4
-                .description("Block of Carrara's marble")
-                .image(R.drawable.blocco_carrara)
+                .description("Genesis of Hero")
+                .image(R.drawable.osso)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
         tsv_hero5
-                .description("Artisan of marble")
-                .image(R.drawable.lavorazione)
+                .description("Genesis of Hero")
+                .image(R.drawable.osso2)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
         tsv_hero6
-                .description("Marble pieces finished")
-                .image(R.drawable.lavorati)
+                .description("Genesis of Hero")
+                .image(R.drawable.fresa)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
 
