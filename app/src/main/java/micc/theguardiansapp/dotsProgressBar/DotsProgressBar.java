@@ -48,11 +48,12 @@ public class DotsProgressBar extends View {
 		// dot background color
 		mPaint.setStyle(Style.FILL);
 		mPaint.setColor(0x33000000);
-		start();
+		//start();
 	}
 
 	public void setDotsCount(int count) {
 		mDotCount = count;
+        invalidate();
 	}
 
 	public void start() {
@@ -60,6 +61,17 @@ public class DotsProgressBar extends View {
 		mHandler.removeCallbacks(mRunnable);
 		mHandler.post(mRunnable);
 	}
+
+    public boolean setActiveDot(int index) {
+        if(index >= 0 && index < mDotCount)
+        {
+            mIndex = index;
+            invalidate();
+            return true;
+        }
+        else return false;
+    }
+
 
 	public void stop() {
 		mHandler.removeCallbacks(mRunnable);
@@ -97,8 +109,8 @@ public class DotsProgressBar extends View {
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-		widthSize = MeasureSpec.getSize(widthMeasureSpec);
-		heightSize = (int) mRadius * 2 + getPaddingBottom() + getPaddingTop();
+		widthSize = (int) mRadius * 2 + getPaddingLeft() + getPaddingRight();
+		heightSize =  MeasureSpec.getSize(heightMeasureSpec);
 		setMeasuredDimension(widthSize, heightSize);
 
 	}
@@ -107,8 +119,12 @@ public class DotsProgressBar extends View {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 
-		float dX = (widthSize - mDotCount * mRadius * 2 - (mDotCount - 1) * margin) / 2.0f;
-		float dY = heightSize / 2;
+		//float dX = (widthSize - mDotCount * mRadius * 2 - (mDotCount - 1) * margin) / 2.0f;
+		float dX = widthSize/2;
+
+        //float dY = heightSize / 2;
+        float dY = (heightSize - mDotCount * mRadius * 2 - (mDotCount - 1) * margin) / 2.0f;
+
 		for (int i = 0; i < mDotCount; i++) {
 			if (i == mIndex) {
 				canvas.drawCircle(dX, dY, mRadius, mPaintFill);
@@ -116,7 +132,7 @@ public class DotsProgressBar extends View {
 				canvas.drawCircle(dX, dY, mRadius, mPaint);
 			}
 
-			dX += (2 * mRadius + margin);
+			dY += (2 * mRadius + margin);
 		}
 
 	}
