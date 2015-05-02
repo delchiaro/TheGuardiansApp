@@ -31,7 +31,6 @@ public class NYCActivity extends ActionBarActivity {
 
     SliderLayout sliderShowNYC;
     SliderLayout sliderShowNYC2;
-    SliderLayout sliderShowNYC3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +41,9 @@ public class NYCActivity extends ActionBarActivity {
         scrollView = (ScrollView) findViewById(R.id.scroll_view_nyc);
         contentView = (ViewGroup) findViewById(R.id.scrolledLayout_nyc);
 
-        fragContainer = new ViewGroup[3];
+        fragContainer = new ViewGroup[2];
         fragContainer[0] = (ViewGroup) findViewById(R.id.fragContainer0_nyc);
         fragContainer[1] = (ViewGroup) findViewById(R.id.fragContainer1_nyc);
-        fragContainer[2] = (ViewGroup) findViewById(R.id.fragContainer2_nyc);
 
 
         MyScrollPager scrollPager = new MyScrollPager(scrollView, contentView, fragContainer, true, false);

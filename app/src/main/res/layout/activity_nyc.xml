@@ -99,26 +99,6 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/fragContainer2_nyc"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/card_container_padding_top"
-                android:paddingRight="@dimen/card_container_padding_right"
-                android:paddingLeft="@dimen/card_container_padding_left"
-                android:paddingBottom="@dimen/card_container_padding_bottom">
-
-
-            <com.daimajia.slider.library.SliderLayout
-                android:id="@+id/slider_nyc_3"
-                android:layout_width="match_parent"
-                android:layout_height="520dp"
-                />
-
-            </RelativeLayout>
-
-
         </LinearLayout>
     </ScrollView>
 
