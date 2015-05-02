@@ -25,5 +25,6 @@
     <string name="title_activity_mi">MiActivity</string>
     <string name="expo_2015">Expo 2015</string>
     <string name="title_activity_fi">FiActivity</string>
+    <string name="title_activity_ny">NYActivity</string>
 
 </resources>
