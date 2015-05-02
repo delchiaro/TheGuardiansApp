@@ -20,6 +20,7 @@ import micc.theguardiansapp.dotsProgressBar.DotsProgressBar;
 import micc.theguardiansapp.scrollPager.MyScrollPager;
 import micc.theguardiansapp.scrollPager.ScrollPagerListener;
 
+
 import com.estimote.sdk.Beacon;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
