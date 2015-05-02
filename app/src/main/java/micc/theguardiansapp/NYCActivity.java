@@ -14,6 +14,8 @@ import com.daimajia.slider.library.Animations.*;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 
+import micc.theguardiansapp.scrollPager.MyScrollPager;
+
 public class NYCActivity extends ActionBarActivity {
 
     private ScrollView scrollView;
@@ -86,7 +88,7 @@ public class NYCActivity extends ActionBarActivity {
         sliderShowNYC.stopAutoCycle();
         sliderShowNYC.setPresetTransformer(SliderLayout.Transformer.DepthPage);
         sliderShowNYC.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
-        sliderShowNYC.setCustomAnimation(new com.daimajia.slider.library.Animations.DescriptionAnimation());
+        //sliderShowNYC.setCustomAnimation(new com.daimajia.slider.library.Animations.DescriptionAnimation());
 
 
 
@@ -109,9 +111,9 @@ public class NYCActivity extends ActionBarActivity {
         sliderShowNYC2.addSlider(tsv_nyc3);
         sliderShowNYC2.addSlider(tsv_nyc4);
         sliderShowNYC2.stopAutoCycle();
-        sliderShowNYC2.setPresetTransformer(SliderLayout.Transformer.DepthPage);
         sliderShowNYC2.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
-        sliderShowNYC2.setCustomAnimation(new com.daimajia.slider.library.Animations.DescriptionAnimation());
+        sliderShowNYC2.setPresetTransformer(SliderLayout.Transformer.DepthPage);
+        //sliderShowNYC2.setCustomAnimation(new com.daimajia.slider.library.Animations.DescriptionAnimation());
 
 
     }

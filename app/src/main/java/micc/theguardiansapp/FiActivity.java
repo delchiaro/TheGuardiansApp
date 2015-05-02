@@ -13,6 +13,7 @@ import android.widget.ScrollView;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import micc.theguardiansapp.scrollPager.MyScrollPager;
@@ -87,9 +88,9 @@ public class FiActivity extends ActionBarActivity {
     {
 
 
-        MyTextSliderView tsv_accademia = new MyTextSliderView(this);
-        MyTextSliderView tsv_accademia1 = new MyTextSliderView(this);
-        MyTextSliderView tsv_accademia2 = new MyTextSliderView(this);
+        TextSliderView tsv_accademia = new TextSliderView(this);
+        TextSliderView tsv_accademia1 = new TextSliderView(this);
+        TextSliderView tsv_accademia2 = new TextSliderView(this);
 
 
 
@@ -135,12 +136,12 @@ public class FiActivity extends ActionBarActivity {
 
         // HERO
 
-        MyTextSliderView tsv_hero1 = new MyTextSliderView(this);
-        MyTextSliderView tsv_hero2 = new MyTextSliderView(this);
-        MyTextSliderView tsv_hero3 = new MyTextSliderView(this);
-        MyTextSliderView tsv_hero4 = new MyTextSliderView(this);
-        MyTextSliderView tsv_hero5 = new MyTextSliderView(this);
-        MyTextSliderView tsv_hero6 = new MyTextSliderView(this);
+        TextSliderView tsv_hero1 = new TextSliderView(this);
+        TextSliderView tsv_hero2 = new TextSliderView(this);
+        TextSliderView tsv_hero3 = new TextSliderView(this);
+        TextSliderView tsv_hero4 = new TextSliderView(this);
+        TextSliderView tsv_hero5 = new TextSliderView(this);
+        TextSliderView tsv_hero6 = new TextSliderView(this);
 
 
 
