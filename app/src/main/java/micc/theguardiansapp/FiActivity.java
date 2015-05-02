@@ -88,26 +88,26 @@ public class FiActivity extends ActionBarActivity {
     {
 
 
-        TextSliderView tsv_accademia = new TextSliderView(this);
-        TextSliderView tsv_accademia1 = new TextSliderView(this);
-        TextSliderView tsv_accademia2 = new TextSliderView(this);
+        MyTextSliderView tsv_accademia = new MyTextSliderView(this);
+        MyTextSliderView tsv_accademia1 = new MyTextSliderView(this);
+        MyTextSliderView tsv_accademia2 = new MyTextSliderView(this);
 
 
 
         //textSliderView.description("Hero").image(R.drawable.guardian_hero);
 
         tsv_accademia
-                .description("Michelangelo's David")
+                .description(getString(R.string.saracino_speech_fi_1))
                 .image(R.drawable.david)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
         tsv_accademia1
-                .description("Saracino's Hero")
+                .description(getString(R.string.saracino_speech_fi_2))
                 .image(R.drawable.hero)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
         tsv_accademia2
-                .description("Hero (Another View)")
+                .description(getString(R.string.saracino_speech_fi_3))
                 .image(R.drawable.hero_2)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
@@ -123,9 +123,30 @@ public class FiActivity extends ActionBarActivity {
 
 
 
-        sliderShowAccademia2.addSlider(tsv_accademia);
-        sliderShowAccademia2.addSlider(tsv_accademia1);
-        sliderShowAccademia2.addSlider(tsv_accademia2);
+        MyTextSliderView tsv_accademia3 = new MyTextSliderView(this);
+        MyTextSliderView tsv_accademia4 = new MyTextSliderView(this);
+        MyTextSliderView tsv_accademia5 = new MyTextSliderView(this);
+
+
+        tsv_accademia3
+                .description(getString(R.string.tartuferi_speech_1))
+                .image(R.drawable.david)
+                .setScaleType(BaseSliderView.ScaleType.CenterInside);
+
+        tsv_accademia4
+                .description(getString(R.string.tartuferi_speech_2))
+                .image(R.drawable.hero)
+                .setScaleType(BaseSliderView.ScaleType.CenterInside);
+
+        tsv_accademia5
+                .description(getString(R.string.tartuferi_speech_3))
+                .image(R.drawable.hero_2)
+                .setScaleType(BaseSliderView.ScaleType.CenterInside);
+
+
+        sliderShowAccademia2.addSlider(tsv_accademia3);
+        sliderShowAccademia2.addSlider(tsv_accademia4);
+        sliderShowAccademia2.addSlider(tsv_accademia5);
 
         sliderShowAccademia2.stopAutoCycle();
         sliderShowAccademia2.setPresetTransformer(SliderLayout.Transformer.DepthPage);

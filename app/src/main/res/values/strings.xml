@@ -25,6 +25,49 @@
     <string name="title_activity_mi">MiActivity</string>
     <string name="expo_2015">Expo 2015</string>
     <string name="title_activity_fi">FiActivity</string>
-    <string name="title_activity_ny">NYActivity</string>
+    <string name="title_activity_ny">NYCActivity</string>
+
+    <string name="tartuferi_speech_1">Countless artists, in the broadest sense of the term
+        (painters, engravers, sculptors, graphic artists, photographers and so on ),
+        have found the courage to confront Michelangelo\'s masterpiece,
+        with results that have had very different outcomes: from grotesque to heroic.
+        Antonio Pio Saracino has revived the matter of “David,”
+        the white Carrara marble, for a modern reinterpretation of the sculpture,</string>
+
+    <string name="tartuferi_speech_2">
+        the white Carrara marble, for a modern reinterpretation of the sculpture,
+        designed not for a museum or an art gallery, but for a public space in Manhattan,
+        thus placing itself even in this respect on the trail of the original intention by Michelangelo.
+        The best hope is that the Hero can represent,
+        in the eyes of the men of our day, the same values of freedom,</string>
+
+    <string name="tartuferi_speech_3">
+        justice and civic pride realized by Florentines at the height of the Renaissance by Michelangelo\'s David.
+        The Accademia Gallery in Florence, along the Italian Embassy in Washington,
+        is pleased to present the work of Antonio Pio Saracino, which qualifies as one of the most intelligent,
+        modern and qualitatively most significant interpretations in terms
+        of the execution of one of the highest signs of Western culture.
+    </string>
+
+    <string name="saracino_speech_fi_1">In 2013 I was presented with a tandem of incredible opportunities:
+        design a symbol for Italy in NYC on the occasion of the Year of Italian Culture.
+        And also a Public Art project in 3 Bryant Park in Manhattan. At the time,
+        I was asked by the Italian Embassy to look at the Michelangelo’s David as an inspiration.
+        Clearly that magnum reference was daunting. Yet I was so honored to create a symbol that could represent
+        a permanent gift from my native Italy to New York City,</string>
+    <string name="saracino_speech_fi_2">that I accepted the exceptional opportunity.
+        I wanted to create two symbolic Guardians: a Hero in marble stone,
+        and a Superhero in mirror polished stainless steel.
+        The two anthropomorphic sculptures that I have digitally generated are intended as two a layered architectural
+        construction that display the universal ability of mankind to cement its own presence in the world with
+        its perennial construction skills. </string>
+    <string name="saracino_speech_fi_3">I never would have expected, two years later from the installation of the Guardians in NYC,
+        to receive the great honor to see a new edition of “Hero” in the Accademia Gallery of Florence,
+        in the same place as Michelangelo’s “David.” This is the story of the actions of an Hero from the past
+        that echoes in our present and in the future.</string>
+
+
+
+
 
 </resources>
