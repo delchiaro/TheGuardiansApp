@@ -147,7 +147,7 @@ public class NYCActivity extends ActionBarActivity {
         stopAudio2();
         audio1playing = true;
         audioButton1.setImageResource(R.drawable.stop);
-        mPlayer = MediaPlayer.create(getBaseContext(), R.raw.innocenti_florence_en);
+        mPlayer = MediaPlayer.create(getBaseContext(), R.raw.saracino_ny_1);
         mPlayer.start();
     }
     private void playAudio2()
@@ -156,7 +156,7 @@ public class NYCActivity extends ActionBarActivity {
         stopAudio2();
         audio2playing = true;
         audioButton2.setImageResource(R.drawable.stop);
-        mPlayer = MediaPlayer.create(getBaseContext(), R.raw.tartufieri_florence_it);
+        mPlayer = MediaPlayer.create(getBaseContext(), R.raw.saracino_ny_2);
         mPlayer.start();
     }
 
