@@ -189,7 +189,7 @@ public class MainActivity extends ActionBarActivity implements BeaconBestProximi
     }
 
     private void onClickNY() {
-        Intent intent = new Intent(this, MiActivity.class);
+        Intent intent = new Intent(this, NYCActivity.class);
         startActivity(intent);
     }
 

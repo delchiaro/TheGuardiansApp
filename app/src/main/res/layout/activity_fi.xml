@@ -53,23 +53,18 @@
                 android:layout_height="450dp"
             />
 
-
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_fi_audio_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:baselineAlignBottom="true"
-                fab:fab_colorNormal="#FFFFFF"
-                fab:fab_colorPressed="#FFFFFF"
-                custom:fab_size="mini"
-                custom:fab_icon="@drawable/play"
-                android:layout_gravity="bottom|right"
-                android:layout_weight="1"
+            <ImageView
+                android:id="@+id/audio_1_button"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_alignRight="@+id/slider_accademia"
-                android:layout_alignEnd="@+id/slider_accademia"
-                android:layout_alignParentRight="true" />
+                android:src="@drawable/play"
+                android:background="@drawable/layout_audio_button"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
+
+                />
 
 
         </RelativeLayout>
@@ -101,20 +96,18 @@
                 android:layout_below="@id/slider_accademia_2"/>
 
 
-
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_fi_audio_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:baselineAlignBottom="true"
-                fab:fab_colorNormal="#FFFFFF"
-                fab:fab_colorPressed="#FFFFFF"
-                custom:fab_size="mini"
-                custom:fab_icon="@drawable/play"
-                android:layout_gravity="bottom|right"
+            <ImageView
+                android:id="@+id/audio_2_button"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true" />
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/play"
+                android:background="@drawable/layout_audio_button"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
+
+                />
 
 
         </RelativeLayout>

@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -23,8 +24,8 @@ public class FiActivity extends ActionBarActivity {
     private ScrollView scrollView;
     private ViewGroup contentView;
     private ViewGroup[] fragContainer;
-    FloatingActionButton fabAudio1;
-    FloatingActionButton fabAudio2;
+    ImageView audioButton1;
+    ImageView audioButton2;
 
     boolean audio1playing = false;
     boolean audio2playing = false;
@@ -67,8 +68,8 @@ public class FiActivity extends ActionBarActivity {
 
 
 
-        fabAudio1 = (FloatingActionButton) findViewById(R.id.fab_fi_audio_1);
-        fabAudio2 = (FloatingActionButton) findViewById(R.id.fab_fi_audio_2);
+        audioButton1 = (ImageView) findViewById(R.id.audio_1_button);
+        audioButton2 = (ImageView) findViewById(R.id.audio_2_button);
 
         sliderShowAccademia = (SliderLayout) findViewById(R.id.slider_accademia);
         sliderShowAccademia2 = (SliderLayout) findViewById(R.id.slider_accademia_2);
@@ -206,7 +207,7 @@ public class FiActivity extends ActionBarActivity {
     private void stopAudio1()
     {
         audio1playing = false;
-        fabAudio1.setIcon(R.drawable.play);
+        audioButton1.setImageResource(R.drawable.play);
         if(mPlayer != null ) {
             mPlayer.stop();
             mPlayer.reset();
@@ -216,7 +217,7 @@ public class FiActivity extends ActionBarActivity {
     private void stopAudio2()
     {
         audio2playing = false;
-        fabAudio2.setIcon(R.drawable.play);
+        audioButton2.setImageResource(R.drawable.play);
         if(mPlayer != null ) {
             mPlayer.stop();
             mPlayer.reset();
@@ -233,7 +234,7 @@ public class FiActivity extends ActionBarActivity {
         stopAudio1();
         stopAudio2();
         audio1playing = true;
-        fabAudio1.setIcon(R.drawable.stop);
+        audioButton1.setImageResource(R.drawable.stop);
         mPlayer = MediaPlayer.create(getBaseContext(), R.raw.innocenti_florence_en);
         mPlayer.start();
     }
@@ -242,7 +243,7 @@ public class FiActivity extends ActionBarActivity {
         stopAudio1();
         stopAudio2();
         audio2playing = true;
-        fabAudio2.setIcon(R.drawable.stop);
+        audioButton2.setImageResource(R.drawable.stop);
         mPlayer = MediaPlayer.create(getBaseContext(), R.raw.tartufieri_florence_it);
         mPlayer.start();
     }
@@ -252,7 +253,7 @@ public class FiActivity extends ActionBarActivity {
     private void setUpEvents()
     {
 
-        fabAudio1.setOnClickListener(new View.OnClickListener() {
+        audioButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!audio1playing)
@@ -276,7 +277,7 @@ public class FiActivity extends ActionBarActivity {
 
 
 
-        fabAudio2.setOnClickListener(new View.OnClickListener() {
+        audioButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!audio2playing)

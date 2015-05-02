@@ -41,6 +41,10 @@
             android:name=".FiActivity"
             android:label="@string/title_activity_fi" >
         </activity>
+        <activity
+            android:name=".NYCActivity"
+            android:label="@string/title_activity_ny" >
+        </activity>
     </application>
 
 </manifest>
