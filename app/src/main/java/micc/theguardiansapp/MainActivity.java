@@ -16,6 +16,7 @@ import android.widget.Toast;
 import it.sephiroth.android.library.tooltip.TooltipManager;
 import micc.theguardiansapp.audioPlayer.AudioPlayer;
 import micc.theguardiansapp.beaconHelper.*;
+import micc.theguardiansapp.dotsProgressBar.DotsProgressBar;
 import micc.theguardiansapp.scrollPager.MyScrollPager;
 import micc.theguardiansapp.scrollPager.ScrollPagerListener;
 
@@ -63,6 +64,7 @@ public class MainActivity
 
     TooltipManager tooltipManager;
 
+    DotsProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,11 +79,17 @@ public class MainActivity
             setTitle("Hero");
 
 
+            progressBar = (DotsProgressBar) findViewById(R.id.dotsProgressBar);
+            progressBar.setDotsCount(4);
+            progressBar.setVisibility(View.VISIBLE);
+            progressBar.setActiveDot(2);
+
+
             tooltipManager = TooltipManager.getInstance(this);
 
 
             ap = new AudioPlayer(getBaseContext());
-            ap.loadAudio(R.raw.hero_florence);
+            ap.loadAudio(R.raw.saracino_intro_1);
 
             setEventListeners();
             scrollView = (ScrollView) findViewById(R.id.scroll_view);
@@ -97,13 +105,15 @@ public class MainActivity
             scrollPager = new MyScrollPager(scrollView, contentView, fragContainer, true, false);
             scrollPager.setOnScrollListener(this);
             scrollView.setOnTouchListener(scrollPager);
+             scrollPager.setDotsPageProgressBar(progressBar);
 
-
-            scrollView.post(new Runnable() {
-                public void run() {
-                    scrollView.scrollTo(0, contentView.getPaddingTop());
-                }
-            });
+//            scrollView.post(new Runnable() {
+//                public void run() {
+//                    scrollView.scrollTo(0, contentView.getPaddingTop());
+//                    scrollPager.setDotsPageProgressBar(progressBar);
+//
+//                }
+//            });
 
 
             //FragmentHelper.setMainActivity(this);
@@ -203,7 +213,10 @@ public class MainActivity
 
     }
 
+    @Override
+    public void onPageChanged(int oldPage, int newPage, int oldFragment, int newFragment) {
 
+    }
 
 
     @Override

@@ -103,9 +103,9 @@ public class AudioPlayer implements SensorEventListener
     private Uri resourceToUri(int resource) {
 
         Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
-                "://" + res.getResourcePackageName(R.raw.hero_florence) +
-                '/' + res.getResourceTypeName(R.raw.hero_florence) +
-                '/' + res.getResourceEntryName(R.raw.hero_florence) );
+                "://" + res.getResourcePackageName(resource) +
+                '/' + res.getResourceTypeName(resource) +
+                '/' + res.getResourceEntryName(resource) );
 
         return uri;
 

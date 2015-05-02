@@ -11,6 +11,8 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Scroller;
 
+import micc.theguardiansapp.dotsProgressBar.DotsProgressBar;
+
 public class MyScrollPager implements OnTouchListener
 {
 	// The class encapsulates scrolling.(Overshoot)
@@ -18,6 +20,10 @@ public class MyScrollPager implements OnTouchListener
 	// The task make scroll view scrolled.
 	private Runnable pageScrollTask;
     private Runnable fragmentScrollTask;
+
+
+    private DotsProgressBar fragmentProgressBar = null;
+    private DotsProgressBar pageProgressBar = null;
 
 
     private final double treshold_Dy_scrolling = 5; // con una accelerazione di 5 si scrolla
@@ -54,6 +60,8 @@ public class MyScrollPager implements OnTouchListener
 
 
     ScrollPagerListener scrollListener = null;
+
+    private boolean guiInitializated = false;
 
 
 	public MyScrollPager(ScrollView aScrollView, ViewGroup aContentView, ViewGroup[] aFragmentContainer,
@@ -120,6 +128,8 @@ public class MyScrollPager implements OnTouchListener
         fragmentFirstPageMap= new int[mFragmentContainers.length];;
         fragmentNPageMap = new int[mFragmentContainers.length];
 
+        mScrollView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+
         this.displayHeight = mScrollView.getHeight();
 
         int nPageTotal = 0;
@@ -159,10 +169,52 @@ public class MyScrollPager implements OnTouchListener
             }
         }
 
-        int a = 2;
+
+
+        guiInitializated = true;
+
+        currentPage = 0;
+        mScrollView.scrollTo(0, mContentView.getPaddingTop());
+
+        if(pageProgressBar != null) {
+            pageProgressBar.setDotsCount(this.nPages);
+            pageProgressBar.setActiveDot(0);
+            setVerticalScrollBarEnabled(false);
+        }
+        if(fragmentProgressBar != null) {
+            fragmentProgressBar.setDotsCount(this.nFragments);
+            fragmentProgressBar.setActiveDot(0);
+            setVerticalScrollBarEnabled(false);
+        }
+
 
     }
 
+    public final void setVerticalScrollBarEnabled(boolean bool) {
+        mScrollView.setVerticalScrollBarEnabled(bool);
+
+    }
+
+    public final void setHorizontalScrollBarEnabled(boolean bool) {
+        mScrollView.setHorizontalScrollBarEnabled(bool);
+    }
+
+    public void setDotsFragmentProgressBar(DotsProgressBar progressBar) {
+        this.fragmentProgressBar = progressBar;
+        if(guiInitializated) {
+            fragmentProgressBar.setDotsCount(this.nFragments);
+            fragmentProgressBar.setActiveDot(pageFragmentMap[currentPage]);
+            setVerticalScrollBarEnabled(false);
+        }
+    }
+    public void setDotsPageProgressBar(DotsProgressBar progressBar) {
+        this.pageProgressBar = progressBar;
+        if(guiInitializated) {
+            pageProgressBar.setDotsCount(this.nPages);
+            pageProgressBar.setActiveDot(currentPage);
+            setVerticalScrollBarEnabled(false);
+        }
+    }
 
 
     public void setOnScrollListener(ScrollPagerListener listener) {
@@ -190,12 +242,20 @@ public class MyScrollPager implements OnTouchListener
 
         if(currentPage != pageNumber)
         {
-            //scrollListener.onPageChanged(beforeTouchPage, beforeTouchFragment, currentPage, pageFragmentMap[currentPage] );
+
+            if(pageProgressBar != null)
+                pageProgressBar.setActiveDot(currentPage);
+            if(scrollListener != null)
+                scrollListener.onPageChanged(currentPage, pageNumber, pageFragmentMap[currentPage], pageFragmentMap[pageNumber] );
             // EVENTO: abbiamo cambiato pagina
             if(pageFragmentMap[currentPage] != pageFragmentMap[pageNumber])
             {
-                scrollListener.onFragmentChanged(pageFragmentMap[currentPage] , pageFragmentMap[currentPage]);
+                if(scrollListener != null)
+                    scrollListener.onFragmentChanged(pageFragmentMap[currentPage] , pageFragmentMap[pageNumber]);
                 // EVENTO: abbiam ocambiato fragment
+
+                if(fragmentProgressBar != null)
+                    fragmentProgressBar.setActiveDot(pageFragmentMap[currentPage]);
             }
         }
 
@@ -396,12 +456,19 @@ public class MyScrollPager implements OnTouchListener
 
                 if(beforeTouchPage != currentPage)
                 {
-                    //scrollListener.onPageChanged(beforeTouchPage, beforeTouchFragment, currentPage, pageFragmentMap[currentPage] );
+                    if(pageProgressBar != null)
+                        pageProgressBar.setActiveDot(currentPage);
+                    if(scrollListener != null)
+                        scrollListener.onPageChanged(currentPage, beforeTouchPage, pageFragmentMap[currentPage], pageFragmentMap[beforeTouchPage] );
                     // EVENTO: abbiamo cambiato pagina
                     if(beforeTouchFragment != pageFragmentMap[currentPage])
                     {
-                        scrollListener.onFragmentChanged(beforeTouchFragment, pageFragmentMap[currentPage]);
+                        if(scrollListener != null)
+                            scrollListener.onFragmentChanged(beforeTouchFragment, pageFragmentMap[currentPage]);
                         // EVENTO: abbiam ocambiato fragment
+
+                        if(fragmentProgressBar != null)
+                            fragmentProgressBar.setActiveDot(pageFragmentMap[currentPage]);
                     }
                 }
 
