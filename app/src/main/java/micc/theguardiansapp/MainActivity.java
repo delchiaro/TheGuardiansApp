@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ScrollView;
 import micc.theguardiansapp.beaconHelper.*;
-import micc.theguardiansapp.beaconHelper.GoodBadBeaconProximityManager;
+//import micc.theguardiansapp.beaconHelper.GoodBadBeaconProximityManager;
 import micc.theguardiansapp.beaconServiceHelper.*;
 import micc.theguardiansapp.beaconServiceHelper.BeaconBestProximityListener;
 

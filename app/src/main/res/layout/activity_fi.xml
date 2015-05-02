@@ -50,7 +50,7 @@
             <com.daimajia.slider.library.SliderLayout
                 android:id="@+id/slider_accademia"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="450dp"
             />
 
 
@@ -71,6 +71,7 @@
                 android:layout_alignEnd="@+id/slider_accademia"
                 android:layout_alignParentRight="true" />
 
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -84,10 +85,21 @@
             android:paddingBottom="@dimen/card_container_padding_bottom">
 
             <com.daimajia.slider.library.SliderLayout
-                android:id="@+id/slider_hero_in_accademia"
+                android:id="@+id/slider_accademia_2"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tartuferi Speech goes here."
+                android:id="@+id/tartuferi_speech"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/slider_accademia_2"/>
+
 
 
             <com.getbase.floatingactionbutton.FloatingActionButton
@@ -103,6 +115,26 @@
                 android:layout_gravity="bottom|right"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/fragContainer2_fi"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/card_container_padding_top"
+            android:paddingRight="@dimen/card_container_padding_right"
+            android:paddingLeft="@dimen/card_container_padding_left"
+            android:paddingBottom="@dimen/card_container_padding_bottom">
+
+
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider_hero_in_accademia"
+                android:layout_width="match_parent"
+                android:layout_height="520dp"
+                />
 
 
         </RelativeLayout>
