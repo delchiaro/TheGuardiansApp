@@ -1,53 +1,96 @@
 package micc.theguardiansapp;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.graphics.Point;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ScrollView;
+import android.widget.Toast;
+
+import it.sephiroth.android.library.tooltip.TooltipManager;
+import micc.theguardiansapp.audioPlayer.AudioPlayer;
 import micc.theguardiansapp.beaconHelper.*;
-//import micc.theguardiansapp.beaconHelper.GoodBadBeaconProximityManager;
-import micc.theguardiansapp.beaconServiceHelper.*;
-import micc.theguardiansapp.beaconServiceHelper.BeaconBestProximityListener;
+import micc.theguardiansapp.dotsProgressBar.DotsProgressBar;
+import micc.theguardiansapp.scrollPager.MyScrollPager;
+import micc.theguardiansapp.scrollPager.ScrollPagerListener;
+
 
 import com.estimote.sdk.Beacon;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
-import java.io.IOException;
+
+import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity implements BeaconBestProximityListener {
+public class MainActivity
+        extends ActionBarActivity
+        implements MyBeaconListener, ScrollPagerListener
+{
 
 
 
+    private static final int REFRESH_BEACON_DELAY = 5000;
+
+
+
+    private static SensorManager sensorManager;
+    private static Sensor proximitySensor;
+
+
+
+    MyScrollPager scrollPager;
     private ScrollView scrollView;
     private ViewGroup contentView;
     private ViewGroup[] fragContainer;
-    private MediaPlayer mPlayer;
-    private boolean audioStarted = false;
+
+    private boolean atLeastOneBeacon = false;
+
+    private static final int REQUEST_ENABLE_BT = 1234;
 
 
+    private BackgroundBeaconManager backgroundBeaconManager;
 
-    private GoodBadBeaconProximityManager proximityManager;
+    private ForegroundBeaconManager beaconManager;
 
 
+    AudioPlayer ap;
+
+    FloatingActionButton fab;
+
+    TooltipManager tooltipManager;
+
+    DotsProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         boolean emulazioneBeacon = true;
         if(getIntent().getBooleanExtra("showinfo", false) || emulazioneBeacon ) {
 
             setContentView(R.layout.activity_main);
             setTitle("Hero");
+
+
+            progressBar = (DotsProgressBar) findViewById(R.id.dotsProgressBar);
+            progressBar.setDotsCount(4);
+            progressBar.setVisibility(View.VISIBLE);
+            progressBar.setActiveDot(2);
+
+
+            tooltipManager = TooltipManager.getInstance(this);
+
+
+            ap = new AudioPlayer(getBaseContext());
+            ap.loadAudio(R.raw.saracino_intro_1);
 
             setEventListeners();
             scrollView = (ScrollView) findViewById(R.id.scroll_view);
@@ -60,49 +103,90 @@ public class MainActivity extends ActionBarActivity implements BeaconBestProximi
             fragContainer[3] = (ViewGroup) findViewById(R.id.fragContainer3);
 
 
-            MyScrollPager scrollPager = new MyScrollPager(scrollView, contentView, fragContainer, true, false);
+            scrollPager = new MyScrollPager(scrollView, contentView, fragContainer, true, false);
+            scrollPager.setOnScrollListener(this);
             scrollView.setOnTouchListener(scrollPager);
+             scrollPager.setDotsPageProgressBar(progressBar);
+
+//            scrollView.post(new Runnable() {
+//                public void run() {
+//                    scrollView.scrollTo(0, contentView.getPaddingTop());
+//                    scrollPager.setDotsPageProgressBar(progressBar);
+//
+//                }
+//            });
 
 
-            scrollView.post(new Runnable() {
-                public void run() {
-                    scrollView.scrollTo(0, contentView.getPaddingTop());
-                }
-            });
+            //FragmentHelper.setMainActivity(this);
 
-
-            FragmentHelper.setMainActivity(this);
-
-            Intent intent = new Intent(this, BeaconService.class);
-
-            if (intent != null) {
-                this.startService(intent);
-            }
+//            Intent intent = new Intent(this, BeaconService.class);
+//
+//            if (intent != null) {
+//                this.startService(intent);
+//            }
 
 
 
 
-
-
-            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floating_action_button);
+            fab = (FloatingActionButton) findViewById(R.id.floating_action_button);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(audioStarted == false)
+
+                    scrollPager.gotoPage(2);
+                    if(ap.isPlaying() == false)
                     {
-                        mPlayer = MediaPlayer.create(getBaseContext(), R.raw.hero_florence);
-                        mPlayer.start();
-                        audioStarted = true;
+//
+//                         AudioManager m_amAudioManager;
+//                        m_amAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+//                        m_amAudioManager.setMode(AudioManager.MODE_IN_CALL);
+//                        m_amAudioManager.setSpeakerphoneOn(false);
+//
+                        ap.play();
+                        //ap.switchToEarpieces();
+
+                        tooltipManager.create(0)
+                                .anchor(fab, TooltipManager.Gravity.LEFT)
+                                .actionBarSize(Utils.getActionBarSize(getBaseContext()))
+                                .closePolicy(TooltipManager.ClosePolicy.None, -1)
+                                .text(R.string.hello_world)
+                                .toggleArrow(true)
+                                .maxWidth(400)
+                                .showDelay(300)
+                                //.withCallback(this)
+                                .show();
                     }
                     else{
-                        mPlayer.stop();
-                        mPlayer.reset();
-                        audioStarted = false;
+                        ap.stop();
+                        tooltipManager.hide(0);
                     }
                 }
             });
 
 
+//
+//            final ToolTipRelativeLayout toolTipRelativeLayout = (ToolTipRelativeLayout) findViewById(R.id.activity_main_tooltipRelativeLayout);
+//
+//            final ToolTip toolTip = new ToolTip()
+//                    .withText("A beautiful View")
+//                    .withColor(R.color.outside_color_gray)
+//                    .withShadow()
+//                    .withAnimationType(ToolTip.AnimationType.FROM_TOP)
+//                    .withClickRemove(false);
+//
+//            ToolTipView myToolTipView = toolTipRelativeLayout.showToolTipForView(toolTip, findViewById(R.id.floating_action_button));
+
+            //toolTipRelativeLayout.showToolTipForView(toolTip, fab);
+
+
+            TooltipManager.getInstance(this)
+                    .create(100)
+                    .anchor(new Point(500, 500), TooltipManager.Gravity.BOTTOM)
+                    .closePolicy(TooltipManager.ClosePolicy.TouchOutside, 3000)
+                    .activateDelay(800)
+                    .text("Something to display in the tooltip...")
+                    .maxWidth(500)
+                    .show();
 
         }
         else
@@ -114,14 +198,42 @@ public class MainActivity extends ActionBarActivity implements BeaconBestProximi
 
 
 
+       // backgroundBeaconManager = new BackgroundBeaconManager(this);
+        beaconManager = new ForegroundBeaconManager(this, this);
 
-        proximityManager = new micc.theguardiansapp.beaconServiceHelper.GoodBadBeaconProximityManager(this, this);
-        proximityManager.scan();
+
+
+
 
     }
 
 
 
+    @Override
+    public void onFragmentChanged(int oldFragment, int newFragment) {
+
+    }
+
+    @Override
+    public void onPageChanged(int oldPage, int newPage, int oldFragment, int newFragment) {
+
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        beaconManager.start();
+        ap.onActivityStarted();
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        beaconManager.stop();
+        ap.onActivityStopped();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -182,7 +294,6 @@ public class MainActivity extends ActionBarActivity implements BeaconBestProximi
         startActivity(intent);
     }
 
-
     private void onClickFI() {
         Intent intent = new Intent(this, FiActivity.class);
         startActivity(intent);
@@ -193,20 +304,34 @@ public class MainActivity extends ActionBarActivity implements BeaconBestProximi
         startActivity(intent);
     }
 
-
-
-
-
-
-
-
-    @Override
-    public void OnNewBeaconBestProximity(Beacon bestProximity, Beacon oldBestProximity) {
-
+    private void deactivateBeaconContents(){
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(this, "Beacon Lontano", duration);
+        toast.show();
+    }
+    private void activateBeaconContents(){
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(this, "Beacon Vicino", duration);
+        toast.show();
     }
 
     @Override
-    public void OnNoneBeaconBestProximity(Beacon oldBestProximity) {
-
+    public void onNewBeacons(List<Beacon> newInProximityBeaconList) {
+        if(atLeastOneBeacon == false && beaconManager.getBeaconSize() > 0)
+        {
+            atLeastOneBeacon = true;
+            activateBeaconContents();
+        }
     }
+
+    @Override
+    public void onRemovedBeacons(List<Beacon> removedBeacons)
+    {
+        if(atLeastOneBeacon == true && beaconManager.getBeaconSize() == 0)
+        {
+            atLeastOneBeacon = false;
+            deactivateBeaconContents();
+        }
+    }
+
 }

@@ -1,7 +1,5 @@
 package micc.theguardiansapp;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -16,6 +14,8 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+
+import micc.theguardiansapp.scrollPager.MyScrollPager;
 
 
 public class FiActivity extends ActionBarActivity {

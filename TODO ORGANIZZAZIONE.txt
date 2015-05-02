@@ -1,7 +1,7 @@
 TODO nagash:
 
-- BEACON — da finire
-- TouchEvent per lo scorrimento: estenderlo per gestire eventi.
+V- BEACON — da finire
+V- TouchEvent per lo scorrimento: estenderlo per gestire eventi.
 
 
 
@@ -17,7 +17,7 @@ TODO franco:
 
 TODO meno importante:
 
-
+- Audio con Earpiece
 - Beacon con servizio —> quando trovo beacon mi parte una notifica di sistema android.
 - personalizzare sta roba per la progress bar a pallini verticali:
 https://github.com/kellysnow/DotsProgressBar/tree/master/DotsProgressBar/res

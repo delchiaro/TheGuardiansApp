@@ -61,7 +61,7 @@ category#android.intent.category.LAUNCHER
 ADDED from AndroidManifest.xml:26:17
 	android:name
 		ADDED from AndroidManifest.xml:26:27
-service#micc.theguardiansapp.BeaconService
+service#micc.theguardiansapp.beaconHelper.BeaconService
 ADDED from AndroidManifest.xml:30:9
 	android:enabled
 		ADDED from AndroidManifest.xml:32:13
