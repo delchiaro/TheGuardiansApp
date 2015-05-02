@@ -39,4 +39,11 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.3.2'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.daimajia.slider:library:1.1.2@aar'
+    compile('it.sephiroth.android.library.targettooltip:target-tooltip-library:1.2.2@aar'){
+        transitive=true
+    }
+//    compile 'com.nhaarman.supertooltips:library:3.0.+'
+    compile project(':tooltip')
+
+
 }

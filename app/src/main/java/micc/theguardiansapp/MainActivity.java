@@ -1,6 +1,7 @@
 package micc.theguardiansapp;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.support.v7.app.ActionBarActivity;
@@ -12,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import it.sephiroth.android.library.tooltip.TooltipManager;
+import micc.theguardiansapp.audioPlayer.AudioPlayer;
 import micc.theguardiansapp.beaconHelper.*;
 import micc.theguardiansapp.scrollPager.MyScrollPager;
 import micc.theguardiansapp.scrollPager.ScrollPagerListener;
@@ -19,10 +22,14 @@ import micc.theguardiansapp.scrollPager.ScrollPagerListener;
 import com.estimote.sdk.Beacon;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
+
 import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity implements MyBeaconListener, ScrollPagerListener {
+public class MainActivity
+        extends ActionBarActivity
+        implements MyBeaconListener, ScrollPagerListener
+{
 
 
 
@@ -52,11 +59,14 @@ public class MainActivity extends ActionBarActivity implements MyBeaconListener,
 
     AudioPlayer ap;
 
+    FloatingActionButton fab;
+
+    TooltipManager tooltipManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
 
 
@@ -65,6 +75,9 @@ public class MainActivity extends ActionBarActivity implements MyBeaconListener,
 
             setContentView(R.layout.activity_main);
             setTitle("Hero");
+
+
+            tooltipManager = TooltipManager.getInstance(this);
 
 
             ap = new AudioPlayer(getBaseContext());
@@ -93,7 +106,6 @@ public class MainActivity extends ActionBarActivity implements MyBeaconListener,
             });
 
 
-
             //FragmentHelper.setMainActivity(this);
 
 //            Intent intent = new Intent(this, BeaconService.class);
@@ -105,7 +117,7 @@ public class MainActivity extends ActionBarActivity implements MyBeaconListener,
 
 
 
-            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floating_action_button);
+            fab = (FloatingActionButton) findViewById(R.id.floating_action_button);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -122,14 +134,48 @@ public class MainActivity extends ActionBarActivity implements MyBeaconListener,
                         ap.play();
                         //ap.switchToEarpieces();
 
+                        tooltipManager.create(0)
+                                .anchor(fab, TooltipManager.Gravity.LEFT)
+                                .actionBarSize(Utils.getActionBarSize(getBaseContext()))
+                                .closePolicy(TooltipManager.ClosePolicy.None, -1)
+                                .text(R.string.hello_world)
+                                .toggleArrow(true)
+                                .maxWidth(400)
+                                .showDelay(300)
+                                //.withCallback(this)
+                                .show();
                     }
                     else{
                         ap.stop();
+                        tooltipManager.hide(0);
                     }
                 }
             });
 
 
+//
+//            final ToolTipRelativeLayout toolTipRelativeLayout = (ToolTipRelativeLayout) findViewById(R.id.activity_main_tooltipRelativeLayout);
+//
+//            final ToolTip toolTip = new ToolTip()
+//                    .withText("A beautiful View")
+//                    .withColor(R.color.outside_color_gray)
+//                    .withShadow()
+//                    .withAnimationType(ToolTip.AnimationType.FROM_TOP)
+//                    .withClickRemove(false);
+//
+//            ToolTipView myToolTipView = toolTipRelativeLayout.showToolTipForView(toolTip, findViewById(R.id.floating_action_button));
+
+            //toolTipRelativeLayout.showToolTipForView(toolTip, fab);
+
+
+            TooltipManager.getInstance(this)
+                    .create(100)
+                    .anchor(new Point(500, 500), TooltipManager.Gravity.BOTTOM)
+                    .closePolicy(TooltipManager.ClosePolicy.TouchOutside, 3000)
+                    .activateDelay(800)
+                    .text("Something to display in the tooltip...")
+                    .maxWidth(500)
+                    .show();
 
         }
         else
@@ -143,6 +189,7 @@ public class MainActivity extends ActionBarActivity implements MyBeaconListener,
 
        // backgroundBeaconManager = new BackgroundBeaconManager(this);
         beaconManager = new ForegroundBeaconManager(this, this);
+
 
 
 

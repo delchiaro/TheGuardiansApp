@@ -1,4 +1,4 @@
-package micc.theguardiansapp;
+package micc.theguardiansapp.audioPlayer;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -13,6 +13,8 @@ import android.net.Uri;
 import android.os.PowerManager;
 
 import java.io.IOException;
+
+import micc.theguardiansapp.R;
 
 /**
  * Created by nagash on 01/05/15.
@@ -41,10 +43,14 @@ public class AudioPlayer implements SensorEventListener
 
     private int field = 0x00000020;
     private PowerManager powerManager;
-    private PowerManager.WakeLock wakeLock;
+    private PowerManager.WakeLock wakeLockProximityScreenOff;
+    private PowerManager.WakeLock wakeLockPreventScreenOff;
+
     private boolean screenOffPlaying = false;
     private long lastScreenSwitchTime = 0;
     private final int MIN_TIME_BETWEEN_SWITCH_SCREEN = 3000;
+
+    private AudioPlayerListener listener = null;
 
     public AudioPlayer(Context context) {
         this.context = context;
@@ -58,19 +64,26 @@ public class AudioPlayer implements SensorEventListener
         {
             sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
             proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-            proximitySensor.getMaximumRange();
-
-            try {
-                // Yeah, this is hidden field.
-                field = PowerManager.class.getClass().getField("PROXIMITY_SCREEN_OFF_WAKE_LOCK").getInt(null);
-            } catch (Throwable ignored) {
-            }
-
-            powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-            wakeLock = powerManager.newWakeLock(field, "HeroAudioPlayer");
-
+        }
+        try {
+            // Yeah, this is hidden field.
+            field = PowerManager.class.getClass().getField("PROXIMITY_SCREEN_OFF_WAKE_LOCK").getInt(null);
+        } catch (Throwable ignored) {
         }
 
+        powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        wakeLockProximityScreenOff = powerManager.newWakeLock(field, "HeroAudioPlayer");
+
+        wakeLockPreventScreenOff = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
+
+        speakerPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                stop();
+                if(listener != null)
+                    listener.onCompletion();
+            }
+        });
 
     }
 
@@ -101,9 +114,10 @@ public class AudioPlayer implements SensorEventListener
 
 
 
-    public void setOnCompletionListener( MediaPlayer.OnCompletionListener listener ){
-        speakerPlayer.setOnCompletionListener(listener);
+    public void setAudioPlayerListener(AudioPlayerListener listener) {
+        this.listener = listener;
     }
+
 
     public void loadAudio(int resource) {
         loadAudio(resourceToUri(resource));
@@ -144,40 +158,56 @@ public class AudioPlayer implements SensorEventListener
     private void playAudio(Uri uri, int offset ) {
         loadAudio(uri);
         activePlayer.seekTo(offset);
-        activePlayer.start();
+        play();
     }
 
 
 
     public final void switchPlayer() {
         int seek = activePlayer.getCurrentPosition();
-        stop();
+
+        activePlayer.stop();
+        try {
+            activePlayer.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         MediaPlayer m = activePlayer;
         activePlayer = notActivePlayer;
         notActivePlayer = m;
 
         activePlayer.seekTo(seek);
         activePlayer.start();
-
     }
 
 
 
     public void pause() {
         activePlayer.pause();
+        if(wakeLockPreventScreenOff.isHeld())
+            wakeLockPreventScreenOff.release();
+
+        if(listener!=null)
+            listener.onPaused();
     }
     public void play() {
         activePlayer.start();
+        wakeLockPreventScreenOff.acquire();
     }
     public void stop() {
+        if(wakeLockPreventScreenOff.isHeld())
+           wakeLockPreventScreenOff.release();
         activePlayer.stop();
-
         try {
             activePlayer.prepare();
         } catch (IOException e) {
             e.printStackTrace();
         }
         activePlayer.seekTo(0);
+
+        if(listener!=null)
+            listener.onStopped();
     }
 
     public boolean isPlaying() {
@@ -190,23 +220,32 @@ public class AudioPlayer implements SensorEventListener
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        long currentTime = System.nanoTime();
-
-        if( lastScreenSwitchTime == 0 || currentTime - lastScreenSwitchTime < MIN_TIME_BETWEEN_SWITCH_SCREEN )
+        if(event.sensor.getType() == Sensor.TYPE_PROXIMITY)
         {
-            if (event.values[0] < event.sensor.getMaximumRange()) {
-                if (speakerPlayer.isPlaying() && !wakeLock.isHeld()) {
+
+            if (event.values[0] < event.sensor.getMaximumRange())
+            {
+                if (speakerPlayer.isPlaying() && !wakeLockProximityScreenOff.isHeld())
+                {
                     this.switchPlayer();
                     screenOffPlaying = true;
-                    wakeLock.acquire();
-                }
-            } else {
-                if (wakeLock.isHeld()) {
-                    this.switchPlayer();
-                    screenOffPlaying = false;
-                    wakeLock.release();
+                    if(wakeLockPreventScreenOff.isHeld())
+                        wakeLockPreventScreenOff.release();
+                    wakeLockProximityScreenOff.acquire();
                 }
             }
+            else
+            {
+                if (wakeLockProximityScreenOff.isHeld())
+                {
+                    this.switchPlayer();
+                    screenOffPlaying = false;
+                    wakeLockProximityScreenOff.release();
+                    if(!wakeLockPreventScreenOff.isHeld())
+                        wakeLockPreventScreenOff.acquire();
+                }
+            }
+
         }
     }
 
