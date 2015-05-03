@@ -31,7 +31,6 @@ public class NYCActivity extends ActionBarActivity {
 
     SliderLayout sliderShowNYC;
     SliderLayout sliderShowNYC2;
-    SliderLayout sliderShowNYC3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +41,9 @@ public class NYCActivity extends ActionBarActivity {
         scrollView = (ScrollView) findViewById(R.id.scroll_view_nyc);
         contentView = (ViewGroup) findViewById(R.id.scrolledLayout_nyc);
 
-        fragContainer = new ViewGroup[3];
+        fragContainer = new ViewGroup[2];
         fragContainer[0] = (ViewGroup) findViewById(R.id.fragContainer0_nyc);
         fragContainer[1] = (ViewGroup) findViewById(R.id.fragContainer1_nyc);
-        fragContainer[2] = (ViewGroup) findViewById(R.id.fragContainer2_nyc);
 
 
         MyScrollPager scrollPager = new MyScrollPager(scrollView, contentView, fragContainer, true, false);
@@ -88,7 +86,7 @@ public class NYCActivity extends ActionBarActivity {
         sliderShowNYC.stopAutoCycle();
         sliderShowNYC.setPresetTransformer(SliderLayout.Transformer.DepthPage);
         sliderShowNYC.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
-        sliderShowNYC.setCustomAnimation(new com.daimajia.slider.library.Animations.DescriptionAnimation());
+        //sliderShowNYC.setCustomAnimation(new com.daimajia.slider.library.Animations.DescriptionAnimation());
 
 
 
@@ -111,9 +109,9 @@ public class NYCActivity extends ActionBarActivity {
         sliderShowNYC2.addSlider(tsv_nyc3);
         sliderShowNYC2.addSlider(tsv_nyc4);
         sliderShowNYC2.stopAutoCycle();
-        sliderShowNYC2.setPresetTransformer(SliderLayout.Transformer.DepthPage);
         sliderShowNYC2.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
-        sliderShowNYC2.setCustomAnimation(new com.daimajia.slider.library.Animations.DescriptionAnimation());
+        sliderShowNYC2.setPresetTransformer(SliderLayout.Transformer.DepthPage);
+        //sliderShowNYC2.setCustomAnimation(new com.daimajia.slider.library.Animations.DescriptionAnimation());
 
 
     }
@@ -149,7 +147,7 @@ public class NYCActivity extends ActionBarActivity {
         stopAudio2();
         audio1playing = true;
         audioButton1.setImageResource(R.drawable.stop);
-        mPlayer = MediaPlayer.create(getBaseContext(), R.raw.innocenti_florence_en);
+        mPlayer = MediaPlayer.create(getBaseContext(), R.raw.saracino_ny_1);
         mPlayer.start();
     }
     private void playAudio2()
@@ -158,7 +156,7 @@ public class NYCActivity extends ActionBarActivity {
         stopAudio2();
         audio2playing = true;
         audioButton2.setImageResource(R.drawable.stop);
-        mPlayer = MediaPlayer.create(getBaseContext(), R.raw.tartufieri_florence_it);
+        mPlayer = MediaPlayer.create(getBaseContext(), R.raw.saracino_ny_2);
         mPlayer.start();
     }
 
