@@ -260,10 +260,10 @@ public class MainActivity
         audioPlayer[2].loadAudio(R.raw.saracino_intro_2);
         audioPlayer[3].loadAudio(R.raw.saracino_intro_3);
 
-        audioTooltipText[0] = "The astist: Saracino";
-        audioTooltipText[1] = "The astist: Saracino";
-        audioTooltipText[2] = "The astist: Saracino";
-        audioTooltipText[3] = "The astist: Saracino";
+        audioTooltipText[0] = "The author: Antonio Pio Saracino";
+        audioTooltipText[1] = "The author: Antonio Pio Saracino";
+        audioTooltipText[2] = "The author: Antonio Pio Saracino";
+        audioTooltipText[3] = "The author: Antonio Pio Saracino";
 
 
         audioButton[0].setOnClickListener(new View.OnClickListener(){

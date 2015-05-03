@@ -390,10 +390,10 @@
     <micc.theguardiansapp.dotsProgressBar.DotsProgressBar
         android:id="@+id/dotsProgressBar"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="120dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="4dp" />
+        android:layout_marginLeft="6dp" />
 
 
 

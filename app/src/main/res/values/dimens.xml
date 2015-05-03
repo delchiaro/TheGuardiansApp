@@ -6,7 +6,7 @@
     <dimen name="card_container_padding_bottom">15dp</dimen>
     <dimen name="card_container_padding_left">12dp</dimen>
     <dimen name="card_container_padding_right">12dp</dimen>
-    <dimen name="circle_indicator_radius">5dp</dimen>
+    <dimen name="circle_indicator_radius">6dp</dimen>
 
     circle_indicator_radius
 

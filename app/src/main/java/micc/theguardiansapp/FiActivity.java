@@ -37,7 +37,7 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
     private AudioPlayer[] audioPlayer = new AudioPlayer[2];
     private ImageButton[] audioButton = new ImageButton[2];
     String audioTooltipText[] = new String[2];
-    private final int nFragment = 2;
+    private final int nFragment = 3;
 
     boolean playing = false;
 
@@ -78,13 +78,7 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
     private ScrollView scrollView;
     private ViewGroup contentView;
     private ViewGroup[] fragContainer;
-    ImageView audioButton1;
-    ImageView audioButton2;
 
-    boolean audio1playing = false;
-    boolean audio2playing = false;
-
-    MediaPlayer mPlayer;
 
 
     @Override
@@ -96,9 +90,8 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
 
 
         progressBar = (DotsProgressBar) findViewById(R.id.dotsProgressBarFI);
-        progressBar.setDotsCount(nFragment+1);
+        //progressBar.setDotsCount(nFragment+1);
         progressBar.setVisibility(View.VISIBLE);
-        progressBar.setActiveDot(2);
 
 
         tooltipManager = TooltipManager.getInstance(this);
@@ -180,7 +173,7 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
         audioPlayer[1].loadAudio(R.raw.tartufieri_florence_it);
 
 
-        audioTooltipText[0] = "Innocenti";
+        audioTooltipText[0] = "Curator: Matteo Innocenti";
         audioTooltipText[1] = "Tartuferi";
 
 
@@ -216,7 +209,7 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
 //                        audioPlayer[(index + 1) % nFragment].play();
 //                    }
                     audioCompleted(index);
-                    scrollPager.gotoFragment((index + 1) % (nFragment+1));
+                    scrollPager.gotoFragment((index + 1) % (nFragment));
 
 
                 }
@@ -241,7 +234,7 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
     }
     private void audioPlay(int index)
     {
-        if(index >= 0 && index < nFragment) {
+        if(index >= 0 && index < nFragment-1) {
             audioPlayer[index].play();
             audioButton[index].setImageResource(DRAWABLE_STOP);
 
@@ -272,15 +265,18 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
     {
         tooltipManager.hide(index);
 
-        if( index >= 0 && index < nFragment)
+        if( index >= 0 && index < nFragment - 1)
         {
             audioButton[index].setImageResource(DRAWABLE_PLAY);
         }
-        if(index == nFragment-1) {
-            playing = false;
-        }
+//        if(index == nFragment-1) {
+//            playing = false;
+//        }
+
         stopCycleSlideShow1();
         stopCycleSlideShow2();
+        stopCycleSlideShow3();
+
 //        switch(index)
 //        {
 //            case 1:
@@ -338,11 +334,11 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
                 .image(R.drawable.david)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
         tsv_slide1_2
-                .image(R.drawable.hero)
+                .image(R.drawable.hero_cape)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
         tsv_slide1_3
-                .image(R.drawable.hero_2)
+                .image(R.drawable.statue)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
         slideShow1.setPresetTransformer(SliderLayout.Transformer.DepthPage);
         slideShow1.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
@@ -393,11 +389,11 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
         slideShow2.setCustomAnimation(new DescriptionAnimation());
 
         slideShow2.addSlider(tsv_slide2_1);
-        slideShow2.addSlider(tsv_slide2_2);
-        slideShow2.addSlider(tsv_slide2_3);
+//        slideShow2.addSlider(tsv_slide2_2);
+//        slideShow2.addSlider(tsv_slide2_3);
 
         slideShow2.stopAutoCycle();
-        slideShow2.setCurrentPosition(0);
+//        slideShow2.setCurrentPosition(0);
     }
     private void loadSlideShow2() {
 //        slideShow2.addSlider(tsv_slide2_2);
@@ -414,7 +410,9 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
 
 
     private void unloadSlideShow3() {
-//        slideShow3.removeSliderAt(1);
+        slideShow3.removeAllSliders();
+        slideShow3.addSlider(tsv_slide3_1);
+        slideShow3.stopAutoCycle();
     }
     private void initSlideShow3() {
         tsv_slide3_1
@@ -450,18 +448,24 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
         slideShow3.setCustomAnimation(new DescriptionAnimation());
 
         slideShow3.addSlider(tsv_slide3_1);
-        slideShow3.addSlider(tsv_slide3_2);
-        slideShow3.addSlider(tsv_slide3_3);
-        slideShow3.addSlider(tsv_slide3_4);
-        slideShow3.addSlider(tsv_slide3_5);
-        slideShow3.addSlider(tsv_slide3_6);
+//        slideShow3.addSlider(tsv_slide3_2);
+//        slideShow3.addSlider(tsv_slide3_3);
+//        slideShow3.addSlider(tsv_slide3_4);
+//        slideShow3.addSlider(tsv_slide3_5);
+//        slideShow3.addSlider(tsv_slide3_6);
 
-        slideShow1.stopAutoCycle();
-        slideShow1.setCurrentPosition(0);
+        slideShow3.stopAutoCycle();
+        slideShow3.setCurrentPosition(0);
     }
     private void loadSlideShow3() {
-//        slideShow2.addSlider(tsv_slide2_2);
-//        unloadSlideShow1();
+//        slideShow3.addSlider(tsv_slide3_2);
+//        slideShow3.addSlider(tsv_slide3_3);
+//        slideShow3.addSlider(tsv_slide3_4);
+//        slideShow3.addSlider(tsv_slide3_5);
+//        slideShow3.addSlider(tsv_slide3_6);
+        slideShow3.stopAutoCycle();
+        slideShow3.setCurrentPosition(0);
+
     }
     private void cycleSlideShow3() {
         slideShow3.setCurrentPosition(0);
@@ -476,13 +480,14 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
     public void onFragmentChanged(int oldFragment, int newFragment) {
 
 
+
         if(playing)
         {
+            if(oldFragment != 2)
+                audioStop(oldFragment);
 
-            audioStop(oldFragment);
             if(newFragment != 2)
                 audioPlay(newFragment);
-            else playing = false;
         }
 
         switch(newFragment)
@@ -493,6 +498,21 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
             case 1:
                 loadSlideShow2();
                 break;
+            case 2:
+                playing = false;
+                loadSlideShow3();
+        }
+        switch(oldFragment)
+        {
+            case 0:
+                loadSlideShow1();
+                break;
+            case 1:
+                loadSlideShow2();
+                break;
+            case 2:
+                playing = false;
+                unloadSlideShow3();
         }
 
     }
@@ -506,7 +526,7 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
     @Override
     protected void onStart() {
         super.onStart();
-        for (int i = 0; i < nFragment; i++) {
+        for (int i = 0; i < nFragment - 1; i++) {
             audioPlayer[i].onActivityStarted();
         }
     }
@@ -516,7 +536,7 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
     protected void onStop() {
         super.onStop();
 
-        for(int i = 0; i < nFragment; i++) {
+        for(int i = 0; i < nFragment - 1; i++) {
             audioPlayer[i].onActivityStopped();
         }
 
