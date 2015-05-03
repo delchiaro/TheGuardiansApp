@@ -306,6 +306,7 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
             audioButton[index].setImageResource(DRAWABLE_PLAY);
         }
 
+<<<<<<< HEAD
 
         stopCycleSlideShow1();
         stopCycleSlideShow2();
@@ -321,6 +322,22 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
 //            case 3:
 //                stopCycleSlideShow3();
 //        }
+=======
+        tsv_accademia
+                .description(getString(R.string.saracino_speech_fi_1))
+                .image(R.drawable.s_f)
+                .setScaleType(BaseSliderView.ScaleType.CenterInside);
+
+        tsv_accademia1
+                .description(getString(R.string.saracino_speech_fi_2))
+                .image(R.drawable.d)
+                .setScaleType(BaseSliderView.ScaleType.CenterInside);
+
+        tsv_accademia2
+                .description(getString(R.string.saracino_speech_fi_3))
+                .image(R.drawable.s_f)
+                .setScaleType(BaseSliderView.ScaleType.CenterInside);
+>>>>>>> franco's
 
     }
 
@@ -329,6 +346,7 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
 
 
 
+<<<<<<< HEAD
     private void unloadSlideShow1() {
 //        slideShow1.removeAllSliders();
 //        slideShow1.addSlider(tsv_slide1_1);
@@ -343,6 +361,21 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
 
         tsv_slide1_3
                 .image(R.drawable.hero_2)
+=======
+        tsv_accademia3
+                .description(getString(R.string.tartuferi_speech_1))
+                .image(R.drawable.a)
+                .setScaleType(BaseSliderView.ScaleType.CenterInside);
+
+        tsv_accademia4
+                .description(getString(R.string.tartuferi_speech_2))
+                .image(R.drawable.s_f)
+                .setScaleType(BaseSliderView.ScaleType.CenterInside);
+
+        tsv_accademia5
+                .description(getString(R.string.tartuferi_speech_3))
+                .image(R.drawable.s_p)
+>>>>>>> franco's
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
         slideShow1.setPresetTransformer(SliderLayout.Transformer.DepthPage);
         slideShow1.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
@@ -432,15 +465,15 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
 
         tsv_slide3_4
                 .description("Genesis of Hero")
-                .image(R.drawable.osso)
+                .image(R.drawable.fresa)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
         tsv_slide3_5
                 .description("Genesis of Hero")
-                .image(R.drawable.osso2)
+                .image(R.drawable.osso)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
         tsv_slide3_6
                 .description("Genesis of Hero")
-                .image(R.drawable.fresa)
+                .image(R.drawable.osso2)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
 
@@ -449,6 +482,7 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
         //slideShow1.setCustomAnimation(new com.daimajia.slider.library.Animations.DescriptionAnimation());
         slideShow3.setCustomAnimation(new DescriptionAnimation());
 
+<<<<<<< HEAD
         slideShow3.addSlider(tsv_slide3_1);
         slideShow3.addSlider(tsv_slide3_2);
         slideShow3.addSlider(tsv_slide3_3);
@@ -458,6 +492,24 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
 
         slideShow1.stopAutoCycle();
         slideShow1.setCurrentPosition(0);
+=======
+        sliderShowHero.addSlider(tsv_hero1);
+        sliderShowHero.addSlider(tsv_hero2);
+        sliderShowHero.addSlider(tsv_hero3);
+        sliderShowHero.addSlider(tsv_hero4);
+        sliderShowHero.addSlider(tsv_hero5);
+        sliderShowHero.addSlider(tsv_hero6);
+
+
+        sliderShowHero.stopAutoCycle();
+        sliderShowHero.setPresetTransformer(SliderLayout.Transformer.DepthPage);
+        //sliderShow.setCustomIndicator((PagerIndicator) findViewById(R.id.custom_indicator));
+        sliderShowHero.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
+        sliderShowHero.setCustomAnimation(new DescriptionAnimation());
+
+
+
+>>>>>>> franco's
     }
     private void loadSlideShow3() {
 //        slideShow2.addSlider(tsv_slide2_2);
