@@ -169,7 +169,7 @@ public class MainActivity
                     params.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.fragContainer0);
                     statueImageView.setLayoutParams(params);
 
-
+                    tooltipManager.remove(999);
                     tooltipManager.create(999)
                             .anchor(new Point((int)fragContainer[0].getWidth()/2, + dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
                                     //.anchor(scrollView, TooltipManager.Gravity.CENTER)
