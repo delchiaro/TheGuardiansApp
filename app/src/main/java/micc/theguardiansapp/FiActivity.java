@@ -42,7 +42,7 @@ public class FiActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fi);
-        setTitle("City of Florence");
+        setTitle("Firenze");
 
 
 
