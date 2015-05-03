@@ -7,6 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context=".MainActivity"
 
     android:padding="0dp"
@@ -19,7 +20,9 @@
         android:padding="0dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:fillViewport="true"
+        >
 
 
 
@@ -33,98 +36,218 @@
         android:weightSum="1"
         android:paddingRight="0dp"
         android:padding="0dp"
-        android:paddingLeft="0dp">
+        android:paddingLeft="0dp"
+        >
 
-
-        <LinearLayout
+    <!-- FRAGMENT 0-->
+        <RelativeLayout
             android:id="@+id/fragContainer0"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingTop="@dimen/card_container_padding_top"
             android:paddingRight="@dimen/card_container_padding_right"
             android:paddingLeft="@dimen/card_container_padding_left"
             android:paddingBottom="@dimen/card_container_padding_bottom"
+            android:baselineAligned="false"
             >
 
 
-
-                <RelativeLayout
+            <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
 
-                    <RelativeLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="150dp"
-                        android:id="@+id/relativeLayout"
-                        android:layout_alignWithParentIfMissing="false"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true">
+                <!--<com.getbase.floatingactionbutton.FloatingActionButton-->
+                    <!--android:id="@+id/fab_MI"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
 
-                        <com.getbase.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fab_NY"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                    <!--android:baselineAlignBottom="true"-->
+                    <!--fab:fab_size="normal"-->
+                    <!--fab:fab_colorNormal="#60B71C1C"-->
+                    <!--fab:fab_colorPressed="#A0B71C1C"-->
+                    <!--android:layout_gravity="right"-->
+                    <!--android:layout_alignParentTop="true"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_alignParentEnd="true" />-->
 
-                            android:baselineAlignBottom="true"
-                            fab:fab_size="mini"
-                            android:layout_above="@+id/fab_FI"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            fab:fab_colorNormal="#60FF9800"
-                            fab:fab_colorPressed="#A0FF9800"/>
+                <!--<com.getbase.floatingactionbutton.FloatingActionButton-->
+                    <!--android:id="@+id/fab_FI"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
 
-                        <com.getbase.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fab_MI"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                    <!--android:baselineAlignBottom="true"-->
+                    <!--fab:fab_size="normal"-->
+                    <!--fab:fab_colorNormal="#609C27B0"-->
+                    <!--fab:fab_colorPressed="#A09C27B0"-->
+                    <!--android:layout_gravity="right"-->
+                    <!--android:layout_below="@+id/fab_MI"-->
+                    <!--android:layout_toLeftOf="@+id/fab_MI"-->
+                    <!--android:layout_toStartOf="@+id/fab_MI"-->
+                    <!--android:layout_marginTop="50dp"-->
+                    <!--android:layout_marginRight="-40dp" />-->
 
-                            android:baselineAlignBottom="true"
-                            fab:fab_size="mini"
-                            android:layout_alignParentTop="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginRight="38dp"
-                            android:layout_marginEnd="38dp"
-                            fab:fab_colorNormal="#60B71C1C"
-                            fab:fab_colorPressed="#A0B71C1C"/>
+                <!--<com.getbase.floatingactionbutton.FloatingActionButton-->
+                    <!--android:id="@+id/fab_NY"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
 
-                        <com.getbase.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fab_FI"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                    <!--android:baselineAlignBottom="true"-->
+                    <!--fab:fab_size="normal"-->
+                    <!--fab:fab_colorNormal="#60FF9800"-->
+                    <!--fab:fab_colorPressed="#A0FF9800"-->
 
-                            android:baselineAlignBottom="true"
-                            fab:fab_size="mini"
-                            android:layout_alignParentBottom="true"
-                            android:layout_toLeftOf="@+id/fab_MI"
-                            android:layout_toStartOf="@+id/fab_MI"
-                            fab:fab_colorNormal="#609C27B0"
-                            fab:fab_colorPressed="#A09C27B0"/>
-                    </RelativeLayout>
-
-                    <ImageView
-                        android:layout_width="300dp"
-                        android:layout_height="500dp"
-                        android:id="@+id/imageView"
-                        android:src="@drawable/guardian_hero"
-                        android:layout_marginTop="128dp"
-                        android:layout_below="@+id/relativeLayout"
-                        android:layout_centerHorizontal="true"
-                        android:adjustViewBounds="true"/>
-
-
-                </RelativeLayout>
-
-
-        </LinearLayout>
+                    <!--android:layout_alignParentTop="true"-->
+                    <!--android:layout_alignParentLeft="true"-->
+                    <!--android:layout_alignParentStart="true"-->
+                    <!--android:layout_marginTop="60dp"-->
+                    <!--android:layout_marginLeft="10dp" />-->
 
 
 
 
-        <LinearLayout
+
+                <ImageButton
+                    android:id="@+id/fab_MI"
+
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/layout_city_button_mi"
+
+                    android:layout_gravity="right"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="30dp" />
+
+                <ImageButton
+                    android:id="@+id/fab_FI"
+
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/layout_city_button_fi"
+
+                    android:layout_gravity="right"
+                    android:layout_below="@+id/fab_MI"
+                    android:layout_toLeftOf="@+id/fab_MI"
+                    android:layout_toStartOf="@+id/fab_MI"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginRight="-50dp" />
+
+
+
+                <!--fab:fab_colorNormal="#60B71C1C"-->
+                <!--fab:fab_colorPressed="#A0B71C1C"-->
+
+
+
+                <ImageButton
+                    android:id="@+id/fab_NY"
+
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/layout_city_button_ny"
+
+
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginLeft="10dp"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New York"
+                    android:id="@+id/textViewNY"
+                    android:layout_alignStart="@+id/fab_NY"
+                    android:layout_below="@+id/fab_NY"
+                    android:layout_alignEnd="@+id/fab_NY"
+                    android:singleLine="true"
+                    android:gravity="center"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Florence"
+                    android:id="@+id/textViewFI"
+                    android:layout_alignStart="@+id/fab_FI"
+                    android:layout_below="@+id/fab_FI"
+                    android:layout_alignEnd="@+id/fab_FI"
+                    android:singleLine="true"
+                    android:gravity="center"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Milan"
+                    android:id="@+id/textViewMI"
+                    android:layout_alignStart="@+id/fab_MI"
+                    android:layout_below="@+id/fab_MI"
+                    android:layout_alignEnd="@+id/fab_MI"
+                    android:singleLine="true"
+                    android:gravity="center"
+                    />
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:id="@+id/statueImageView"
+                    android:src="@drawable/statue"
+                    android:adjustViewBounds="false"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="120dp"
+                    android:paddingLeft="-70dp" />
+
+
+            </RelativeLayout>
+
+
+            <ImageButton
+                android:id="@+id/activity_main_audioButton0"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+
+
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/play"
+                android:scaleType="fitCenter"
+                android:background="#00000000"
+
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
+
+                />
+
+
+            <!--<ImageButton-->
+                <!--android:id="@+id/activity_main_audioButton0"-->
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_height="60dp"-->
+                <!--android:background="#00000000"-->
+                <!--android:src="@drawable/play"-->
+                <!--android:scaleType="fitCenter"-->
+                <!--android:baselineAlignBottom="true"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:layout_marginRight="10dp"-->
+                <!--android:layout_marginBottom="10dp"-->
+                <!--/>-->
+
+
+        </RelativeLayout>
+
+
+
+    <!--FRAGMENT 1-->
+        <RelativeLayout
             android:id="@+id/fragContainer1"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -132,37 +255,42 @@
             android:paddingTop="@dimen/card_container_padding_top"
             android:paddingRight="@dimen/card_container_padding_right"
             android:paddingLeft="@dimen/card_container_padding_left"
-            android:paddingBottom="@dimen/card_container_padding_bottom"
-            android:background="#E0EBEB">
+            android:paddingBottom="@dimen/card_container_padding_bottom">
 
 
 
-                <LinearLayout
+                <com.daimajia.slider.library.SliderLayout
+                    android:id="@+id/activity_main_imageSlider_1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="6dp"
-                        android:singleLine="false"
-                        android:text="@string/Text1Slide1" />
-
-
-                </LinearLayout>
+                    android:layout_height="450dp"
+                    />
 
 
 
-        </LinearLayout>
+            <ImageButton
+                android:id="@+id/activity_main_audioButton1"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+
+
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/play"
+                android:scaleType="fitCenter"
+                android:background="#00000000"
+
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
+
+                />
+        </RelativeLayout>
 
 
 
 
 
-
-
-        <LinearLayout
+    <!-- FRAGMENT 2-->
+        <RelativeLayout
             android:id="@+id/fragContainer2"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -170,36 +298,44 @@
             android:paddingTop="@dimen/card_container_padding_top"
             android:paddingRight="@dimen/card_container_padding_right"
             android:paddingLeft="@dimen/card_container_padding_left"
-            android:paddingBottom="@dimen/card_container_padding_bottom"
-            android:background="#E0EBEB">
+            android:paddingBottom="@dimen/card_container_padding_bottom">
 
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="6dp"
-                        android:singleLine="false"
-                        android:text="@string/Text1Slide2" />
-
-
-                </LinearLayout>
-
-
-
-        </LinearLayout>
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/activity_main_imageSlider_2"
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                />
 
 
 
 
+            <ImageButton
+                android:id="@+id/activity_main_audioButton2"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
 
 
-        <LinearLayout
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/play"
+                android:scaleType="fitCenter"
+                android:background="#00000000"
+
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
+
+                />
+
+        </RelativeLayout>
+
+
+
+
+
+    <!-- FRAGMENT 3-->
+        <RelativeLayout
             android:id="@+id/fragContainer3"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -207,28 +343,33 @@
             android:paddingTop="@dimen/card_container_padding_top"
             android:paddingRight="@dimen/card_container_padding_right"
             android:paddingLeft="@dimen/card_container_padding_left"
-            android:paddingBottom="@dimen/card_container_padding_bottom"
-            android:background="#E0EBEB">
+            android:paddingBottom="@dimen/card_container_padding_bottom">
 
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="6dp"
-                        android:singleLine="false"
-                        android:text="SLIDE 3" />
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/activity_main_imageSlider_3"
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                />
 
 
-                </LinearLayout>
+            <ImageButton
+                android:id="@+id/activity_main_audioButton3"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
 
 
-        </LinearLayout>
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/play"
+                android:scaleType="fitCenter"
+                android:background="#00000000"
+
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
+
+                />
+        </RelativeLayout>
 
 
 
@@ -252,26 +393,12 @@
         android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="3dp" />
+        android:layout_marginLeft="4dp" />
 
 
 
 
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floating_action_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
 
-        android:baselineAlignBottom="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        fab:fab_colorNormal="#F44336"
-        fab:fab_colorPressed="#E53935"
-
-        />
 
 
     <!-- fab:fab_icon="@drawable/white_museum"

@@ -15,52 +15,20 @@
         android:contentDescription="@string/expo_2015"
         android:adjustViewBounds="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="58dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/from"
+        android:text="@string/expo_text"
         android:id="@+id/textView2"
         android:textStyle="bold"
         android:textIsSelectable="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:layout_below="@+id/imageView2"
-        android:layout_alignLeft="@+id/imageView2"
-        android:layout_alignStart="@+id/imageView2"
-        android:layout_marginLeft="45dp"
-        android:layout_marginTop="10dp" />
+        android:elegantTextHeight="false"
+        android:gravity="fill_horizontal"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/to"
-        android:id="@+id/textView4"
-        android:textStyle="bold"
-        android:textIsSelectable="false"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:layout_marginTop="18dp"
-        android:layout_below="@+id/textView2"
-        android:layout_toLeftOf="@+id/textView3"
-        android:layout_toStartOf="@+id/textView3" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/from_date"
-        android:id="@+id/textView3"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_toRightOf="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2"
-        android:layout_marginLeft="18dp"
-        android:layout_marginStart="18dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/to_date"
-        android:id="@+id/textView5"
-        android:layout_alignBottom="@+id/textView4"
-        android:layout_alignLeft="@+id/textView3"
-        android:layout_alignStart="@+id/textView3" />
 </RelativeLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:background="#70000000"
+    android:minHeight="40dp"
+    android:padding="10dp">
+
+
+
+    <TextView
+		android:id="@android:id/text1"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="@android:color/white"
+		android:singleLine="false"
+		android:textSize="12sp"
+		android:autoLink="all"
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+
+        android:text="ciao">
+
+	</TextView>
+</RelativeLayout>
