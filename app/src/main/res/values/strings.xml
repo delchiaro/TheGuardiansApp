@@ -23,8 +23,16 @@
         \n\n
      I never would have expected, two years later from the installation of the Guardians in NYC, to receive the great honor to see a new edition of “Hero” in the Accademia Gallery of Florence, in the same place as Michelangelo’s “David.” This is the story of the actions of an Hero from the past that echoes in our present and in the future.</string>
     <string name="title_activity_mi">MiActivity</string>
+
+
+    <string name="expo_text">The artwork by the artist Antonio Pio Saracino will be at the
+                             Galleria dell\'Accademia from may 4 until september 20, 2015,
+                            in conjunction with EXPO Milano 2015.</string>
     <string name="expo_2015">Expo 2015</string>
     <string name="title_activity_fi">FiActivity</string>
     <string name="title_activity_ny">NYActivity</string>
+
+
+    <string name= "audio_tooltip_main">The artist: Saracino</string>
 
 </resources>

@@ -42,9 +42,9 @@ public class ForegroundBeaconManager
     // --> si scarta dopo (millisecondi):
     // CASO PESSIMO:  (SCANNING_PERIOD + SCANNING_DELAY) * BEACON_MAX_TIMEOUT + SCANNING_PERIOD
     // CASO OTTIMO:   (SCANNING_PERIOD + SCANNING_DELAY) * BEACON_MAX_TIMEOUT
-    private int BEACON_MAX_TIMEOUT = 2; // caso pessimo = 6 secondi
+    private int BEACON_MAX_TIMEOUT = 3; //
     private int SCANNING_PERIOD = BEACON_PULSE_INTERVAL + BEACON_PULSE_INTERVAL/2;
-    private int SCANNING_DELAY = BEACON_PULSE_INTERVAL/2;
+    private int SCANNING_DELAY = BEACON_PULSE_INTERVAL/4;
 
 
 
@@ -91,7 +91,7 @@ public class ForegroundBeaconManager
         beaconManager.setRangingListener(new BeaconManager.RangingListener() {
 
             @Override public void onBeaconsDiscovered(Region region, List<Beacon> beacons) {
-                Log.d(TAG, "Ranged beacons: " + beacons);
+                // Log.d(TAG, "Ranged beacons: " + beacons);
                 onBeaconProximity(beacons);
             }
 

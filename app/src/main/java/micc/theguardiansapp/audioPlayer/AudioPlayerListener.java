@@ -5,7 +5,7 @@ package micc.theguardiansapp.audioPlayer;
  */
 public interface AudioPlayerListener
 {
-    public void onCompletion();
+    public void onCompletion(boolean inEarpieceMode);
     public void onPaused();
     public void onStopped();
 }

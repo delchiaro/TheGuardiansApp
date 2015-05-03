@@ -14,6 +14,8 @@ import com.daimajia.slider.library.Animations.*;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 
+import micc.theguardiansapp.scrollPager.MyScrollPager;
+
 public class NYCActivity extends ActionBarActivity {
 
     private ScrollView scrollView;
