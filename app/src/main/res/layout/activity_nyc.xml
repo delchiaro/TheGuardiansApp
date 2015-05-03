@@ -49,16 +49,20 @@
                     android:layout_height="450dp"
                     />
 
-                <ImageView
+
+                <ImageButton
                     android:id="@+id/audio_1_button"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
                     android:src="@drawable/play"
-                    android:background="@drawable/layout_audio_button"
+                    android:scaleType="fitCenter"
+                    android:background="#00000000"
+
                     android:layout_marginBottom="5dp"
                     android:layout_marginRight="5dp"
+
                     />
 
 
@@ -82,14 +86,16 @@
 
 
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/audio_2_button"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
                     android:src="@drawable/play"
-                    android:background="@drawable/layout_audio_button"
+                    android:scaleType="fitCenter"
+                    android:background="#00000000"
+
                     android:layout_marginBottom="5dp"
                     android:layout_marginRight="5dp"
 
@@ -101,6 +107,15 @@
         </LinearLayout>
     </ScrollView>
 
+
+
+    <micc.theguardiansapp.dotsProgressBar.DotsProgressBar
+        android:id="@+id/dotsProgressBarNY"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="4dp" />
 
 
 </RelativeLayout>

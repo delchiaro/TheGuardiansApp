@@ -43,6 +43,9 @@ public class MainActivity
         implements MyBeaconListener, ScrollPagerListener
 {
 
+    boolean SIMULATE_BEACON = true;
+
+    private final static int DP_BEACON_TOOLTIP = 35;
     private static final int DRAWABLE_PLAY = R.drawable.play;
     private static final int DRAWABLE_STOP = R.drawable.stop;
 
@@ -75,6 +78,7 @@ public class MainActivity
     private ImageButton btnMi;
     private ImageButton btnNy;
 
+    private final int nFragment = 4;
 
     private AudioPlayer[] audioPlayer = new AudioPlayer[4];
     private ImageButton[] audioButton = new ImageButton[4];
@@ -114,7 +118,6 @@ public class MainActivity
 
 
 
-        boolean emulazioneBeacon = true;
 
             setContentView(R.layout.activity_main);
             setTitle("Hero");
@@ -166,6 +169,22 @@ public class MainActivity
 //                    params.addRule(RelativeLayout.);
                     params.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.fragContainer0);
                     statueImageView.setLayoutParams(params);
+
+
+                    tooltipManager.create(999)
+                            .anchor(new Point((int)fragContainer[0].getWidth()/2, + dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
+                                    //.anchor(scrollView, TooltipManager.Gravity.CENTER)
+                            .actionBarSize(Utils.getActionBarSize(getBaseContext()))
+                            .closePolicy(TooltipManager.ClosePolicy.None, -1)
+                            .text("Get closer to the hero and enjoy the additional content")
+                            .toggleArrow(false)
+                            .withCustomView(R.layout.custom_textview, false)
+                            .maxWidth(400)
+                            .showDelay(300)
+                            .show();
+
+
+                    if(SIMULATE_BEACON) activateBeaconContents();
 
                 }
             });
@@ -224,9 +243,9 @@ public class MainActivity
 
 
 
+
     }
 
-    private final int nFragment = 4;
     private void audioInit() {
 
         audioButton[0] = (ImageButton) findViewById(R.id.activity_main_audioButton0);
@@ -317,7 +336,7 @@ public class MainActivity
             audioButton[index].setImageResource(DRAWABLE_STOP);
 
             tooltipManager.create(index)
-                    .anchor(new Point((int)scrollView.getWidth()/2, (int)scrollView.getHeight() - dpToPx(25) ), TooltipManager.Gravity.TOP)
+                    .anchor(new Point((int)scrollView.getWidth()/2, (int)scrollView.getHeight() - dpToPx(35) ), TooltipManager.Gravity.TOP)
                             //.anchor(scrollView, TooltipManager.Gravity.CENTER)
                     .actionBarSize(Utils.getActionBarSize(getBaseContext()))
                     .closePolicy(TooltipManager.ClosePolicy.None, -1)
@@ -517,11 +536,39 @@ public class MainActivity
                 audioPlay(newFragment);
         }
 
+        tooltipManager.remove(999);
+
+
+
         switch(newFragment)
         {
             case 0:
                 playing = false;
+                if( beaconized)
+                    tooltipManager.create(999)
+                        .anchor(new Point((int)fragContainer[0].getWidth()/2, + dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
+                                //.anchor(scrollView, TooltipManager.Gravity.CENTER)
+                        .actionBarSize(Utils.getActionBarSize(getBaseContext()))
+                        .closePolicy(TooltipManager.ClosePolicy.None, -1)
+                        .text("You are approaching the Hero, enjoy additional app contents")
+                        .toggleArrow(false)
+                        .withCustomView(R.layout.custom_textview_dark, true)
+                        .maxWidth(400)
+                        .showDelay(300)
+                        .show();
 
+                else
+                    tooltipManager.create(999)
+                            .anchor(new Point((int)fragContainer[0].getWidth()/2, + dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
+                                    //.anchor(scrollView, TooltipManager.Gravity.CENTER)
+                            .actionBarSize(Utils.getActionBarSize(getBaseContext()))
+                            .closePolicy(TooltipManager.ClosePolicy.None, -1)
+                            .text("Get closer to the Hero and enjoy the additional content")
+                            .toggleArrow(false)
+                            .withCustomView(R.layout.custom_textview, true)
+                            .maxWidth(400)
+                            .showDelay(300)
+                            .show();
             case 1:
                 loadSlideShow1();
                 break;
@@ -647,24 +694,50 @@ public class MainActivity
         startActivity(intent);
     }
 
+
+    private boolean beaconized = false;
     private void deactivateBeaconContents(){
 
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(this, "Contenuti aggiuntivi disabilitati..", duration);
-        toast.show();
+        beaconized = false;
+        tooltipManager.remove(999);
+        tooltipManager.create(999)
+                .anchor(new Point((int)fragContainer[0].getWidth()/2, + dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
+                        //.anchor(scrollView, TooltipManager.Gravity.CENTER)
+                .actionBarSize(Utils.getActionBarSize(getBaseContext()))
+                .closePolicy(TooltipManager.ClosePolicy.None, -1)
+                .text("Get closer to the Hero and enjoy the additional content")
+                .toggleArrow(false)
+                .withCustomView(R.layout.custom_textview, true)
+                .maxWidth(400)
+                .showDelay(300)
+                .show();
 
-        btnFi.setEnabled(false);
-        btnMi.setEnabled(false);
-        btnNy.setEnabled(false);
-        btnFi.setImageResource(R.drawable.layout_city_button_fi);
-        btnMi.setImageResource(R.drawable.layout_city_button_mi);
-        btnNy.setImageResource(R.drawable.layout_city_button_ny);
 
+        if(!SIMULATE_BEACON) {
+            btnFi.setEnabled(false);
+            btnMi.setEnabled(false);
+            btnNy.setEnabled(false);
+            btnFi.setImageResource(R.drawable.layout_city_button_fi);
+            btnMi.setImageResource(R.drawable.layout_city_button_mi);
+            btnNy.setImageResource(R.drawable.layout_city_button_ny);
+        }
     }
     private void activateBeaconContents(){
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(this, "Nuovi contenuti disponibili!", duration);
-        toast.show();
+        beaconized = true;
+
+        tooltipManager.remove(999);
+
+        tooltipManager.create(999)
+                .anchor(new Point((int)fragContainer[0].getWidth()/2, + dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
+                        //.anchor(scrollView, TooltipManager.Gravity.CENTER)
+                .actionBarSize(Utils.getActionBarSize(getBaseContext()))
+                .closePolicy(TooltipManager.ClosePolicy.None, -1)
+                .text("You are approaching the Hero, enjoy additional app contents")
+                .toggleArrow(false)
+                .withCustomView(R.layout.custom_textview_dark, true)
+                .maxWidth(400)
+                .showDelay(300)
+                .show();
 
         btnFi.setEnabled(true);
         btnMi.setEnabled(true);
