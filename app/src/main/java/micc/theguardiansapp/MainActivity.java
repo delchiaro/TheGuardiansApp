@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -80,6 +81,7 @@ public class MainActivity
     String audioTooltipText[] = new String[4];
 
 
+
     boolean playing = false;
 
 
@@ -99,6 +101,11 @@ public class MainActivity
     MySmallTextSliderView tsv_slide3_1;
 
 
+    private int dpToPx(int dp) {
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return px;
+    }
 
 
     @Override
@@ -178,29 +185,15 @@ public class MainActivity
 
 
 //
-//            final ToolTipRelativeLayout toolTipRelativeLayout = (ToolTipRelativeLayout) findViewById(R.id.activity_main_tooltipRelativeLayout);
 //
-//            final ToolTip toolTip = new ToolTip()
-//                    .withText("A beautiful View")
-//                    .withColor(R.color.outside_color_gray)
-//                    .withShadow()
-//                    .withAnimationType(ToolTip.AnimationType.FROM_TOP)
-//                    .withClickRemove(false);
-//
-//            ToolTipView myToolTipView = toolTipRelativeLayout.showToolTipForView(toolTip, findViewById(R.id.floating_action_button));
-
-            //toolTipRelativeLayout.showToolTipForView(toolTip, audioButton);
-
-
-
-            TooltipManager.getInstance(this)
-                    .create(100)
-                    .anchor(new Point(500, 500), TooltipManager.Gravity.BOTTOM)
-                    .closePolicy(TooltipManager.ClosePolicy.TouchOutside, 3000)
-                    .activateDelay(800)
-                    .text("Something to display in the tooltip...")
-                    .maxWidth(500)
-                    .show();
+//            TooltipManager.getInstance(this)
+//                    .create(100)
+//                    .anchor(new Point(500, 500), TooltipManager.Gravity.BOTTOM)
+//                    .closePolicy(TooltipManager.ClosePolicy.TouchOutside, 3000)
+//                    .activateDelay(800)
+//                    .text("Something to display in the tooltip...")
+//                    .maxWidth(500)
+//                    .show();
 
 
 
@@ -249,7 +242,7 @@ public class MainActivity
         audioPlayer[2].loadAudio(R.raw.saracino_intro_2);
         audioPlayer[3].loadAudio(R.raw.saracino_intro_3);
 
-        //audioTooltipText[0] = "The astist: Saracino";
+        audioTooltipText[0] = "The astist: Saracino";
         audioTooltipText[1] = "The astist: Saracino";
         audioTooltipText[2] = "The astist: Saracino";
         audioTooltipText[3] = "The astist: Saracino";
@@ -268,24 +261,15 @@ public class MainActivity
 
             final int index = i;
 
-
-            tooltipManager.create(i)
-                    .anchor(audioButton[i], TooltipManager.Gravity.LEFT)
-                    .actionBarSize(Utils.getActionBarSize(getBaseContext()))
-                    .closePolicy(TooltipManager.ClosePolicy.None, -1)
-                    .text(R.string.audio_tooltip_main)
-                    .toggleArrow(true)
-                    .maxWidth(400)
-                    .showDelay(300);
-                            //.withCallback(this)
-                    //.show();
+            tooltipManager.hide(i);
 
             audioButton[i].setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     playing = !playing;
-                    if(playing)
+                    if(playing) {
                         audioPlay(index);
+                    }
                     else audioStop(index);
                     //audioToggle(index);
 
@@ -321,6 +305,7 @@ public class MainActivity
 
     private void audioToggle(int index)
     {
+
         if(audioPlayer[index].isPlaying())
             audioStop(index);
         else audioPlay(index);
@@ -330,7 +315,18 @@ public class MainActivity
         if(index != 0 && index <= nFragment) {
             audioPlayer[index].play();
             audioButton[index].setImageResource(DRAWABLE_STOP);
-            tooltipManager.active(index);
+
+            tooltipManager.create(index)
+                    .anchor(new Point((int)scrollView.getWidth()/2, (int)scrollView.getHeight() - dpToPx(25) ), TooltipManager.Gravity.TOP)
+                            //.anchor(scrollView, TooltipManager.Gravity.CENTER)
+                    .actionBarSize(Utils.getActionBarSize(getBaseContext()))
+                    .closePolicy(TooltipManager.ClosePolicy.None, -1)
+                    .text(audioTooltipText[index])
+                    .toggleArrow(false)
+                    .withCustomView(R.layout.custom_textview, false)
+                    .maxWidth(400)
+                    .showDelay(300)
+                    .show();
         }
 
         switch(index)
@@ -347,10 +343,12 @@ public class MainActivity
     }
     private void audioCompleted(int index)
     {
+        tooltipManager.hide(index);
+
         if( index != 0 && index <= nFragment)
         {
             audioButton[index].setImageResource(DRAWABLE_PLAY);
-            tooltipManager.hide(index);
+
         }
 
         switch(index)
@@ -368,13 +366,14 @@ public class MainActivity
     }
     private void audioStop(int index)
     {
+        tooltipManager.hide(index);
+
         if( index != 0 && index <= nFragment)
         {
             if(audioPlayer[index].isPlaying())
                 audioPlayer[index].stop();
 
             audioButton[index].setImageResource(DRAWABLE_PLAY);
-            tooltipManager.hide(index);
         }
 
 
@@ -495,7 +494,6 @@ public class MainActivity
 
     @Override
     public void onFragmentChanged(int oldFragment, int newFragment) {
-
 
 
         if(playing)

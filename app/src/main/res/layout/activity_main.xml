@@ -261,8 +261,7 @@
             android:paddingTop="@dimen/card_container_padding_top"
             android:paddingRight="@dimen/card_container_padding_right"
             android:paddingLeft="@dimen/card_container_padding_left"
-            android:paddingBottom="@dimen/card_container_padding_bottom"
-            android:background="#E0EBEB">
+            android:paddingBottom="@dimen/card_container_padding_bottom">
 
 
 
@@ -305,8 +304,7 @@
             android:paddingTop="@dimen/card_container_padding_top"
             android:paddingRight="@dimen/card_container_padding_right"
             android:paddingLeft="@dimen/card_container_padding_left"
-            android:paddingBottom="@dimen/card_container_padding_bottom"
-            android:background="#E0EBEB">
+            android:paddingBottom="@dimen/card_container_padding_bottom">
 
 
 
@@ -351,8 +349,7 @@
             android:paddingTop="@dimen/card_container_padding_top"
             android:paddingRight="@dimen/card_container_padding_right"
             android:paddingLeft="@dimen/card_container_padding_left"
-            android:paddingBottom="@dimen/card_container_padding_bottom"
-            android:background="#E0EBEB">
+            android:paddingBottom="@dimen/card_container_padding_bottom">
 
 
             <com.daimajia.slider.library.SliderLayout

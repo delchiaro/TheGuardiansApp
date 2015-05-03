@@ -72,12 +72,12 @@ public class NYCActivity extends ActionBarActivity {
         MyTextSliderView tsv_nyc2 = new MyTextSliderView(this);
 
         tsv_nyc
-            .description("Hero in Bryant Park")
+            .description(getString(R.string.saracino_speech_nyc_1))
             .image(R.drawable.hero_garden)
             .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
-        tsv_nyc
-            .description("Hero in Bryant Park")
+        tsv_nyc2
+            .description(getString(R.string.saracino_speech_nyc_2))
             .image(R.drawable.superhero_garden)
             .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
@@ -97,12 +97,12 @@ public class NYCActivity extends ActionBarActivity {
         MyTextSliderView tsv_nyc4 = new MyTextSliderView(this);
 
         tsv_nyc3
-             .description("Hero in Bryant Park")
+             .description(getString(R.string.saracino_speech_nyc_3))
              .image(R.drawable.hero_1)
              .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
         tsv_nyc4
-             .description("Hero in Bryant Park")
+             .description(getString(R.string.saracino_speech_nyc_4))
              .image(R.drawable.hero_2)
              .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
