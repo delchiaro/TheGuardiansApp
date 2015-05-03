@@ -98,17 +98,17 @@ public class FiActivity extends ActionBarActivity {
 
         tsv_accademia
                 .description(getString(R.string.saracino_speech_fi_1))
-                .image(R.drawable.david)
+                .image(R.drawable.s_f)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
         tsv_accademia1
                 .description(getString(R.string.saracino_speech_fi_2))
-                .image(R.drawable.hero)
+                .image(R.drawable.d)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
         tsv_accademia2
                 .description(getString(R.string.saracino_speech_fi_3))
-                .image(R.drawable.hero_2)
+                .image(R.drawable.s_f)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
         sliderShowAccademia.addSlider(tsv_accademia);
@@ -130,17 +130,17 @@ public class FiActivity extends ActionBarActivity {
 
         tsv_accademia3
                 .description(getString(R.string.tartuferi_speech_1))
-                .image(R.drawable.david)
+                .image(R.drawable.a)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
         tsv_accademia4
                 .description(getString(R.string.tartuferi_speech_2))
-                .image(R.drawable.hero)
+                .image(R.drawable.s_f)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
         tsv_accademia5
                 .description(getString(R.string.tartuferi_speech_3))
-                .image(R.drawable.hero_2)
+                .image(R.drawable.s_p)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
 
@@ -190,20 +190,18 @@ public class FiActivity extends ActionBarActivity {
 
         tsv_hero4
                 .description("Genesis of Hero")
-                .image(R.drawable.osso)
+                .image(R.drawable.fresa)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
         tsv_hero5
                 .description("Genesis of Hero")
-                .image(R.drawable.osso2)
+                .image(R.drawable.osso)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
         tsv_hero6
                 .description("Genesis of Hero")
-                .image(R.drawable.fresa)
+                .image(R.drawable.osso2)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
-
-
 
 
 
