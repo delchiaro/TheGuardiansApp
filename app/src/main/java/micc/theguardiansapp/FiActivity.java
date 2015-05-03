@@ -17,7 +17,6 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import it.sephiroth.android.library.tooltip.TooltipManager;
 import micc.theguardiansapp.audioPlayer.AudioPlayer;

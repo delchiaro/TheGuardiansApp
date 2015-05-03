@@ -32,7 +32,6 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.estimote.sdk.Beacon;
-import com.getbase.floatingactionbutton.FloatingActionButton;
 
 
 import java.util.List;
@@ -43,7 +42,7 @@ public class MainActivity
         implements MyBeaconListener, ScrollPagerListener
 {
 
-    boolean SIMULATE_BEACON = true;
+    boolean SIMULATE_BEACON = false;
 
     private final static int DP_BEACON_TOOLTIP = 35;
     private static final int DRAWABLE_PLAY = R.drawable.play;
