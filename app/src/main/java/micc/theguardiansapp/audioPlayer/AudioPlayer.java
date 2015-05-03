@@ -79,9 +79,9 @@ public class AudioPlayer implements SensorEventListener
         speakerPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                stop();
+                complete();
                 if(listener != null)
-                    listener.onCompletion();
+                    listener.onCompletion((activePlayer == earpiecePlayer));
             }
         });
 
@@ -195,6 +195,13 @@ public class AudioPlayer implements SensorEventListener
         activePlayer.start();
         wakeLockPreventScreenOff.acquire();
     }
+    private void complete() {
+        if(wakeLockPreventScreenOff.isHeld())
+            wakeLockPreventScreenOff.release();
+
+        if(listener!=null)
+            listener.onStopped();
+    }
     public void stop() {
         if(wakeLockPreventScreenOff.isHeld())
            wakeLockPreventScreenOff.release();
@@ -209,6 +216,7 @@ public class AudioPlayer implements SensorEventListener
         if(listener!=null)
             listener.onStopped();
     }
+
 
     public boolean isPlaying() {
         return activePlayer.isPlaying();

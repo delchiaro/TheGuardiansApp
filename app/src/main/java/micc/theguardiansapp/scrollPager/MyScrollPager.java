@@ -244,7 +244,7 @@ public class MyScrollPager implements OnTouchListener
         {
 
             if(pageProgressBar != null)
-                pageProgressBar.setActiveDot(currentPage);
+                pageProgressBar.setActiveDot(pageNumber);
             if(scrollListener != null)
                 scrollListener.onPageChanged(currentPage, pageNumber, pageFragmentMap[currentPage], pageFragmentMap[pageNumber] );
             // EVENTO: abbiamo cambiato pagina
@@ -255,7 +255,7 @@ public class MyScrollPager implements OnTouchListener
                 // EVENTO: abbiam ocambiato fragment
 
                 if(fragmentProgressBar != null)
-                    fragmentProgressBar.setActiveDot(pageFragmentMap[currentPage]);
+                    fragmentProgressBar.setActiveDot(pageFragmentMap[pageNumber]);
             }
         }
 
