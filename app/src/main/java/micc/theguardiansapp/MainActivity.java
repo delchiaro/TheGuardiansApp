@@ -350,18 +350,20 @@ public class MainActivity
             audioButton[index].setImageResource(DRAWABLE_PLAY);
 
         }
-
-        switch(index)
-        {
-            case 1:
-                stopCycleSlideShow1();
-                break;
-            case 2:
-                stopCycleSlideShow2();
-                break;
-            case 3:
-                stopCycleSlideShow3();
-        }
+        stopCycleSlideShow1();
+        stopCycleSlideShow2();
+        stopCycleSlideShow3();
+//        switch(index)
+//        {
+//            case 1:
+//                stopCycleSlideShow1();
+//                break;
+//            case 2:
+//                stopCycleSlideShow2();
+//                break;
+//            case 3:
+//                stopCycleSlideShow3();
+//        }
 
     }
     private void audioStop(int index)
@@ -377,17 +379,21 @@ public class MainActivity
         }
 
 
-        switch(index)
-        {
-            case 1:
-                stopCycleSlideShow1();
-                break;
-            case 2:
-                stopCycleSlideShow2();
-                break;
-            case 3:
-                stopCycleSlideShow3();
-        }
+        stopCycleSlideShow1();
+        stopCycleSlideShow2();
+        stopCycleSlideShow3();
+
+//        switch(index)
+//        {
+//            case 1:
+//                stopCycleSlideShow1();
+//                break;
+//            case 2:
+//                stopCycleSlideShow2();
+//                break;
+//            case 3:
+//                stopCycleSlideShow3();
+//        }
 
     }
 
@@ -416,6 +422,7 @@ public class MainActivity
 
         slideShow1.addSlider(tsv_slide1_1);
         slideShow1.addSlider(tsv_slide1_2);
+        slideShow1.stopAutoCycle();
         slideShow1.setCurrentPosition(0);
 
 
@@ -451,7 +458,10 @@ public class MainActivity
 
         slideShow2.addSlider(tsv_slide2_1);
         slideShow2.addSlider(tsv_slide2_2);
+        slideShow2.stopAutoCycle();
         slideShow2.setCurrentPosition(0);
+
+
 
     }
     private void loadSlideShow2() {
@@ -468,7 +478,7 @@ public class MainActivity
 
     private void initSlideShow3(){
         tsv_slide3_1
-                .description("The artist: Antonio Pio Saracino")
+                .description("Accademia Gallery in Florence")
                 .image(R.drawable.accademia)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
         //slideShow3.setPresetTransformer(SliderLayout.Transformer.DepthPage);
@@ -476,6 +486,8 @@ public class MainActivity
         //slideShow3.setCustomAnimation(new com.daimajia.slider.library.Animations.DescriptionAnimation());
 
         slideShow3.addSlider(tsv_slide3_1);
+        slideShow2.stopAutoCycle();
+
     }
     private void loadSlideShow3() {
 //        unloadSlideShow1();
