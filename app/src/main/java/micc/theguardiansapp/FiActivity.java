@@ -54,9 +54,9 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
     TextSliderView tsv_slide1_2;
     TextSliderView tsv_slide1_3;
 
-    TextSliderView tsv_slide2_1;
-    TextSliderView tsv_slide2_2;
-    TextSliderView tsv_slide2_3;
+    MyTextSliderView tsv_slide2_1;
+    MyTextSliderView tsv_slide2_2;
+    MyTextSliderView tsv_slide2_3;
 
     TextSliderView tsv_slide3_1;
     TextSliderView tsv_slide3_2;
@@ -138,9 +138,9 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
         tsv_slide1_2 = new TextSliderView(this);
         tsv_slide1_3 = new TextSliderView(this);
 
-        tsv_slide2_1 = new TextSliderView(this);
-        tsv_slide2_2 = new TextSliderView(this);
-        tsv_slide2_3 = new TextSliderView(this);
+        tsv_slide2_1 = new MyTextSliderView(this);
+        tsv_slide2_2 = new MyTextSliderView(this);
+        tsv_slide2_3 = new MyTextSliderView(this);
 
         tsv_slide3_1 = new TextSliderView(this);
         tsv_slide3_2 = new TextSliderView(this);
@@ -174,7 +174,7 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
 
 
         audioTooltipText[0] = "Curator: Matteo Innocenti";
-        audioTooltipText[1] = "Tartuferi";
+        audioTooltipText[1] = "Accademia Gallery director: Angelo Tartuferi";
 
 
 
@@ -332,15 +332,17 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
     }
     private void initSlideShow1(){
         tsv_slide1_1
-                .image(R.drawable.david)
+                .description("Saracino's Hero")
+                .image(R.drawable.s_f)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
         tsv_slide1_2
-                .image(R.drawable.hero_cape)
+                .description("Michelangelo's David")
+                .image(R.drawable.d)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
         tsv_slide1_3
-                .image(R.drawable.statue)
-                .image(R.drawable.a)
+                .description("Saracino's Hero")
+                .image(R.drawable.s_f)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
         slideShow1.setPresetTransformer(SliderLayout.Transformer.DepthPage);
@@ -376,15 +378,15 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
     private void initSlideShow2() {
         tsv_slide2_1
                 .description(getString(R.string.tartuferi_speech_1))
-                .image(R.drawable.david)
+                .image(R.drawable.a)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
         tsv_slide2_2
                 .description(getString(R.string.tartuferi_speech_2))
-                .image(R.drawable.hero)
+                .image(R.drawable.s_f)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
         tsv_slide2_3
                 .description(getString(R.string.tartuferi_speech_3))
-                .image(R.drawable.hero_2)
+                .image(R.drawable.s_p)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
         slideShow2.setPresetTransformer(SliderLayout.Transformer.DepthPage);
         slideShow2.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
@@ -392,8 +394,8 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
         slideShow2.setCustomAnimation(new DescriptionAnimation());
 
         slideShow2.addSlider(tsv_slide2_1);
-//        slideShow2.addSlider(tsv_slide2_2);
-//        slideShow2.addSlider(tsv_slide2_3);
+        slideShow2.addSlider(tsv_slide2_2);
+        slideShow2.addSlider(tsv_slide2_3);
 
         slideShow2.stopAutoCycle();
 //        slideShow2.setCurrentPosition(0);
@@ -451,11 +453,11 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
         slideShow3.setCustomAnimation(new DescriptionAnimation());
 
         slideShow3.addSlider(tsv_slide3_1);
-//        slideShow3.addSlider(tsv_slide3_2);
-//        slideShow3.addSlider(tsv_slide3_3);
+        slideShow3.addSlider(tsv_slide3_2);
+        slideShow3.addSlider(tsv_slide3_3);
 //        slideShow3.addSlider(tsv_slide3_4);
-//        slideShow3.addSlider(tsv_slide3_5);
-//        slideShow3.addSlider(tsv_slide3_6);
+        slideShow3.addSlider(tsv_slide3_5);
+        slideShow3.addSlider(tsv_slide3_6);
 
         slideShow3.stopAutoCycle();
         slideShow3.setCurrentPosition(0);

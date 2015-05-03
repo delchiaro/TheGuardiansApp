@@ -21,7 +21,7 @@
          \n\n
          Everything starts with the body, with its focus and its ability to project itself serially in civilizations: from the early stone towers to the current steel skyscrapers. The architectural body is a vital trace we leave in the world and it is the perfect language to create the shape of an Hero.
         \n\n
-     I never would have expected, two years later from the installation of the Guardians in NYC, to receive the great honor to see a new edition of “Hero” in the Accademia Gallery of Florence, in the same place as Michelangelo’s “David.” This is the story of the actions of an Hero from the past that echoes in our present and in the future.</string>
+     I never would have expected, two years later from the installation of the Guardians in NYC, to receive the great honor to see a new edition of “Hero” in the Accademia Gallery of Florence, in the same place as Michelangelo\’s “David.” This is the story of the actions of an Hero from the past that echoes in our present and in the future.</string>
     <string name="title_activity_mi">MiActivity</string>
 
 
@@ -32,59 +32,50 @@
     <string name="title_activity_fi">FiActivity</string>
     <string name="title_activity_ny">NYCActivity</string>
 
-    <string name="tartuferi_speech_1">Countless artists, in the broadest sense of the term
-        (painters, engravers, sculptors, graphic artists, photographers and so on ),
-        have found the courage to confront Michelangelo\'s masterpiece,
-        with results that have had very different outcomes: from grotesque to heroic.
-        Antonio Pio Saracino has revived the matter of “David,”
-        the white Carrara marble, for a modern reinterpretation of the sculpture,</string>
+    <string name="tartuferi_speech_1">Countless artists graphic artists have found the courage to confront <b>Michelangelo\'s masterpiece</b>,
+        with results that have had very different outcomes: from grotesque to heroic.</string>
 
     <string name="tartuferi_speech_2">
-        the white Carrara marble, for a modern reinterpretation of the sculpture,
-        designed not for a museum or an art gallery, but for a public space in Manhattan,
-        thus placing itself even in this respect on the trail of the original intention by Michelangelo.
-        The best hope is that the Hero can represent,
-        in the eyes of the men of our day, the same values of freedom,</string>
+        <b>Antonio Pio Saracino has revived the matter of “David”</b> the white <b>Carrara marble</b>,
+        for a modern reinterpretation of the sculpture, designed not for a museum or an art gallery,
+        but for a public space in Manhattan, thus placing itself even in this respect on the trail of the original intention by Michelangelo.</string>
 
-    <string name="tartuferi_speech_3">
-        justice and civic pride realized by Florentines at the height of the Renaissance by Michelangelo\'s David.
-        The Accademia Gallery in Florence, along the Italian Embassy in Washington,
-        is pleased to present the work of Antonio Pio Saracino, which qualifies as one of the most intelligent,
-        modern and qualitatively most significant interpretations in terms
-        of the execution of one of the highest signs of Western culture.
+    <string name="tartuferi_speech_3">The best hope is that the <b>Hero</b> can represent,
+        in the eyes of the men of our day, the same values of <b>freedom,
+        justice and civic pride</b> realised by <b>Florentines</b> at the height of the Renaissance by Michelangelo\'s David.
     </string>
 
-    <string name="saracino_speech_fi_1">In 2013 I was presented with a tandem of incredible opportunities:
-        design a symbol for Italy in NYC on the occasion of the Year of Italian Culture.
-        And also a Public Art project in 3 Bryant Park in Manhattan. At the time,
-        I was asked by the Italian Embassy to look at the Michelangelo’s David as an inspiration.
-        Clearly that magnum reference was daunting. Yet I was so honored to create a symbol that could represent
-        a permanent gift from my native Italy to New York City,</string>
-    <string name="saracino_speech_fi_2">that I accepted the exceptional opportunity.
-        I wanted to create two symbolic Guardians: a Hero in marble stone,
-        and a Superhero in mirror polished stainless steel.
-        The two anthropomorphic sculptures that I have digitally generated are intended as two a layered architectural
-        construction that display the universal ability of mankind to cement its own presence in the world with
-        its perennial construction skills. </string>
-    <string name="saracino_speech_fi_3">I never would have expected, two years later from the installation of the Guardians in NYC,
-        to receive the great honor to see a new edition of “Hero” in the Accademia Gallery of Florence,
-        in the same place as Michelangelo’s “David.” This is the story of the actions of an Hero from the past
-        that echoes in our present and in the future.</string>
+    <string name="saracino_intro_1">In 2013 I was presented with a tandem of incredible opportunities: 
+        <b>design a symbol for Italy</b> in NYC on the occasion of the Year of Italian Culture -
+        I was asked by the Italian Embassy to look at the Michelangelo’s David as an inspiration -,
+        and a <b>public art project</b> in <b>Three Bryant Park in Manhattan.</b></string>
+    <string name="saracino_intro_2">I wanted to create two symbolic Guardians: a <b>Hero</b> in marble stone,
+        and a <b>Superhero</b> in mirror polished stainless steel.\n\n
+        The two anthropomorphic sculptures that I have digitally generated ... display the <b>universal ability of mankind to cement its own presence in the world</b> with its perennial construction skills.
+    </string>
+    <string name="saracino_intro_3">I never would have expected, ...
+        to receive the great honor to see a <b>new edition of Hero</b> in the Accademia Gallery of Florence,
+        in the same place as Michelangelo/’s David. </string>
 
-    <string name="saracino_speech_nyc_1">We have always celebrated, in civilizations around the globe,
-        the myth of the superhuman and our ability to swell our limited physical condition with our
-        limitless inner potency. I was inspired by that potency, I was inspired to materialize,
-        in the hearth of Manhattan, that force with the history of the David that will always be actual.
-        This is why I created the Hero.</string>
+    <string name="saracino_intro_4">I never would have expected, ...
+        to receive the great honor to see a new edition of Hero in the Accademia Gallery of Florence,
+        in the same place as Michelangelo\’s David.\n\n
+        <b>This is the story of the actions of an Hero from the past that echoes in our present and in the future.</b>
+    </string>
+
+    <string name="saracino_speech_nyc_1">We have always celebrated,
+        .... the myth of the superhuman ...
+        I was inspired to materialize, in the hearth of Manhattan,
+        that force with the history of the David that will always be actual.
+    </string>
     <string name="saracino_speech_nyc_2">
         The Guardians in New York City represent two symbolic protectors of the City
         that celebrate the superhuman and the inspiration that it channels.</string>
-    <string name="saracino_speech_nyc_3">The stack of materials creates layers and layers
-        of traces of the movement of the body and the body\'s openness to its surroundings.
-        The layers in the shape of slabs are stacked together with a complex static system.</string>
-    <string name="saracino_speech_nyc_4">Everything starts with the body, with its focus and its ability
-        to project itself serially in civilizations: from the early stone towers to the current steel skyscrapers.
-        The architectural body is a vital trace we leave in the world and it is the perfect language to create the shape of an Hero.</string>
+    <string name="saracino_speech_nyc_3">The stack of materials creates <b>layers and layers
+        of traces of the movement of the body</b> and the <b>body\'s openness to its surroundings.</b></string>
+    <string name="saracino_speech_nyc_4">The stack of materials creates layers and layers of traces of the movement of the body and the body\'s openness to its
+        surroundings. The architectural body is a vital trace we leave in the world and it is the perfect language to create the shape of an Hero.
+    </string>
 
 
 

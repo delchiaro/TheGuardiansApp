@@ -144,8 +144,8 @@ public class NYCActivity extends ActionBarActivity implements ScrollPagerListene
         audioPlayer[1].loadAudio(R.raw.saracino_ny_2);
 
 
-        audioTooltipText[0] = "The astist: Saracino";
-        audioTooltipText[1] = "The astist: Saracino";
+        audioTooltipText[0] = "The author: Antonio Pio Saracino";
+        audioTooltipText[1] = "The author: Antonio Pio Saracino";
 
 
 
@@ -243,9 +243,9 @@ public class NYCActivity extends ActionBarActivity implements ScrollPagerListene
 
         slideShow[1].addSlider(tsv_slide2_1);
         slideShow[1].addSlider(tsv_slide2_2);
-        slideShow[1].addSlider(tsv_slide2_3);
-        slideShow[1].addSlider(tsv_slide2_4);
-        slideShow[1].addSlider(tsv_slide2_5);
+//        slideShow[1].addSlider(tsv_slide2_3);
+//        slideShow[1].addSlider(tsv_slide2_4);
+//        slideShow[1].addSlider(tsv_slide2_5);
 
         slideShow[1].stopAutoCycle();
         slideShow[1].setCurrentPosition(0);

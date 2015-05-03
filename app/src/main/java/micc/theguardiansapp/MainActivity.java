@@ -98,10 +98,11 @@ public class MainActivity
     SliderLayout slideShow2;
     SliderLayout slideShow3;
     MySmallTextSliderView tsv_slide1_1;
-    MySmallTextSliderView tsv_slide1_2;
-    MySmallTextSliderView tsv_slide2_1;
-    MySmallTextSliderView tsv_slide2_2;
-    MySmallTextSliderView tsv_slide3_1;
+    MyTextSliderView tsv_slide1_2;
+    MyTextSliderView tsv_slide2_1;
+    MyTextSliderView tsv_slide2_2;
+    MyTextSliderView tsv_slide3_1;
+    MyTextSliderView tsv_slide3_2;
 
 
     private int dpToPx(int dp) {
@@ -223,10 +224,11 @@ public class MainActivity
 
 
             tsv_slide1_1 = new MySmallTextSliderView(this);
-            tsv_slide1_2 = new MySmallTextSliderView(this);
-            tsv_slide2_1 = new MySmallTextSliderView(this);
-            tsv_slide2_2 = new MySmallTextSliderView(this);
-            tsv_slide3_1 = new MySmallTextSliderView(this);
+            tsv_slide1_2 = new MyTextSliderView(this);
+            tsv_slide2_1 = new MyTextSliderView(this);
+            tsv_slide2_2 = new MyTextSliderView(this);
+            tsv_slide3_1 = new MyTextSliderView(this);
+            tsv_slide3_2 = new MyTextSliderView(this);
 
             initSlideShow1();
             initSlideShow2();
@@ -426,11 +428,11 @@ public class MainActivity
     }
     private void initSlideShow1(){
         tsv_slide1_1
-                .description("The artist: Antonio Pio Saracino")
-                .image(R.drawable.antonio_pio)
+                .description("The author: Antonio Pio Saracino")
+                .image(R.drawable.saracino)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
         tsv_slide1_2
-                .description("Bryant Park in New York City")
+                .description(getString(R.string.saracino_intro_1))
                 .image(R.drawable.bryant_park)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
         //slideShow1.setPresetTransformer(SliderLayout.Transformer.DepthPage);
@@ -463,11 +465,11 @@ public class MainActivity
     }
     private void initSlideShow2() {
         tsv_slide2_1
-                .description("The HERO")
+                .description(getString(R.string.saracino_intro_2))
                 .image(R.drawable.hero)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
         tsv_slide2_2
-                .description("SUPERHERO")
+                .description(getString(R.string.saracino_intro_2))
                 .image(R.drawable.hero_cape)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
         //slideShow2.setPresetTransformer(SliderLayout.Transformer.DepthPage);
@@ -496,14 +498,19 @@ public class MainActivity
 
     private void initSlideShow3(){
         tsv_slide3_1
-                .description("Accademia Gallery in Florence")
+                .description(getString(R.string.saracino_intro_3))
                 .image(R.drawable.accademia)
+                .setScaleType(BaseSliderView.ScaleType.CenterInside);
+        tsv_slide3_2
+                .description(getString(R.string.saracino_intro_4))
+                .image(R.drawable.a)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
         //slideShow3.setPresetTransformer(SliderLayout.Transformer.DepthPage);
         slideShow3.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
         //slideShow3.setCustomAnimation(new com.daimajia.slider.library.Animations.DescriptionAnimation());
 
         slideShow3.addSlider(tsv_slide3_1);
+        slideShow3.addSlider(tsv_slide3_2);
         slideShow2.stopAutoCycle();
 
     }
