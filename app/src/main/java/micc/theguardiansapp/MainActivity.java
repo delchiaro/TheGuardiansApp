@@ -42,7 +42,7 @@ public class MainActivity
         implements MyBeaconListener, ScrollPagerListener
 {
 
-    boolean SIMULATE_BEACON = false;
+    boolean SIMULATE_BEACON = true;
 
     private final static int DP_BEACON_TOOLTIP = 35;
     private static final int DRAWABLE_PLAY = R.drawable.play;

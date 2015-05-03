@@ -222,11 +222,12 @@ public class MyScrollPager implements OnTouchListener
     }
 
 
-    public void gotoFragment(int fragmentNumber)
+    public int gotoFragment(int fragmentNumber)
     {
         gotoPage(fragmentFirstPageMap[fragmentNumber]);
+        return getActiveFragment();
     }
-    public void gotoPage(int pageNumber)
+    public int gotoPage(int pageNumber)
     {
         int contentTop = mContentView.getPaddingTop();
         int contentBottom = mContentView.getHeight() - mContentView.getPaddingBottom();
@@ -263,7 +264,7 @@ public class MyScrollPager implements OnTouchListener
         this.currentPage = pageNumber;
         this.activeFragment = pageFragmentMap[pageNumber];
 
-
+        return currentPage;
     }
 
 	@Override
@@ -486,4 +487,20 @@ public class MyScrollPager implements OnTouchListener
 		
 		return false;
 	}
+
+
+
+
+    public final int nFragment() {
+        return this.nFragments;
+    }
+
+
+    public final int getActiveFragment() {
+        return this.pageFragmentMap[currentPage];
+    }
+
+    public final int getActivePage() {
+        return currentPage;
+    }
 }
