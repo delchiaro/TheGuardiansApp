@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -31,7 +32,6 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.estimote.sdk.Beacon;
-import com.getbase.floatingactionbutton.FloatingActionButton;
 
 
 import java.util.List;
@@ -42,6 +42,9 @@ public class MainActivity
         implements MyBeaconListener, ScrollPagerListener
 {
 
+    boolean SIMULATE_BEACON = false;
+
+    private final static int DP_BEACON_TOOLTIP = 35;
     private static final int DRAWABLE_PLAY = R.drawable.play;
     private static final int DRAWABLE_STOP = R.drawable.stop;
 
@@ -74,10 +77,12 @@ public class MainActivity
     private ImageButton btnMi;
     private ImageButton btnNy;
 
+    private final int nFragment = 4;
 
     private AudioPlayer[] audioPlayer = new AudioPlayer[4];
     private ImageButton[] audioButton = new ImageButton[4];
     String audioTooltipText[] = new String[4];
+
 
 
     boolean playing = false;
@@ -99,6 +104,11 @@ public class MainActivity
     MySmallTextSliderView tsv_slide3_1;
 
 
+    private int dpToPx(int dp) {
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return px;
+    }
 
 
     @Override
@@ -107,7 +117,6 @@ public class MainActivity
 
 
 
-        boolean emulazioneBeacon = true;
 
             setContentView(R.layout.activity_main);
             setTitle("Hero");
@@ -160,6 +169,22 @@ public class MainActivity
                     params.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.fragContainer0);
                     statueImageView.setLayoutParams(params);
 
+                    tooltipManager.remove(999);
+                    tooltipManager.create(999)
+                            .anchor(new Point((int)fragContainer[0].getWidth()/2, + dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
+                                    //.anchor(scrollView, TooltipManager.Gravity.CENTER)
+                            .actionBarSize(Utils.getActionBarSize(getBaseContext()))
+                            .closePolicy(TooltipManager.ClosePolicy.None, -1)
+                            .text("Get closer to the hero and enjoy the additional content")
+                            .toggleArrow(false)
+                            .withCustomView(R.layout.custom_textview, false)
+                            .maxWidth(400)
+                            .showDelay(300)
+                            .show();
+
+
+                    if(SIMULATE_BEACON) activateBeaconContents();
+
                 }
             });
 
@@ -178,29 +203,15 @@ public class MainActivity
 
 
 //
-//            final ToolTipRelativeLayout toolTipRelativeLayout = (ToolTipRelativeLayout) findViewById(R.id.activity_main_tooltipRelativeLayout);
 //
-//            final ToolTip toolTip = new ToolTip()
-//                    .withText("A beautiful View")
-//                    .withColor(R.color.outside_color_gray)
-//                    .withShadow()
-//                    .withAnimationType(ToolTip.AnimationType.FROM_TOP)
-//                    .withClickRemove(false);
-//
-//            ToolTipView myToolTipView = toolTipRelativeLayout.showToolTipForView(toolTip, findViewById(R.id.floating_action_button));
-
-            //toolTipRelativeLayout.showToolTipForView(toolTip, audioButton);
-
-
-
-            TooltipManager.getInstance(this)
-                    .create(100)
-                    .anchor(new Point(500, 500), TooltipManager.Gravity.BOTTOM)
-                    .closePolicy(TooltipManager.ClosePolicy.TouchOutside, 3000)
-                    .activateDelay(800)
-                    .text("Something to display in the tooltip...")
-                    .maxWidth(500)
-                    .show();
+//            TooltipManager.getInstance(this)
+//                    .create(100)
+//                    .anchor(new Point(500, 500), TooltipManager.Gravity.BOTTOM)
+//                    .closePolicy(TooltipManager.ClosePolicy.TouchOutside, 3000)
+//                    .activateDelay(800)
+//                    .text("Something to display in the tooltip...")
+//                    .maxWidth(500)
+//                    .show();
 
 
 
@@ -231,9 +242,9 @@ public class MainActivity
 
 
 
+
     }
 
-    private final int nFragment = 4;
     private void audioInit() {
 
         audioButton[0] = (ImageButton) findViewById(R.id.activity_main_audioButton0);
@@ -249,7 +260,7 @@ public class MainActivity
         audioPlayer[2].loadAudio(R.raw.saracino_intro_2);
         audioPlayer[3].loadAudio(R.raw.saracino_intro_3);
 
-        //audioTooltipText[0] = "The astist: Saracino";
+        audioTooltipText[0] = "The astist: Saracino";
         audioTooltipText[1] = "The astist: Saracino";
         audioTooltipText[2] = "The astist: Saracino";
         audioTooltipText[3] = "The astist: Saracino";
@@ -268,24 +279,15 @@ public class MainActivity
 
             final int index = i;
 
-
-            tooltipManager.create(i)
-                    .anchor(audioButton[i], TooltipManager.Gravity.LEFT)
-                    .actionBarSize(Utils.getActionBarSize(getBaseContext()))
-                    .closePolicy(TooltipManager.ClosePolicy.None, -1)
-                    .text(R.string.audio_tooltip_main)
-                    .toggleArrow(true)
-                    .maxWidth(400)
-                    .showDelay(300);
-                            //.withCallback(this)
-                    //.show();
+            tooltipManager.hide(i);
 
             audioButton[i].setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     playing = !playing;
-                    if(playing)
+                    if(playing) {
                         audioPlay(index);
+                    }
                     else audioStop(index);
                     //audioToggle(index);
 
@@ -321,6 +323,7 @@ public class MainActivity
 
     private void audioToggle(int index)
     {
+
         if(audioPlayer[index].isPlaying())
             audioStop(index);
         else audioPlay(index);
@@ -330,7 +333,18 @@ public class MainActivity
         if(index != 0 && index <= nFragment) {
             audioPlayer[index].play();
             audioButton[index].setImageResource(DRAWABLE_STOP);
-            tooltipManager.active(index);
+
+            tooltipManager.create(index)
+                    .anchor(new Point((int)scrollView.getWidth()/2, (int)scrollView.getHeight() - dpToPx(35) ), TooltipManager.Gravity.TOP)
+                            //.anchor(scrollView, TooltipManager.Gravity.CENTER)
+                    .actionBarSize(Utils.getActionBarSize(getBaseContext()))
+                    .closePolicy(TooltipManager.ClosePolicy.None, -1)
+                    .text(audioTooltipText[index])
+                    .toggleArrow(false)
+                    .withCustomView(R.layout.custom_textview, false)
+                    .maxWidth(400)
+                    .showDelay(300)
+                    .show();
         }
 
         switch(index)
@@ -347,48 +361,57 @@ public class MainActivity
     }
     private void audioCompleted(int index)
     {
+        tooltipManager.hide(index);
+
         if( index != 0 && index <= nFragment)
         {
             audioButton[index].setImageResource(DRAWABLE_PLAY);
-            tooltipManager.hide(index);
-        }
 
-        switch(index)
-        {
-            case 1:
-                stopCycleSlideShow1();
-                break;
-            case 2:
-                stopCycleSlideShow2();
-                break;
-            case 3:
-                stopCycleSlideShow3();
         }
+        stopCycleSlideShow1();
+        stopCycleSlideShow2();
+        stopCycleSlideShow3();
+//        switch(index)
+//        {
+//            case 1:
+//                stopCycleSlideShow1();
+//                break;
+//            case 2:
+//                stopCycleSlideShow2();
+//                break;
+//            case 3:
+//                stopCycleSlideShow3();
+//        }
 
     }
     private void audioStop(int index)
     {
+        tooltipManager.hide(index);
+
         if( index != 0 && index <= nFragment)
         {
             if(audioPlayer[index].isPlaying())
                 audioPlayer[index].stop();
 
             audioButton[index].setImageResource(DRAWABLE_PLAY);
-            tooltipManager.hide(index);
         }
 
 
-        switch(index)
-        {
-            case 1:
-                stopCycleSlideShow1();
-                break;
-            case 2:
-                stopCycleSlideShow2();
-                break;
-            case 3:
-                stopCycleSlideShow3();
-        }
+        stopCycleSlideShow1();
+        stopCycleSlideShow2();
+        stopCycleSlideShow3();
+
+//        switch(index)
+//        {
+//            case 1:
+//                stopCycleSlideShow1();
+//                break;
+//            case 2:
+//                stopCycleSlideShow2();
+//                break;
+//            case 3:
+//                stopCycleSlideShow3();
+//        }
 
     }
 
@@ -417,6 +440,7 @@ public class MainActivity
 
         slideShow1.addSlider(tsv_slide1_1);
         slideShow1.addSlider(tsv_slide1_2);
+        slideShow1.stopAutoCycle();
         slideShow1.setCurrentPosition(0);
 
 
@@ -452,7 +476,10 @@ public class MainActivity
 
         slideShow2.addSlider(tsv_slide2_1);
         slideShow2.addSlider(tsv_slide2_2);
+        slideShow2.stopAutoCycle();
         slideShow2.setCurrentPosition(0);
+
+
 
     }
     private void loadSlideShow2() {
@@ -469,7 +496,7 @@ public class MainActivity
 
     private void initSlideShow3(){
         tsv_slide3_1
-                .description("The artist: Antonio Pio Saracino")
+                .description("Accademia Gallery in Florence")
                 .image(R.drawable.accademia)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
         //slideShow3.setPresetTransformer(SliderLayout.Transformer.DepthPage);
@@ -477,6 +504,8 @@ public class MainActivity
         //slideShow3.setCustomAnimation(new com.daimajia.slider.library.Animations.DescriptionAnimation());
 
         slideShow3.addSlider(tsv_slide3_1);
+        slideShow2.stopAutoCycle();
+
     }
     private void loadSlideShow3() {
 //        unloadSlideShow1();
@@ -497,7 +526,6 @@ public class MainActivity
     public void onFragmentChanged(int oldFragment, int newFragment) {
 
 
-
         if(playing)
         {
             if(oldFragment != 0)
@@ -507,11 +535,39 @@ public class MainActivity
                 audioPlay(newFragment);
         }
 
+        tooltipManager.remove(999);
+
+
+
         switch(newFragment)
         {
             case 0:
                 playing = false;
+                if( beaconized)
+                    tooltipManager.create(999)
+                        .anchor(new Point((int)fragContainer[0].getWidth()/2, + dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
+                                //.anchor(scrollView, TooltipManager.Gravity.CENTER)
+                        .actionBarSize(Utils.getActionBarSize(getBaseContext()))
+                        .closePolicy(TooltipManager.ClosePolicy.None, -1)
+                        .text("You are approaching the Hero, enjoy additional app contents")
+                        .toggleArrow(false)
+                        .withCustomView(R.layout.custom_textview_dark, true)
+                        .maxWidth(400)
+                        .showDelay(300)
+                        .show();
 
+                else
+                    tooltipManager.create(999)
+                            .anchor(new Point((int)fragContainer[0].getWidth()/2, + dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
+                                    //.anchor(scrollView, TooltipManager.Gravity.CENTER)
+                            .actionBarSize(Utils.getActionBarSize(getBaseContext()))
+                            .closePolicy(TooltipManager.ClosePolicy.None, -1)
+                            .text("Get closer to the Hero and enjoy the additional content")
+                            .toggleArrow(false)
+                            .withCustomView(R.layout.custom_textview, true)
+                            .maxWidth(400)
+                            .showDelay(300)
+                            .show();
             case 1:
                 loadSlideShow1();
                 break;
@@ -637,24 +693,50 @@ public class MainActivity
         startActivity(intent);
     }
 
+
+    private boolean beaconized = false;
     private void deactivateBeaconContents(){
 
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(this, "Contenuti aggiuntivi disabilitati..", duration);
-        toast.show();
+        beaconized = false;
+        tooltipManager.remove(999);
+        tooltipManager.create(999)
+                .anchor(new Point((int)fragContainer[0].getWidth()/2, + dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
+                        //.anchor(scrollView, TooltipManager.Gravity.CENTER)
+                .actionBarSize(Utils.getActionBarSize(getBaseContext()))
+                .closePolicy(TooltipManager.ClosePolicy.None, -1)
+                .text("Get closer to the Hero and enjoy the additional content")
+                .toggleArrow(false)
+                .withCustomView(R.layout.custom_textview, true)
+                .maxWidth(400)
+                .showDelay(300)
+                .show();
 
-        btnFi.setEnabled(false);
-        btnMi.setEnabled(false);
-        btnNy.setEnabled(false);
-        btnFi.setImageResource(R.drawable.layout_city_button_fi);
-        btnMi.setImageResource(R.drawable.layout_city_button_mi);
-        btnNy.setImageResource(R.drawable.layout_city_button_ny);
 
+        if(!SIMULATE_BEACON) {
+            btnFi.setEnabled(false);
+            btnMi.setEnabled(false);
+            btnNy.setEnabled(false);
+            btnFi.setImageResource(R.drawable.layout_city_button_fi);
+            btnMi.setImageResource(R.drawable.layout_city_button_mi);
+            btnNy.setImageResource(R.drawable.layout_city_button_ny);
+        }
     }
     private void activateBeaconContents(){
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(this, "Nuovi contenuti disponibili!", duration);
-        toast.show();
+        beaconized = true;
+
+        tooltipManager.remove(999);
+
+        tooltipManager.create(999)
+                .anchor(new Point((int)fragContainer[0].getWidth()/2, + dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
+                        //.anchor(scrollView, TooltipManager.Gravity.CENTER)
+                .actionBarSize(Utils.getActionBarSize(getBaseContext()))
+                .closePolicy(TooltipManager.ClosePolicy.None, -1)
+                .text("You are approaching the Hero, enjoy additional app contents")
+                .toggleArrow(false)
+                .withCustomView(R.layout.custom_textview_dark, true)
+                .maxWidth(400)
+                .showDelay(300)
+                .show();
 
         btnFi.setEnabled(true);
         btnMi.setEnabled(true);
