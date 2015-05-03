@@ -59,54 +59,6 @@
                     android:orientation="vertical">
 
 
-                <!--<com.getbase.floatingactionbutton.FloatingActionButton-->
-                    <!--android:id="@+id/fab_MI"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-
-                    <!--android:baselineAlignBottom="true"-->
-                    <!--fab:fab_size="normal"-->
-                    <!--fab:fab_colorNormal="#60B71C1C"-->
-                    <!--fab:fab_colorPressed="#A0B71C1C"-->
-                    <!--android:layout_gravity="right"-->
-                    <!--android:layout_alignParentTop="true"-->
-                    <!--android:layout_alignParentRight="true"-->
-                    <!--android:layout_alignParentEnd="true" />-->
-
-                <!--<com.getbase.floatingactionbutton.FloatingActionButton-->
-                    <!--android:id="@+id/fab_FI"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-
-                    <!--android:baselineAlignBottom="true"-->
-                    <!--fab:fab_size="normal"-->
-                    <!--fab:fab_colorNormal="#609C27B0"-->
-                    <!--fab:fab_colorPressed="#A09C27B0"-->
-                    <!--android:layout_gravity="right"-->
-                    <!--android:layout_below="@+id/fab_MI"-->
-                    <!--android:layout_toLeftOf="@+id/fab_MI"-->
-                    <!--android:layout_toStartOf="@+id/fab_MI"-->
-                    <!--android:layout_marginTop="50dp"-->
-                    <!--android:layout_marginRight="-40dp" />-->
-
-                <!--<com.getbase.floatingactionbutton.FloatingActionButton-->
-                    <!--android:id="@+id/fab_NY"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-
-                    <!--android:baselineAlignBottom="true"-->
-                    <!--fab:fab_size="normal"-->
-                    <!--fab:fab_colorNormal="#60FF9800"-->
-                    <!--fab:fab_colorPressed="#A0FF9800"-->
-
-                    <!--android:layout_alignParentTop="true"-->
-                    <!--android:layout_alignParentLeft="true"-->
-                    <!--android:layout_alignParentStart="true"-->
-                    <!--android:layout_marginTop="60dp"-->
-                    <!--android:layout_marginLeft="10dp" />-->
-
-
-
 
 
                 <ImageButton
@@ -199,10 +151,16 @@
                     android:id="@+id/statueImageView"
                     android:src="@drawable/statue"
                     android:adjustViewBounds="false"
+
+
+
+                    android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="120dp"
-                    android:paddingLeft="-70dp" />
+                    android:paddingLeft="-70dp"
+
+                    />
+
 
 
             </RelativeLayout>
@@ -210,13 +168,13 @@
 
             <ImageButton
                 android:id="@+id/activity_main_audioButton0"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="@dimen/play_button_diameter"
+                android:layout_height="@dimen/play_button_diameter"
 
 
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:src="@drawable/play"
+                android:src="@drawable/sound_icon_small_3"
                 android:scaleType="fitCenter"
                 android:background="#00000000"
 
@@ -269,13 +227,13 @@
 
             <ImageButton
                 android:id="@+id/activity_main_audioButton1"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="@dimen/play_button_diameter"
+                android:layout_height="@dimen/play_button_diameter"
 
 
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:src="@drawable/play"
+                android:src="@drawable/sound_icon_small_3"
                 android:scaleType="fitCenter"
                 android:background="#00000000"
 
@@ -313,13 +271,13 @@
 
             <ImageButton
                 android:id="@+id/activity_main_audioButton2"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="@dimen/play_button_diameter"
+                android:layout_height="@dimen/play_button_diameter"
 
 
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:src="@drawable/play"
+                android:src="@drawable/sound_icon_small_3"
                 android:scaleType="fitCenter"
                 android:background="#00000000"
 
@@ -355,13 +313,13 @@
 
             <ImageButton
                 android:id="@+id/activity_main_audioButton3"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="@dimen/play_button_diameter"
+                android:layout_height="@dimen/play_button_diameter"
 
 
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:src="@drawable/play"
+                android:src="@drawable/sound_icon_small_3"
                 android:scaleType="fitCenter"
                 android:background="#00000000"
 
@@ -390,10 +348,10 @@
     <micc.theguardiansapp.dotsProgressBar.DotsProgressBar
         android:id="@+id/dotsProgressBar"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="6dp" />
+        android:layout_marginLeft="20dp" />
 
 
 

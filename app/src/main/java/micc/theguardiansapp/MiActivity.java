@@ -15,6 +15,9 @@ public class MiActivity extends ActionBarActivity {
         setContentView(R.layout.activity_mi);
         setTitle("Milano");
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
     }
 
 //

@@ -1,6 +1,7 @@
 package micc.theguardiansapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -42,10 +43,11 @@ public class MainActivity
         implements MyBeaconListener, ScrollPagerListener
 {
 
-    boolean SIMULATE_BEACON = true;
+    boolean SIMULATE_BEACON = false;
+    private boolean beaconized = false;
 
     private final static int DP_BEACON_TOOLTIP = 35;
-    private static final int DRAWABLE_PLAY = R.drawable.play;
+    private static final int DRAWABLE_PLAY = R.drawable.sound_icon_small_3;
     private static final int DRAWABLE_STOP = R.drawable.stop;
 
 
@@ -111,6 +113,20 @@ public class MainActivity
         return px;
     }
 
+    private static String SETTING_BEACON_ACQUIRED = "BEACON_ACQUIRED";
+    private static String SETTINGS = "SETTINGS";
+
+
+    private void saveBeaconAcquired(boolean beacon_acquired) {
+        SharedPreferences.Editor editor = getSharedPreferences(SETTINGS, MODE_PRIVATE).edit();
+        editor.putBoolean(SETTING_BEACON_ACQUIRED, beacon_acquired);
+        editor.commit();
+    }
+    private boolean loadIsBeaconAcquired() {
+        SharedPreferences prefs = getSharedPreferences(SETTINGS, MODE_PRIVATE);
+        boolean beacon_acquired = prefs.getBoolean(SETTING_BEACON_ACQUIRED, false);
+        return beacon_acquired;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,9 +135,11 @@ public class MainActivity
 
 
 
-            setContentView(R.layout.activity_main);
-            setTitle("Hero");
+        setContentView(R.layout.activity_main);
+        setTitle("Hero");
 
+
+        beaconized = loadIsBeaconAcquired();
 
         btnFi = (ImageButton) findViewById(R.id.fab_FI);
         btnMi = (ImageButton) findViewById(R.id.fab_MI);
@@ -132,62 +150,52 @@ public class MainActivity
 
 
         progressBar = (DotsProgressBar) findViewById(R.id.dotsProgressBar);
-            progressBar.setDotsCount(4);
-            progressBar.setVisibility(View.VISIBLE);
-            progressBar.setActiveDot(2);
+        progressBar.setDotsCount(4);
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setActiveDot(2);
 
 
-            tooltipManager = TooltipManager.getInstance(this);
+        tooltipManager = TooltipManager.getInstance(this);
 
 
 
-            setEventListeners();
-            scrollView = (ScrollView) findViewById(R.id.scroll_view);
-            contentView = (ViewGroup) findViewById(R.id.scrolledLayout);
-            fragContainer = new ViewGroup[4];
+        setEventListeners();
+        scrollView = (ScrollView) findViewById(R.id.scroll_view);
+        contentView = (ViewGroup) findViewById(R.id.scrolledLayout);
+        fragContainer = new ViewGroup[4];
 
-            fragContainer[0] = (ViewGroup) findViewById(R.id.fragContainer0);
-            fragContainer[1] = (ViewGroup) findViewById(R.id.fragContainer1);
-            fragContainer[2] = (ViewGroup) findViewById(R.id.fragContainer2);
-            fragContainer[3] = (ViewGroup) findViewById(R.id.fragContainer3);
+        fragContainer[0] = (ViewGroup) findViewById(R.id.fragContainer0);
+        fragContainer[1] = (ViewGroup) findViewById(R.id.fragContainer1);
+        fragContainer[2] = (ViewGroup) findViewById(R.id.fragContainer2);
+        fragContainer[3] = (ViewGroup) findViewById(R.id.fragContainer3);
 
 
-            scrollPager = new MyScrollPager(scrollView, contentView, fragContainer, true, false);
-            scrollPager.setOnScrollListener(this);
-            scrollView.setOnTouchListener(scrollPager);
-             scrollPager.setDotsPageProgressBar(progressBar);
+        scrollPager = new MyScrollPager(scrollView, contentView, fragContainer, true, false);
+        scrollPager.setOnScrollListener(this);
+        scrollView.setOnTouchListener(scrollPager);
+         scrollPager.setDotsPageProgressBar(progressBar);
 
-            statueImageView = (ImageView) findViewById(R.id.statueImageView);
+        statueImageView = (ImageView) findViewById(R.id.statueImageView);
 
-            scrollView.post(new Runnable() {
-                public void run() {
+        scrollView.post(new Runnable() {
+            public void run() {
 //                    scrollView.scrollTo(0, contentView.getPaddingTop());
 //                    scrollPager.setDotsPageProgressBar(progressBar);
 
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)statueImageView.getLayoutParams();
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)statueImageView.getLayoutParams();
 //                    params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 //                    params.addRule(RelativeLayout.);
-                    params.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.fragContainer0);
-                    statueImageView.setLayoutParams(params);
+                params.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.fragContainer0);
+                statueImageView.setLayoutParams(params);
 
-                    tooltipManager.remove(999);
-                    tooltipManager.create(999)
-                            .anchor(new Point((int)fragContainer[0].getWidth()/2, + dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
-                                    //.anchor(scrollView, TooltipManager.Gravity.CENTER)
-                            .actionBarSize(Utils.getActionBarSize(getBaseContext()))
-                            .closePolicy(TooltipManager.ClosePolicy.None, -1)
-                            .text("Get closer to the hero and enjoy the additional content")
-                            .toggleArrow(false)
-                            .withCustomView(R.layout.custom_textview, false)
-                            .maxWidth(400)
-                            .showDelay(300)
-                            .show();
+                if(beaconized || SIMULATE_BEACON)
+                    activateBeaconContents();
+                else deactivateBeaconContents();
 
+                if(SIMULATE_BEACON) activateBeaconContents();
 
-                    if(SIMULATE_BEACON) activateBeaconContents();
-
-                }
-            });
+            }
+        });
 
 
             //FragmentHelper.setMainActivity(this);
@@ -615,27 +623,6 @@ public class MainActivity
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
 
 
@@ -701,7 +688,6 @@ public class MainActivity
     }
 
 
-    private boolean beaconized = false;
     private void deactivateBeaconContents(){
 
         beaconized = false;
@@ -756,10 +742,15 @@ public class MainActivity
 
     @Override
     public void onNewBeacons(List<Beacon> newInProximityBeaconList) {
-        if(atLeastOneBeacon == false && beaconManager.getBeaconSize() > 0)
+        if(atLeastOneBeacon == false)
         {
+
+            if(!beaconized)
+            {
+                saveBeaconAcquired(true);
+                activateBeaconContents();
+            }
             atLeastOneBeacon = true;
-            activateBeaconContents();
         }
     }
 
@@ -769,8 +760,37 @@ public class MainActivity
         if(atLeastOneBeacon == true && beaconManager.getBeaconSize() == 0)
         {
             atLeastOneBeacon = false;
-            deactivateBeaconContents();
+            //deactivateBeaconContents();
         }
+    }
+
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            this.saveBeaconAcquired(false);
+            deactivateBeaconContents();
+            beaconManager.clear();
+            atLeastOneBeacon = false;
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

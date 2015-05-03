@@ -51,7 +51,8 @@ public class ForegroundBeaconManager
     private int REFRESH_BEACON_SLEEP_TIME = 3000;
 
 
-    private static final int PROXIMITY_DISTANCE = 5;
+    // CON UN VALORE MINORE DI 0 SI ACCETTANO TUTTI !!!!
+    private static final int PROXIMITY_DISTANCE = -1;
 
 
     Thread refresherThread;
@@ -65,6 +66,12 @@ public class ForegroundBeaconManager
 
     private volatile boolean runRefreshTask = false;
 
+
+    public void clear()
+    {
+        this.beacon_retry_map.clear();
+        this.proximityBeacons.clear();
+    }
 
 
 
@@ -91,7 +98,7 @@ public class ForegroundBeaconManager
         beaconManager.setRangingListener(new BeaconManager.RangingListener() {
 
             @Override public void onBeaconsDiscovered(Region region, List<Beacon> beacons) {
-                // Log.d(TAG, "Ranged beacons: " + beacons);
+                Log.d(TAG, "Ranged beacons: " + beacons);
                 onBeaconProximity(beacons);
             }
 
@@ -150,10 +157,13 @@ public class ForegroundBeaconManager
 
     protected final boolean isInProximity(Beacon beacon)
     {
-        double distance = getDistance(beacon);
-        if(distance <= PROXIMITY_DISTANCE )
-            return true;
-        else return false;
+        if(PROXIMITY_DISTANCE >= 0) {
+            double distance = getDistance(beacon);
+            if (distance <= PROXIMITY_DISTANCE)
+                return true;
+            else return false;
+        }
+        else return true;
     }
 
     private void onBeaconProximity(List<Beacon> detectedBeacons)
@@ -233,7 +243,9 @@ public class ForegroundBeaconManager
         }
 
 
-        listener.onNewBeacons(newNotInOld);
+        if(newNotInOld.size() > 0)
+            listener.onNewBeacons(newNotInOld);
+        if(removedBeacons.size() > 0)
         listener.onRemovedBeacons(removedBeacons);
     }
 

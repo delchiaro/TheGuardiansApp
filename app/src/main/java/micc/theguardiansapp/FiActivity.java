@@ -29,7 +29,7 @@ import micc.theguardiansapp.scrollPager.ScrollPagerListener;
 public class FiActivity extends ActionBarActivity implements ScrollPagerListener {
 
 
-    private static final int DRAWABLE_PLAY = R.drawable.play;
+    private static final int DRAWABLE_PLAY = R.drawable.sound_icon_small_3;
     private static final int DRAWABLE_STOP = R.drawable.stop;
 
 
@@ -87,6 +87,7 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
         setContentView(R.layout.activity_fi);
         setTitle("Florence");
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         progressBar = (DotsProgressBar) findViewById(R.id.dotsProgressBarFI);

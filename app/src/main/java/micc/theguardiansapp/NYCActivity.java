@@ -28,7 +28,7 @@ import micc.theguardiansapp.scrollPager.ScrollPagerListener;
 public class NYCActivity extends ActionBarActivity implements ScrollPagerListener {
 
 
-    private static final int DRAWABLE_PLAY = R.drawable.play;
+    private static final int DRAWABLE_PLAY = R.drawable.sound_icon_small_3;
     private static final int DRAWABLE_STOP = R.drawable.stop;
 
 
@@ -86,7 +86,7 @@ public class NYCActivity extends ActionBarActivity implements ScrollPagerListene
         setContentView(R.layout.activity_nyc);
         setTitle("New York City");
 
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressBar = (DotsProgressBar) findViewById(R.id.dotsProgressBarNY);
         progressBar.setDotsCount(nFragment);
