@@ -122,8 +122,10 @@
             <com.daimajia.slider.library.SliderLayout
                 android:id="@+id/slider_hero_in_accademia"
                 android:layout_width="match_parent"
-                android:layout_height="520dp"
+                android:layout_height="450dp"
                 />
+
+
 
 
         </RelativeLayout>

@@ -18,6 +18,8 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 
+import java.lang.ref.WeakReference;
+
 import it.sephiroth.android.library.tooltip.TooltipManager;
 import micc.theguardiansapp.audioPlayer.AudioPlayer;
 import micc.theguardiansapp.audioPlayer.AudioPlayerListener;
@@ -54,9 +56,9 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
     TextSliderView tsv_slide1_2;
     TextSliderView tsv_slide1_3;
 
-    MyTextSliderView tsv_slide2_1;
-    MyTextSliderView tsv_slide2_2;
-    MyTextSliderView tsv_slide2_3;
+    WeakReference<MyTextSliderView> tsv_slide2_1;
+    WeakReference<MyTextSliderView> tsv_slide2_2;
+    WeakReference<MyTextSliderView> tsv_slide2_3;
 
     TextSliderView tsv_slide3_1;
     TextSliderView tsv_slide3_2;
@@ -139,9 +141,9 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
         tsv_slide1_2 = new TextSliderView(this);
         tsv_slide1_3 = new TextSliderView(this);
 
-        tsv_slide2_1 = new MyTextSliderView(this);
-        tsv_slide2_2 = new MyTextSliderView(this);
-        tsv_slide2_3 = new MyTextSliderView(this);
+        tsv_slide2_1 =  new WeakReference<MyTextSliderView>(new MyTextSliderView(this));
+        tsv_slide2_2 =  new WeakReference<MyTextSliderView>(new MyTextSliderView(this));
+        tsv_slide2_3 =  new WeakReference<MyTextSliderView>(new MyTextSliderView(this));
 
         tsv_slide3_1 = new TextSliderView(this);
         tsv_slide3_2 = new TextSliderView(this);
@@ -328,8 +330,7 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
 
 
     private void unloadSlideShow1() {
-//        slideShow1.removeAllSliders();
-//        slideShow1.addSlider(tsv_slide1_1);
+        slideShow1.removeAllSliders();
     }
     private void initSlideShow1(){
         tsv_slide1_1
@@ -341,19 +342,18 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
                 .image(R.drawable.d)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
-        tsv_slide1_3
-                .description("Saracino's Hero")
-                .image(R.drawable.s_f)
-                .setScaleType(BaseSliderView.ScaleType.CenterInside);
+//        tsv_slide1_3
+//                .description("Saracino's Hero")
+//                .image(R.drawable.s_f)
+//                .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
         slideShow1.setPresetTransformer(SliderLayout.Transformer.DepthPage);
         slideShow1.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
         //slideShow1.setCustomAnimation(new com.daimajia.slider.library.Animations.DescriptionAnimation());
         slideShow1.setCustomAnimation(new DescriptionAnimation());
 
-        slideShow1.addSlider(tsv_slide1_1);
-        slideShow1.addSlider(tsv_slide1_2);
-        slideShow1.addSlider(tsv_slide1_3);
+        loadSlideShow1();
+        //slideShow1.addSlider(tsv_slide1_3);
 
         slideShow1.stopAutoCycle();
         slideShow1.setCurrentPosition(0);
@@ -361,12 +361,11 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
 
     }
     private void loadSlideShow1() {
-//        slideShow1.addSlider(tsv_slide1_2);
-//        unloadSlideShow2();
+        slideShow1.addSlider(tsv_slide1_1);
+        slideShow1.addSlider(tsv_slide1_2);
     }
     private void cycleSlideShow1() {
-        slideShow1.setCurrentPosition(0);
-        slideShow1.startAutoCycle(10000, 10000, false);
+        slideShow1.startAutoCycle(9500, 20000, false);
     }
     private void stopCycleSlideShow1() {
         slideShow1.stopAutoCycle();
@@ -374,18 +373,18 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
 
 
     private void unloadSlideShow2() {
-//        slideShow1.removeSliderAt(1);
+       slideShow2.removeAllSliders();
     }
     private void initSlideShow2() {
-        tsv_slide2_1
+        tsv_slide2_1.get()
                 .description(getString(R.string.tartuferi_speech_1))
                 .image(R.drawable.a)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
-        tsv_slide2_2
+        tsv_slide2_2.get()
                 .description(getString(R.string.tartuferi_speech_2))
                 .image(R.drawable.s_f)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
-        tsv_slide2_3
+        tsv_slide2_3.get()
                 .description(getString(R.string.tartuferi_speech_3))
                 .image(R.drawable.s_p)
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
@@ -394,20 +393,17 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
         //slideShow2.setCustomAnimation(new com.daimajia.slider.library.Animations.DescriptionAnimation());
         slideShow2.setCustomAnimation(new DescriptionAnimation());
 
-        slideShow2.addSlider(tsv_slide2_1);
-        slideShow2.addSlider(tsv_slide2_2);
-        slideShow2.addSlider(tsv_slide2_3);
 
         slideShow2.stopAutoCycle();
-//        slideShow2.setCurrentPosition(0);
     }
     private void loadSlideShow2() {
-//        slideShow2.addSlider(tsv_slide2_2);
-//        unloadSlideShow1();
+        slideShow2.addSlider(tsv_slide2_1.get());
+        slideShow2.addSlider(tsv_slide2_2.get());
+        slideShow2.addSlider(tsv_slide2_3.get());
+
     }
     private void cycleSlideShow2() {
-        slideShow2.setCurrentPosition(0);
-        slideShow2.startAutoCycle(22000, 22000, true);
+        slideShow2.startAutoCycle(23000, 26000, true);
     }
     private void stopCycleSlideShow2() {
         slideShow2.stopAutoCycle();
@@ -417,8 +413,6 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
 
     private void unloadSlideShow3() {
         slideShow3.removeAllSliders();
-        slideShow3.addSlider(tsv_slide3_1);
-        slideShow3.stopAutoCycle();
     }
     private void initSlideShow3() {
         tsv_slide3_1
@@ -450,37 +444,22 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
 
         slideShow3.setPresetTransformer(SliderLayout.Transformer.DepthPage);
         slideShow3.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
-        //slideShow1.setCustomAnimation(new com.daimajia.slider.library.Animations.DescriptionAnimation());
         slideShow3.setCustomAnimation(new DescriptionAnimation());
 
-        slideShow3.addSlider(tsv_slide3_1);
-        slideShow3.addSlider(tsv_slide3_2);
-        slideShow3.addSlider(tsv_slide3_3);
-//        slideShow3.addSlider(tsv_slide3_4);
-        slideShow3.addSlider(tsv_slide3_5);
-        slideShow3.addSlider(tsv_slide3_6);
-
-        slideShow3.stopAutoCycle();
-        slideShow3.setCurrentPosition(0);
-        slideShow1.stopAutoCycle();
-        slideShow1.setCurrentPosition(0);
-
-
+        loadSlideShow3();
 
 
     }
     private void loadSlideShow3() {
-//        slideShow3.addSlider(tsv_slide3_2);
+        slideShow3.addSlider(tsv_slide3_1);
+        slideShow3.addSlider(tsv_slide3_2);
 //        slideShow3.addSlider(tsv_slide3_3);
-//        slideShow3.addSlider(tsv_slide3_4);
+        slideShow3.addSlider(tsv_slide3_4);
 //        slideShow3.addSlider(tsv_slide3_5);
-//        slideShow3.addSlider(tsv_slide3_6);
-        slideShow3.stopAutoCycle();
-        slideShow3.setCurrentPosition(0);
+        slideShow3.addSlider(tsv_slide3_6);
 
     }
     private void cycleSlideShow3() {
-        slideShow3.setCurrentPosition(0);
         slideShow3.startAutoCycle(10000, 10000, true);
     }
     private void stopCycleSlideShow3() {
@@ -505,26 +484,29 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
         switch(newFragment)
         {
             case 0:
-                loadSlideShow1();
+               // loadSlideShow1();
+               // unloadSlideShow3();
                 break;
             case 1:
-                loadSlideShow2();
+               // loadSlideShow2();
                 break;
             case 2:
                 playing = false;
-                loadSlideShow3();
+               // loadSlideShow3();
+               // unloadSlideShow1();
+
         }
         switch(oldFragment)
         {
-            case 0:
-                loadSlideShow1();
-                break;
-            case 1:
-                loadSlideShow2();
-                break;
+//            case 0:
+//                unloadSlideShow1();
+//                break;
+//            case 1:
+//                unloadSlideShow2();
+//                break;
             case 2:
                 playing = false;
-                unloadSlideShow3();
+                //unloadSlideShow3();
         }
 
     }
@@ -538,6 +520,10 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
     @Override
     protected void onStart() {
         super.onStart();
+        loadSlideShow1();
+        loadSlideShow2();
+        loadSlideShow3();
+
         for (int i = 0; i < nFragment - 1; i++) {
             audioPlayer[i].onActivityStarted();
         }
@@ -546,6 +532,13 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
 
     @Override
     protected void onStop() {
+
+        unloadSlideShow1();
+        unloadSlideShow2();
+        unloadSlideShow3();
+        slideShow1.stopAutoCycle();
+        slideShow2.stopAutoCycle();
+        slideShow3.stopAutoCycle();
         super.onStop();
 
         for (int i = 0; i < nFragment - 1; i++) {

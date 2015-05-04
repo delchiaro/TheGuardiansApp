@@ -46,7 +46,7 @@ public class MainActivity
     boolean SIMULATE_BEACON = false;
     private boolean beaconized = false;
 
-    private final static int DP_BEACON_TOOLTIP = 35;
+    private final static int DP_BEACON_TOOLTIP = 32;
     private static final int DRAWABLE_PLAY = R.drawable.sound_icon_small_3;
     private static final int DRAWABLE_STOP = R.drawable.stop;
 
@@ -131,10 +131,6 @@ public class MainActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-
         setContentView(R.layout.activity_main);
         setTitle("Hero");
 
@@ -614,8 +610,13 @@ public class MainActivity
 
     @Override
     protected void onStop() {
+        slideShow1.stopAutoCycle();
+        slideShow2.stopAutoCycle();
+        slideShow3.stopAutoCycle();
         super.onStop();
         beaconManager.stop();
+
+
 
         for(int i = 1; i < 4; i++) {
             audioPlayer[i].onActivityStopped();
@@ -693,7 +694,7 @@ public class MainActivity
         beaconized = false;
         tooltipManager.remove(999);
         tooltipManager.create(999)
-                .anchor(new Point((int)fragContainer[0].getWidth()/2, + dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
+                .anchor(new Point((int)fragContainer[0].getWidth()/2 - dpToPx(4), dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
                         //.anchor(scrollView, TooltipManager.Gravity.CENTER)
                 .actionBarSize(Utils.getActionBarSize(getBaseContext()))
                 .closePolicy(TooltipManager.ClosePolicy.None, -1)
@@ -720,7 +721,7 @@ public class MainActivity
         tooltipManager.remove(999);
 
         tooltipManager.create(999)
-                .anchor(new Point((int)fragContainer[0].getWidth()/2, + dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
+                .anchor(new Point((int)fragContainer[0].getWidth()/2- dpToPx(4), dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
                         //.anchor(scrollView, TooltipManager.Gravity.CENTER)
                 .actionBarSize(Utils.getActionBarSize(getBaseContext()))
                 .closePolicy(TooltipManager.ClosePolicy.None, -1)

@@ -124,7 +124,7 @@ public class NYCActivity extends ActionBarActivity implements ScrollPagerListene
 
         slideShow[0] = (SliderLayout) findViewById(R.id.slider_nyc);
         slideShow[1] = (SliderLayout) findViewById(R.id.slider_nyc_2);
-        slideShowInit();
+        // slideShowInit();
         audioInit();
 
 
@@ -345,9 +345,10 @@ public class NYCActivity extends ActionBarActivity implements ScrollPagerListene
     }
 
     private void onAudioPlayerFinished(int index) {
-        prepareAudioToggle(index);
+        onAudioButtonClicked(index);
         int next = scrollViewGoNext();
-        prepareAudioToggle(next);
+        if(index != nFragment-1)
+            onAudioButtonClicked(next);
     }
 
     private void onAudioPlayerStopped(int index) {
@@ -356,10 +357,21 @@ public class NYCActivity extends ActionBarActivity implements ScrollPagerListene
 
     private void showAudioTooltip(int index) {
 
+        tooltipManager.create(index)
+                .anchor(new Point((int)scrollView.getWidth()/2, (int)scrollView.getHeight() - dpToPx(35) ), TooltipManager.Gravity.TOP)
+                        //.anchor(scrollView, TooltipManager.Gravity.CENTER)
+                .actionBarSize(Utils.getActionBarSize(getBaseContext()))
+                .closePolicy(TooltipManager.ClosePolicy.None, -1)
+                .text(audioTooltipText[index])
+                .toggleArrow(false)
+                .withCustomView(R.layout.custom_textview, false)
+                .maxWidth(400)
+                .showDelay(300)
+                .show();
     }
 
     private void hideAudioTooltip(int index) {
-
+        tooltipManager.hide(index);
     }
 
 
@@ -373,12 +385,28 @@ public class NYCActivity extends ActionBarActivity implements ScrollPagerListene
             if(audioPlayer[i] != null)
                 audioPlayer[i].onActivityStarted();
         }
+
+        slideShowInit();
     }
 
 
     @Override
     protected void onStop() {
+
+        slideShow[0].stopAutoCycle();
+        slideShow[1].stopAutoCycle();
+        tsv_slide1_1=null;
+        tsv_slide2_2=null;
+        tsv_slide2_1=null;
+        tsv_slide2_2=null;
+        tsv_slide2_3=null;
+        tsv_slide2_4=null;
+        tsv_slide2_5=null;
+        tsv_slide2_6=null;
+
+
         super.onStop();
+
 
         for(int i = 0; i < nFragment; i++) {
             if(audioPlayer[i] != null)
