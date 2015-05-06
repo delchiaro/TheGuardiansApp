@@ -8,5 +8,5 @@ public interface ScrollPagerListener {
 
     public void onFragmentChanged(int oldFragment, int newFragment);
     public void onPageChanged(int oldPage, int newPage, int oldFragment, int newFragment);
-
+    public void onPagerGuiInit();
 }

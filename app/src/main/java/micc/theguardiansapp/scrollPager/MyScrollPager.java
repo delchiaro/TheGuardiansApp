@@ -65,7 +65,7 @@ public class MyScrollPager implements OnTouchListener
 
 
 	public MyScrollPager(ScrollView aScrollView, ViewGroup aContentView, ViewGroup[] aFragmentContainer,
-                         boolean stdScrollIfHigher, boolean fastScrollJumpFragment)
+                         ScrollPagerListener listener, boolean stdScrollIfHigher, boolean fastScrollJumpFragment)
 	{
 		mScrollView = aScrollView;
         mContentView = aContentView;
@@ -74,6 +74,7 @@ public class MyScrollPager implements OnTouchListener
         activeFragment = 0;
         this.stdScrollIfHigher = stdScrollIfHigher;
         this.fastScrollJumpFragment = fastScrollJumpFragment;
+        this.scrollListener = listener;
 
 
 		scroller = new Scroller(mScrollView.getContext(), null);
@@ -147,7 +148,10 @@ public class MyScrollPager implements OnTouchListener
             int nPage = (int)ceil;
             nPageTotal += nPage;
             //int nDisplay = (int) Math.ceil(v.getHeight() / displayHeight);
-            v.setMinimumHeight(nPage*displayHeight);
+            v.setMinimumHeight(nPage * displayHeight);
+            ViewGroup.LayoutParams lp = v.getLayoutParams();
+            lp.height = nPage*displayHeight;
+            v.setLayoutParams(lp);
 
             //v.setPadding(0, 100, 0, 100);
 
@@ -187,6 +191,8 @@ public class MyScrollPager implements OnTouchListener
             setVerticalScrollBarEnabled(false);
         }
 
+        scrollListener.onPagerGuiInit();
+
 
     }
 
@@ -217,9 +223,9 @@ public class MyScrollPager implements OnTouchListener
     }
 
 
-    public void setOnScrollListener(ScrollPagerListener listener) {
-        this.scrollListener = listener;
-    }
+//    public void setOnScrollListener(ScrollPagerListener listener) {
+//        this.scrollListener = listener;
+//    }
 
 
     public int gotoFragment(int fragmentNumber)

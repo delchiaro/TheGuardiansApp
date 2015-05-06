@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -83,10 +84,15 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
 
 
 
+    private int audioTooltipX = 0;
+    private int audioTooltipY = 0;
+    private int maxTooltipWidthDp = 230;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fi);
+        setContentView(R.layout.activity_fi_relative);
         setTitle("Florence");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -113,8 +119,7 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
 
 
 
-        scrollPager = new MyScrollPager(scrollView, contentView, fragContainer, true, false);
-        scrollPager.setOnScrollListener(this);
+        scrollPager = new MyScrollPager(scrollView, contentView, fragContainer, this, true, false);
         scrollView.setOnTouchListener(scrollPager);
 
         scrollPager.setDotsPageProgressBar(progressBar);
@@ -157,8 +162,6 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
         initSlideShow1();
         initSlideShow2();
         initSlideShow3();
-
-
 
 
 
@@ -242,15 +245,16 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
             audioButton[index].setImageResource(DRAWABLE_STOP);
 
             tooltipManager.create(index)
-                    .anchor(new Point((int)scrollView.getWidth()/2, (int)scrollView.getHeight() - dpToPx(25) ), TooltipManager.Gravity.TOP)
+                    //.anchor(audioButton[index], TooltipManager.Gravity.LEFT)
+                    .anchor(new Point(audioTooltipX, audioTooltipY) , TooltipManager.Gravity.LEFT)
                             //.anchor(scrollView, TooltipManager.Gravity.CENTER)
                     .actionBarSize(Utils.getActionBarSize(getBaseContext()))
                     .closePolicy(TooltipManager.ClosePolicy.None, -1)
                     .text(audioTooltipText[index])
-                    .toggleArrow(false)
+                    .toggleArrow(true)
                     .withCustomView(R.layout.custom_textview, false)
-                    .maxWidth(400)
-                    .showDelay(300)
+                    .maxWidth(dpToPx(maxTooltipWidthDp))
+                    .showDelay(500)
                     .show();
         }
 
@@ -349,8 +353,7 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
 
         slideShow1.setPresetTransformer(SliderLayout.Transformer.DepthPage);
         slideShow1.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
-        //slideShow1.setCustomAnimation(new com.daimajia.slider.library.Animations.DescriptionAnimation());
-        slideShow1.setCustomAnimation(new DescriptionAnimation());
+        //slideShow1.setCustomAnimation(new DescriptionAnimation());
 
         loadSlideShow1();
         //slideShow1.addSlider(tsv_slide1_3);
@@ -391,7 +394,7 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
         slideShow2.setPresetTransformer(SliderLayout.Transformer.DepthPage);
         slideShow2.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
         //slideShow2.setCustomAnimation(new com.daimajia.slider.library.Animations.DescriptionAnimation());
-        slideShow2.setCustomAnimation(new DescriptionAnimation());
+        //slideShow2.setCustomAnimation(new DescriptionAnimation());
 
 
         slideShow2.stopAutoCycle();
@@ -513,6 +516,14 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
 
     @Override
     public void onPageChanged(int oldPage, int newPage, int oldFragment, int newFragment) {
+
+    }
+
+    @Override
+    public void onPagerGuiInit() {
+
+        audioTooltipX = (int) audioButton[0].getX() + audioButton[0].getWidth()/ 2 - dpToPx(12);
+        audioTooltipY = (int) (scrollView.getHeight() - audioButton[0].getHeight() +dpToPx(5));;
 
     }
 

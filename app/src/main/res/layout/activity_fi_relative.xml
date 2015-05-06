@@ -1,0 +1,184 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="micc.theguardiansapp.FiActivity">
+
+
+
+    <ScrollView
+        android:id="@+id/scroll_view_fi"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:padding="0dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true">
+
+
+
+    <LinearLayout
+        android:id="@+id/scrolledLayout_fi"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="0dip"
+        android:paddingBottom="0dp"
+        android:weightSum="1"
+        android:paddingRight="0dp"
+        android:padding="0dp"
+        android:paddingLeft="0dp">
+
+
+
+
+
+        <RelativeLayout
+            android:id="@+id/fragContainer0_fi"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/card_container_padding_top"
+            android:paddingRight="@dimen/card_container_padding_right"
+            android:paddingLeft="@dimen/card_container_padding_left"
+            android:paddingBottom="@dimen/card_container_padding_bottom">
+
+
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider_accademia"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_above="@+id/footer_frag1" />
+
+
+
+
+            <RelativeLayout
+                android:id="@+id/footer_frag1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fi_dots_progress_bar_height"
+                android:layout_alignParentBottom="true">
+
+
+                <ImageButton
+                    android:id="@+id/audio_1_button"
+                    android:layout_width="@dimen/play_button_diameter"
+                    android:layout_height="@dimen/play_button_diameter"
+
+
+                    android:src="@drawable/sound_icon_small_3"
+                    android:scaleType="fitCenter"
+                    android:background="#00000000"
+
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="@dimen/audio_button_margin_right" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/fragContainer1_fi"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/card_container_padding_top"
+            android:paddingRight="@dimen/card_container_padding_right"
+            android:paddingLeft="@dimen/card_container_padding_left"
+            android:paddingBottom="@dimen/card_container_padding_bottom">
+
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider_accademia_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/footer_frag2"
+                android:layout_alignParentTop="true" />
+
+
+
+
+            <RelativeLayout
+                android:id="@+id/footer_frag2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fi_dots_progress_bar_height"
+                android:layout_alignParentBottom="true">
+
+
+                <ImageButton
+                    android:id="@+id/audio_2_button"
+                    android:layout_width="@dimen/play_button_diameter"
+                    android:layout_height="@dimen/play_button_diameter"
+
+
+                    android:src="@drawable/sound_icon_small_3"
+                    android:scaleType="fitCenter"
+                    android:background="#00000000"
+
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="@dimen/audio_button_margin_right" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/fragContainer2_fi"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/card_container_padding_top"
+            android:paddingRight="@dimen/card_container_padding_right"
+            android:paddingLeft="@dimen/card_container_padding_left"
+            android:paddingBottom="@dimen/card_container_padding_bottom">
+
+
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider_hero_in_accademia"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/footer_frag3"
+                android:layout_alignParentTop="true" />
+
+
+
+            <RelativeLayout
+                android:id="@+id/footer_frag3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fi_dots_progress_bar_height"
+                android:layout_alignParentBottom="true">
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+
+
+
+
+
+    </LinearLayout>
+    </ScrollView>
+
+
+
+    <micc.theguardiansapp.dotsProgressBar.DotsProgressBar
+        android:id="@+id/dotsProgressBarFI"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp" />
+
+
+</RelativeLayout>

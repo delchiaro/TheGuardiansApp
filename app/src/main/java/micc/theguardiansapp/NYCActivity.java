@@ -38,6 +38,11 @@ public class NYCActivity extends ActionBarActivity implements ScrollPagerListene
     String audioTooltipText[] = new String[2];
     private final int nFragment = 2;
 
+
+    private int audioTooltipX = 0;
+    private int audioTooltipY = 0;
+    private int maxTooltipWidthDp = 250;
+
     boolean playing = false;
 
 
@@ -47,8 +52,6 @@ public class NYCActivity extends ActionBarActivity implements ScrollPagerListene
 
     SliderLayout slideShow[] = new SliderLayout[nFragment];
 
-    SliderLayout slideShow1;
-    SliderLayout slideShow2;
 
     MyTextSliderView tsv_slide1_1;
     MyTextSliderView tsv_slide1_2;
@@ -71,19 +74,12 @@ public class NYCActivity extends ActionBarActivity implements ScrollPagerListene
     private ScrollView scrollView;
     private ViewGroup contentView;
     private ViewGroup[] fragContainer;
-    ImageView audioButton1;
-    ImageView audioButton2;
-
-    boolean audio1playing = false;
-    boolean audio2playing = false;
-
-    MediaPlayer mPlayer;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nyc);
+        setContentView(R.layout.activity_nyc_relative);
         setTitle("New York City");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -107,8 +103,7 @@ public class NYCActivity extends ActionBarActivity implements ScrollPagerListene
         fragContainer[1] = (ViewGroup) findViewById(R.id.fragContainer1_nyc);
 
 
-        scrollPager = new MyScrollPager(scrollView, contentView, fragContainer, true, false);
-        scrollPager.setOnScrollListener(this);
+        scrollPager = new MyScrollPager(scrollView, contentView, fragContainer, this, true, false);
         scrollView.setOnTouchListener(scrollPager);
 
         scrollPager.setDotsPageProgressBar(progressBar);
@@ -237,7 +232,7 @@ public class NYCActivity extends ActionBarActivity implements ScrollPagerListene
                 .setScaleType(BaseSliderView.ScaleType.CenterInside);
 
 
-        //slideShow[1].setPresetTransformer(SliderLayout.Transformer.DepthPage);
+        slideShow[1].setPresetTransformer(SliderLayout.Transformer.DepthPage);
         slideShow[1].setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
         //slideShow2.setCustomAnimation(new com.daimajia.slider.library.Animations.DescriptionAnimation());
 
@@ -358,15 +353,15 @@ public class NYCActivity extends ActionBarActivity implements ScrollPagerListene
     private void showAudioTooltip(int index) {
 
         tooltipManager.create(index)
-                .anchor(new Point((int)scrollView.getWidth()/2, (int)scrollView.getHeight() - dpToPx(35) ), TooltipManager.Gravity.TOP)
+                .anchor(audioButton[index], TooltipManager.Gravity.LEFT)
                         //.anchor(scrollView, TooltipManager.Gravity.CENTER)
                 .actionBarSize(Utils.getActionBarSize(getBaseContext()))
                 .closePolicy(TooltipManager.ClosePolicy.None, -1)
                 .text(audioTooltipText[index])
-                .toggleArrow(false)
+                .toggleArrow(true)
                 .withCustomView(R.layout.custom_textview, false)
-                .maxWidth(400)
-                .showDelay(300)
+                .maxWidth(dpToPx(300))
+                .showDelay(500)
                 .show();
     }
 
@@ -421,6 +416,14 @@ public class NYCActivity extends ActionBarActivity implements ScrollPagerListene
 
     @Override
     public void onPageChanged(int oldPage, int newPage, int oldFragment, int newFragment) {
+
+    }
+
+    @Override
+    public void onPagerGuiInit() {
+
+        audioTooltipX = (int) audioButton[0].getX() + audioButton[0].getWidth()/ 2 - dpToPx(12);
+        audioTooltipY = (int) (scrollView.getHeight() - audioButton[0].getHeight() +dpToPx(5));;
 
     }
 }

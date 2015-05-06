@@ -146,7 +146,11 @@ public class DotsProgressBar extends View {
 		float dX = widthSize/2;
 
         //float dY = heightSize / 2;
+
         float dY = (heightSize - mDotCount * mRadius * 2 - (mDotCount - 1) * margin) / 2.0f;
+        if(arrowAtStartEnd && !arrowLateral)
+            dY = (heightSize - (mDotCount-1) * mRadius * 2 - (mDotCount - 1) * margin) / 2.0f;
+
 
         float arrowLateralStartY = (dY - mRadius);
 

@@ -43,10 +43,13 @@ public class MainActivity
         implements MyBeaconListener, ScrollPagerListener
 {
 
+    boolean DEV_MODE = false;
     boolean SIMULATE_BEACON = false;
     private boolean beaconized = false;
 
-    private final static int DP_BEACON_TOOLTIP = 32;
+    private final static int DP_BEACON_TOOLTIP = 10;
+    private final static int DP_MAX_WIDTH_BEACON_TOOLTIP = 160;
+
     private static final int DRAWABLE_PLAY = R.drawable.sound_icon_small_3;
     private static final int DRAWABLE_STOP = R.drawable.stop;
 
@@ -75,6 +78,8 @@ public class MainActivity
     private ForegroundBeaconManager beaconManager;
 
 
+    MyFragment frag1;
+
     private ImageButton btnFi;
     private ImageButton btnMi;
     private ImageButton btnNy;
@@ -86,6 +91,9 @@ public class MainActivity
     String audioTooltipText[] = new String[4];
 
 
+    private int audioTooltipX = 0;
+    private int audioTooltipY = 0;
+    private int maxTooltipWidthDp = 250;
 
     boolean playing = false;
 
@@ -131,7 +139,7 @@ public class MainActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_relative);
         setTitle("Hero");
 
 
@@ -155,6 +163,7 @@ public class MainActivity
 
 
 
+
         setEventListeners();
         scrollView = (ScrollView) findViewById(R.id.scroll_view);
         contentView = (ViewGroup) findViewById(R.id.scrolledLayout);
@@ -166,12 +175,16 @@ public class MainActivity
         fragContainer[3] = (ViewGroup) findViewById(R.id.fragContainer3);
 
 
-        scrollPager = new MyScrollPager(scrollView, contentView, fragContainer, true, false);
-        scrollPager.setOnScrollListener(this);
+        scrollPager = new MyScrollPager(scrollView, contentView, fragContainer, this, true, false);
         scrollView.setOnTouchListener(scrollPager);
          scrollPager.setDotsPageProgressBar(progressBar);
 
         statueImageView = (ImageView) findViewById(R.id.statueImageView);
+
+
+
+        FragmentHelper.setMainActivity(this);
+        frag1 = new MyFragment();
 
         scrollView.post(new Runnable() {
             public void run() {
@@ -189,6 +202,8 @@ public class MainActivity
                 else deactivateBeaconContents();
 
                 if(SIMULATE_BEACON) activateBeaconContents();
+
+
 
             }
         });
@@ -249,6 +264,16 @@ public class MainActivity
 
 
 
+    }
+
+
+
+    @Override
+    public void onPagerGuiInit() {
+     //   FragmentHelper.swapFragment(R.id.fragContainer1,  frag1);
+
+        audioTooltipX = (int) audioButton[0].getX() + audioButton[0].getWidth()/ 2 - dpToPx(12);
+        audioTooltipY = (int) (scrollView.getHeight() - audioButton[0].getHeight() );;
     }
 
     private void audioInit() {
@@ -341,15 +366,16 @@ public class MainActivity
             audioButton[index].setImageResource(DRAWABLE_STOP);
 
             tooltipManager.create(index)
-                    .anchor(new Point((int)scrollView.getWidth()/2, (int)scrollView.getHeight() - dpToPx(35) ), TooltipManager.Gravity.TOP)
+                    //.anchor(audioButton[index], TooltipManager.Gravity.LEFT)
+                    .anchor(new Point(audioTooltipX, audioTooltipY), TooltipManager.Gravity.LEFT)
                             //.anchor(scrollView, TooltipManager.Gravity.CENTER)
                     .actionBarSize(Utils.getActionBarSize(getBaseContext()))
                     .closePolicy(TooltipManager.ClosePolicy.None, -1)
                     .text(audioTooltipText[index])
-                    .toggleArrow(false)
+                    .toggleArrow(true)
                     .withCustomView(R.layout.custom_textview, false)
-                    .maxWidth(400)
-                    .showDelay(300)
+                    .maxWidth(dpToPx(maxTooltipWidthDp))
+                    .showDelay(500)
                     .show();
         }
 
@@ -494,7 +520,7 @@ public class MainActivity
     }
     private void cycleSlideShow2() {
         slideShow2.setCurrentPosition(0);
-        slideShow2.startAutoCycle(12000, 12000,true );
+        slideShow2.startAutoCycle(12000, 12000, true);
     }
     private void stopCycleSlideShow2() {
         slideShow2.stopAutoCycle();
@@ -554,31 +580,8 @@ public class MainActivity
         {
             case 0:
                 playing = false;
-                if( beaconized)
-                    tooltipManager.create(999)
-                        .anchor(new Point((int)fragContainer[0].getWidth()/2, + dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
-                                //.anchor(scrollView, TooltipManager.Gravity.CENTER)
-                        .actionBarSize(Utils.getActionBarSize(getBaseContext()))
-                        .closePolicy(TooltipManager.ClosePolicy.None, -1)
-                        .text("You are approaching the Hero, enjoy additional app contents")
-                        .toggleArrow(false)
-                        .withCustomView(R.layout.custom_textview_dark, true)
-                        .maxWidth(400)
-                        .showDelay(300)
-                        .show();
+                showBeaconTooltip(beaconized);
 
-                else
-                    tooltipManager.create(999)
-                            .anchor(new Point((int)fragContainer[0].getWidth()/2, + dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
-                                    //.anchor(scrollView, TooltipManager.Gravity.CENTER)
-                            .actionBarSize(Utils.getActionBarSize(getBaseContext()))
-                            .closePolicy(TooltipManager.ClosePolicy.None, -1)
-                            .text("Get closer to the Hero and enjoy the additional content")
-                            .toggleArrow(false)
-                            .withCustomView(R.layout.custom_textview, true)
-                            .maxWidth(400)
-                            .showDelay(300)
-                            .show();
             case 1:
                 loadSlideShow1();
                 break;
@@ -596,6 +599,7 @@ public class MainActivity
     public void onPageChanged(int oldPage, int newPage, int oldFragment, int newFragment) {
 
     }
+
 
 
     @Override
@@ -637,13 +641,12 @@ public class MainActivity
         miButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch(event.getAction())
-                {
+                switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                     case MotionEvent.ACTION_POINTER_DOWN:
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_POINTER_UP:
-                      //  v.setBackground();
+                        //  v.setBackground();
 
 
                 }
@@ -689,22 +692,45 @@ public class MainActivity
     }
 
 
+    private void showBeaconTooltip(boolean beaconConnected)
+    {
+        tooltipManager.remove(999);
+
+        if(beaconConnected)
+        {
+
+            tooltipManager.create(999)
+                    .anchor(new Point((int)fragContainer[0].getWidth()/2- dpToPx(4), dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
+                            //.anchor(scrollView, TooltipManager.Gravity.CENTER)
+                    .actionBarSize(Utils.getActionBarSize(getBaseContext()))
+                    .closePolicy(TooltipManager.ClosePolicy.None, -1)
+                    .text("You are approaching the Hero, enjoy additional app contents")
+                    .toggleArrow(false)
+                    .withCustomView(R.layout.custom_textview_dark, true)
+                    .maxWidth(dpToPx(DP_MAX_WIDTH_BEACON_TOOLTIP))
+                    .showDelay(300)
+                    .show();
+        }
+        else
+        {
+            tooltipManager.create(999)
+                    .anchor(new Point((int)fragContainer[0].getWidth()/2 - dpToPx(4), dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
+                            //.anchor(scrollView, TooltipManager.Gravity.CENTER)
+                    .actionBarSize(Utils.getActionBarSize(getBaseContext()))
+                    .closePolicy(TooltipManager.ClosePolicy.None, -1)
+                    .text("Get closer to the Hero and enjoy the additional content")
+                    .toggleArrow(false)
+                    .withCustomView(R.layout.custom_textview, true)
+                    .maxWidth(dpToPx(DP_MAX_WIDTH_BEACON_TOOLTIP))
+                    .showDelay(300)
+                    .show();
+        }
+    }
     private void deactivateBeaconContents(){
 
         beaconized = false;
-        tooltipManager.remove(999);
-        tooltipManager.create(999)
-                .anchor(new Point((int)fragContainer[0].getWidth()/2 - dpToPx(4), dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
-                        //.anchor(scrollView, TooltipManager.Gravity.CENTER)
-                .actionBarSize(Utils.getActionBarSize(getBaseContext()))
-                .closePolicy(TooltipManager.ClosePolicy.None, -1)
-                .text("Get closer to the Hero and enjoy the additional content")
-                .toggleArrow(false)
-                .withCustomView(R.layout.custom_textview, true)
-                .maxWidth(400)
-                .showDelay(300)
-                .show();
 
+        showBeaconTooltip(false);
 
         if(!SIMULATE_BEACON) {
             btnFi.setEnabled(false);
@@ -718,19 +744,7 @@ public class MainActivity
     private void activateBeaconContents(){
         beaconized = true;
 
-        tooltipManager.remove(999);
-
-        tooltipManager.create(999)
-                .anchor(new Point((int)fragContainer[0].getWidth()/2- dpToPx(4), dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
-                        //.anchor(scrollView, TooltipManager.Gravity.CENTER)
-                .actionBarSize(Utils.getActionBarSize(getBaseContext()))
-                .closePolicy(TooltipManager.ClosePolicy.None, -1)
-                .text("You are approaching the Hero, enjoy additional app contents")
-                .toggleArrow(false)
-                .withCustomView(R.layout.custom_textview_dark, true)
-                .maxWidth(400)
-                .showDelay(300)
-                .show();
+        showBeaconTooltip(true);
 
         btnFi.setEnabled(true);
         btnMi.setEnabled(true);
@@ -771,7 +785,8 @@ public class MainActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        if(DEV_MODE)
+            getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
