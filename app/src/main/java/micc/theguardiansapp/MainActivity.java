@@ -1,7 +1,9 @@
 package micc.theguardiansapp;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -17,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import it.sephiroth.android.library.tooltip.TooltipManager;
@@ -28,11 +31,11 @@ import micc.theguardiansapp.scrollPager.MyScrollPager;
 import micc.theguardiansapp.scrollPager.ScrollPagerListener;
 
 
-import com.daimajia.slider.library.Animations.*;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.estimote.sdk.Beacon;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 
 import java.util.List;
@@ -43,10 +46,11 @@ public class MainActivity
         implements MyBeaconListener, ScrollPagerListener
 {
 
-    boolean DEV_MODE = false;
-    boolean SIMULATE_BEACON = false;
+    private static final boolean DEV_MODE = false;
+    private static final boolean SIMULATE_BEACON = false;
     private boolean beaconized = false;
 
+    private final String qrCodeHeroString = "http://goo.gl/dqEN3V";
     private final static int DP_BEACON_TOOLTIP = 10;
     private final static int DP_MAX_WIDTH_BEACON_TOOLTIP = 160;
 
@@ -84,7 +88,7 @@ public class MainActivity
     private ImageButton btnMi;
     private ImageButton btnNy;
 
-    private final int nFragment = 4;
+    private final int nFragment = 5;
 
     private AudioPlayer[] audioPlayer = new AudioPlayer[4];
     private ImageButton[] audioButton = new ImageButton[4];
@@ -99,6 +103,11 @@ public class MainActivity
 
 
     TooltipManager tooltipManager;
+    RelativeLayout tooltipContainerLayout;
+    int tooltip_x;
+    int tooltip_y;
+    private TextView textViewTip;
+
     DotsProgressBar progressBar;
 
 
@@ -121,6 +130,10 @@ public class MainActivity
         return px;
     }
 
+
+    private static String SETTING_BLUETOOTH_4_INFO = "BLUETOOTH_4_PRESENT";
+    private static String SETTING_BLUETOOTH_4_CHECKED = "BLUETOOTH_4_CHECKED";
+
     private static String SETTING_BEACON_ACQUIRED = "BEACON_ACQUIRED";
     private static String SETTINGS = "SETTINGS";
 
@@ -136,14 +149,57 @@ public class MainActivity
         return beacon_acquired;
     }
 
+    private void clearBluetoothInfo() {
+        SharedPreferences.Editor editor = getSharedPreferences(SETTINGS, MODE_PRIVATE).edit();
+        editor.putBoolean(SETTING_BLUETOOTH_4_CHECKED, false);
+        editor.putBoolean(SETTING_BLUETOOTH_4_INFO, false);
+        editor.commit();
+    }
+    private void saveBluetoothInfo(boolean hasBluetooth4) {
+        SharedPreferences.Editor editor = getSharedPreferences(SETTINGS, MODE_PRIVATE).edit();
+        editor.putBoolean(SETTING_BLUETOOTH_4_CHECKED, true);
+        editor.putBoolean(SETTING_BLUETOOTH_4_INFO, hasBluetooth4);
+        editor.commit();
+    }
+    private Boolean loadBluetoothInfo() {
+        SharedPreferences prefs = getSharedPreferences(SETTINGS, MODE_PRIVATE);
+        boolean bluetooth_4_checked = prefs.getBoolean(SETTING_BLUETOOTH_4_CHECKED, false);
+
+        if(!bluetooth_4_checked)
+            return null;
+
+        boolean bt4 = prefs.getBoolean(SETTING_BLUETOOTH_4_INFO, false);
+        return bt4;
+    }
+
+
+
+    Boolean hasBluetooth4 = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_main_relative);
         setTitle("Hero");
 
 
+
+        beaconManager = new ForegroundBeaconManager(this, this);
+        hasBluetooth4 = loadBluetoothInfo();
+
+        if(hasBluetooth4 == null)
+        {
+            hasBluetooth4 = beaconManager.hasBluetooth();
+            saveBluetoothInfo(hasBluetooth4);
+        }
+
         beaconized = loadIsBeaconAcquired();
+
+        textViewTip = (TextView) findViewById(R.id.textViewTip);
+
 
         btnFi = (ImageButton) findViewById(R.id.fab_FI);
         btnMi = (ImageButton) findViewById(R.id.fab_MI);
@@ -173,6 +229,7 @@ public class MainActivity
         fragContainer[1] = (ViewGroup) findViewById(R.id.fragContainer1);
         fragContainer[2] = (ViewGroup) findViewById(R.id.fragContainer2);
         fragContainer[3] = (ViewGroup) findViewById(R.id.fragContainer3);
+        fragContainer[4] = (ViewGroup) findViewById(R.id.fragContainer3);
 
 
         scrollPager = new MyScrollPager(scrollView, contentView, fragContainer, this, true, false);
@@ -188,12 +245,8 @@ public class MainActivity
 
         scrollView.post(new Runnable() {
             public void run() {
-//                    scrollView.scrollTo(0, contentView.getPaddingTop());
-//                    scrollPager.setDotsPageProgressBar(progressBar);
 
                 RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)statueImageView.getLayoutParams();
-//                    params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-//                    params.addRule(RelativeLayout.);
                 params.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.fragContainer0);
                 statueImageView.setLayoutParams(params);
 
@@ -207,31 +260,6 @@ public class MainActivity
 
             }
         });
-
-
-            //FragmentHelper.setMainActivity(this);
-
-//            Intent intent = new Intent(this, BeaconService.class);
-//
-//            if (intent != null) {
-//                this.startService(intent);
-//            }
-
-
-
-
-
-
-//
-//
-//            TooltipManager.getInstance(this)
-//                    .create(100)
-//                    .anchor(new Point(500, 500), TooltipManager.Gravity.BOTTOM)
-//                    .closePolicy(TooltipManager.ClosePolicy.TouchOutside, 3000)
-//                    .activateDelay(800)
-//                    .text("Something to display in the tooltip...")
-//                    .maxWidth(500)
-//                    .show();
 
 
 
@@ -254,16 +282,6 @@ public class MainActivity
             initSlideShow3();
 
 
-
-
-
-       // backgroundBeaconManager = new BackgroundBeaconManager(this);
-        beaconManager = new ForegroundBeaconManager(this, this);
-
-
-
-
-
     }
 
 
@@ -272,8 +290,9 @@ public class MainActivity
     public void onPagerGuiInit() {
      //   FragmentHelper.swapFragment(R.id.fragContainer1,  frag1);
 
-        audioTooltipX = (int) audioButton[0].getX() + audioButton[0].getWidth()/ 2 - dpToPx(12);
-        audioTooltipY = (int) (scrollView.getHeight() - audioButton[0].getHeight() );;
+        RelativeLayout footer = (RelativeLayout) findViewById(R.id.footer_frag0);
+        audioTooltipX = (int) audioButton[0].getX() + dpToPx(16 - 6);
+        audioTooltipY = (int) (scrollView.getHeight() - footer.getHeight()/2  );;
     }
 
     private void audioInit() {
@@ -605,7 +624,16 @@ public class MainActivity
     @Override
     protected void onStart() {
         super.onStart();
-        beaconManager.start();
+
+        if(hasBluetooth4)
+        {
+            if(!beaconManager.isBluetoothEnabled() )
+            {
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+            }
+            beaconManager.start();
+        }
         for (int i = 1; i < 4; i++) {
             audioPlayer[i].onActivityStarted();
         }
@@ -618,7 +646,8 @@ public class MainActivity
         slideShow2.stopAutoCycle();
         slideShow3.stopAutoCycle();
         super.onStop();
-        beaconManager.stop();
+        if(hasBluetooth4)
+            beaconManager.stop();
 
 
 
@@ -629,6 +658,37 @@ public class MainActivity
     }
 
 
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+         String scanFormat, scanContent; //variabili per i risultati della scan
+
+        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if (scanningResult != null)
+        {
+            scanContent = scanningResult.getContents();
+            scanFormat = scanningResult.getFormatName();
+
+            if(scanContent != null &&  scanContent.compareTo(qrCodeHeroString) == 0)
+            {
+                if(!beaconized)
+                {
+                    saveBeaconAcquired(true);
+                    activateBeaconContents();
+                }
+            }
+            // textViewFormat.setText("FORMAT: " + scanFormat);
+            // textViewContent.setText("CONTENT: " + scanContent);
+        }
+//        else{
+//            Toast toast = Toast.makeText(getApplicationContext(), "No scan data received!", Toast.LENGTH_SHORT);
+//            toast.show();
+//        }
+    }
+
+
+    private void zxingQrScan() {
+        IntentIntegrator scanIntegrator = new IntentIntegrator(MainActivity.this);
+        scanIntegrator.initiateScan();
+    }
 
 
 
@@ -695,36 +755,46 @@ public class MainActivity
     private void showBeaconTooltip(boolean beaconConnected)
     {
         tooltipManager.remove(999);
+        String notNearString = "Activate bluetooth, get closer to the Hero and enjoy the additional content";
+        String nearString = "You are approaching the Hero! Enjoy additional app contents";
+        String activeString = null;
 
-        if(beaconConnected)
-        {
+        int activeLayoutID = R.layout.custom_textview_dark;
+        int notActiveLayoutID = R.layout.custom_textview;
+        String color;
 
-            tooltipManager.create(999)
-                    .anchor(new Point((int)fragContainer[0].getWidth()/2- dpToPx(4), dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
-                            //.anchor(scrollView, TooltipManager.Gravity.CENTER)
-                    .actionBarSize(Utils.getActionBarSize(getBaseContext()))
-                    .closePolicy(TooltipManager.ClosePolicy.None, -1)
-                    .text("You are approaching the Hero, enjoy additional app contents")
-                    .toggleArrow(false)
-                    .withCustomView(R.layout.custom_textview_dark, true)
-                    .maxWidth(dpToPx(DP_MAX_WIDTH_BEACON_TOOLTIP))
-                    .showDelay(300)
-                    .show();
-        }
-        else
+        if(!hasBluetooth4)
         {
-            tooltipManager.create(999)
-                    .anchor(new Point((int)fragContainer[0].getWidth()/2 - dpToPx(4), dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
-                            //.anchor(scrollView, TooltipManager.Gravity.CENTER)
-                    .actionBarSize(Utils.getActionBarSize(getBaseContext()))
-                    .closePolicy(TooltipManager.ClosePolicy.None, -1)
-                    .text("Get closer to the Hero and enjoy the additional content")
-                    .toggleArrow(false)
-                    .withCustomView(R.layout.custom_textview, true)
-                    .maxWidth(dpToPx(DP_MAX_WIDTH_BEACON_TOOLTIP))
-                    .showDelay(300)
-                    .show();
+            notNearString = "Scan Hero QR code and enjoy the additional content";
+            nearString = "You scanned Hero QR code! Enjoy additional app contents";
         }
+
+        if(beaconConnected) {
+            activeString = nearString;
+            color = "#90000000";
+        }
+        else {
+            activeString = notNearString;
+            color = "#60000000";
+        }
+
+
+        textViewTip.setText(activeString);
+        textViewTip.setBackgroundColor(Color.parseColor(color));
+//
+//        tooltipManager.create(999)
+//                //.anchor(new Point((int)fragContainer[0].getWidth()/2- dpToPx(4), dpToPx(DP_BEACON_TOOLTIP) ), TooltipManager.Gravity.BOTTOM)
+//                .anchor(new Point(tooltip_x, tooltip_y), TooltipManager.Gravity.CENTER)
+//                        //.anchor(scrollView, TooltipManager.Gravity.CENTER)
+//                .actionBarSize(Utils.getActionBarSize(getBaseContext()))
+//                .closePolicy(TooltipManager.ClosePolicy.None, -1)
+//                .text(activeString)
+//                .toggleArrow(false)
+//                .withCustomView(activeLayoutID, true)
+//                .maxWidth(dpToPx(DP_MAX_WIDTH_BEACON_TOOLTIP))
+//                .showDelay(300)
+//                .show();
+
     }
     private void deactivateBeaconContents(){
 
@@ -785,8 +855,19 @@ public class MainActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        if(DEV_MODE)
-            getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        if (hasBluetooth4) {
+            if (DEV_MODE)
+                getMenuInflater().inflate(R.menu.menu_main_dev, menu);
+        }
+        else
+        {
+            if(DEV_MODE)
+                getMenuInflater().inflate(R.menu.menu_main_nobt_dev, menu);
+            else getMenuInflater().inflate(R.menu.menu_main_nobt, menu);
+
+        }
+
         return true;
     }
 
@@ -800,10 +881,16 @@ public class MainActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             this.saveBeaconAcquired(false);
+
+            clearBluetoothInfo();
             deactivateBeaconContents();
             beaconManager.clear();
             atLeastOneBeacon = false;
             return true;
+        }
+        else if(id == R.id.action_qrscan)
+        {
+             zxingQrScan();
         }
 
         return super.onOptionsItemSelected(item);

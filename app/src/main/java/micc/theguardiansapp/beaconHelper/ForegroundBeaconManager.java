@@ -1,6 +1,7 @@
 package micc.theguardiansapp.beaconHelper;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.RemoteException;
@@ -28,7 +29,7 @@ public class ForegroundBeaconManager
     private static final int MAJOR = 27910;
     private static final Region MY_BEACONS = new Region("regionId", ESTIMOTE_PROXIMITY_UUID, MAJOR, null);
 
-
+    private boolean started = false;
 
 
 
@@ -97,7 +98,8 @@ public class ForegroundBeaconManager
         // Should be invoked in #onCreate.
         beaconManager.setRangingListener(new BeaconManager.RangingListener() {
 
-            @Override public void onBeaconsDiscovered(Region region, List<Beacon> beacons) {
+            @Override
+            public void onBeaconsDiscovered(Region region, List<Beacon> beacons) {
                 Log.d(TAG, "Ranged beacons: " + beacons);
                 onBeaconProximity(beacons);
             }
@@ -107,27 +109,43 @@ public class ForegroundBeaconManager
 
     }
 
-    public void start()  {
+    public boolean start()  {
          // Should be invoked in #onStart.
         beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
             @Override
             public void onServiceReady() {
                 try {
                     beaconManager.startRanging(MY_BEACONS);
+                    started = true;
                 } catch (RemoteException e) {
                     Log.e(TAG, "Cannot start ranging", e);
                 }
             }
         });
         //startRefreshTask();
+        return true;
+    }
+    public boolean startAndCheck(Activity activity)  {
+        // Should be invoked in #onStart.
+        if(!beaconManager.hasBluetooth())
+        {
+            return false;
+        }
+        else if(!beaconManager.isBluetoothEnabled())
+        {
+            // enable bluetooth with activity
+        }
+        start();
+        //startRefreshTask();
+        return true;
     }
 
     public void stop() {
 
-        //stopRefreshTask();
         // Should be invoked in #onStop.
         try {
             beaconManager.stopRanging(MY_BEACONS);
+            started = false;
         } catch (RemoteException e) {
             Log.e(TAG, "Cannot stop but it does not matter now", e);
         }
@@ -138,6 +156,12 @@ public class ForegroundBeaconManager
 
 
 
+    public final boolean hasBluetooth() {
+        return beaconManager.hasBluetooth();
+    }
+    public final boolean isBluetoothEnabled(){
+        return beaconManager.isBluetoothEnabled();
+    }
 
 
 

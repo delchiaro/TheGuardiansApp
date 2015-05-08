@@ -355,17 +355,17 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
         slideShow1.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
         //slideShow1.setCustomAnimation(new DescriptionAnimation());
 
-        loadSlideShow1();
+        //loadSlideShow1();
         //slideShow1.addSlider(tsv_slide1_3);
 
         slideShow1.stopAutoCycle();
-        slideShow1.setCurrentPosition(0);
 
 
     }
     private void loadSlideShow1() {
         slideShow1.addSlider(tsv_slide1_1);
         slideShow1.addSlider(tsv_slide1_2);
+        slideShow1.setCurrentPosition(0);
     }
     private void cycleSlideShow1() {
         slideShow1.startAutoCycle(9500, 20000, false);
@@ -449,7 +449,7 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
         slideShow3.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
         slideShow3.setCustomAnimation(new DescriptionAnimation());
 
-        loadSlideShow3();
+        //loadSlideShow3();
 
 
     }
