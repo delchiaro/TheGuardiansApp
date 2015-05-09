@@ -1,7 +1,11 @@
 package micc.theguardiansapp;
 
+import android.app.Activity;
 import android.graphics.Point;
 import android.media.MediaPlayer;
+import android.os.Build;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -29,7 +33,7 @@ import micc.theguardiansapp.scrollPager.MyScrollPager;
 import micc.theguardiansapp.scrollPager.ScrollPagerListener;
 
 
-public class FiActivity extends ActionBarActivity implements ScrollPagerListener {
+public class FiActivity extends Activity implements ScrollPagerListener {
 
 
     private static final int DRAWABLE_PLAY = R.drawable.sound_icon_small_3;
@@ -95,7 +99,17 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
         setContentView(R.layout.activity_fi_relative);
         setTitle("Florence");
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        android.app.ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayUseLogoEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(true);
+
+        actionBar.setLogo(null); // forgot why this one but it helped
+        View homeIcon = findViewById(android.R.id.home);
+        ((View) homeIcon).setVisibility(View.GONE);
+
+        //((View)findViewById(android.R.id.title).getParent()).setP
 
 
         progressBar = (DotsProgressBar) findViewById(R.id.dotsProgressBarFI);
@@ -165,6 +179,18 @@ public class FiActivity extends ActionBarActivity implements ScrollPagerListener
 
 
 
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

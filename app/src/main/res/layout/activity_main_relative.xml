@@ -43,7 +43,7 @@
         <RelativeLayout
             android:id="@+id/fragContainer0"
             android:layout_width="fill_parent"
-            android:layout_height="300dp"
+            android:layout_height="200dp"
             android:orientation="vertical"
             android:paddingTop="@dimen/card_container_padding_top"
             android:paddingRight="@dimen/card_container_padding_right"
@@ -339,13 +339,15 @@
             android:paddingBottom="@dimen/card_container_padding_bottom">
 
 
+
+
             <com.daimajia.slider.library.SliderLayout
                 android:id="@+id/activity_main_imageSlider_3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentStart="false"
-                android:layout_alignParentTop="true"
-                android:layout_above="@+id/footer_frag3" />
+                android:layout_above="@+id/footer_frag3"
+                android:layout_alignParentTop="true" />
+
 
 
 
@@ -377,6 +379,10 @@
 
 
     <!-- FRAGMENT 4-->
+
+
+
+        <!-- FRAGMENT 4-->
         <RelativeLayout
             android:id="@+id/fragContainer4"
             android:layout_width="fill_parent"
@@ -387,42 +393,118 @@
             android:paddingLeft="@dimen/card_container_padding_left"
             android:paddingBottom="@dimen/card_container_padding_bottom">
 
-
-            <com.daimajia.slider.library.SliderLayout
-                android:id="@+id/activity_main_imageSlider_3"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentStart="false"
-                android:layout_alignParentTop="true"
-                android:layout_above="@+id/footer_frag3" />
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:orientation="vertical"
+                android:id="@+id/layout"
+                android:gravity="center_vertical|center_horizontal">
 
 
-
-            <RelativeLayout
-                android:id="@+id/footer_frag3"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/main_dots_progress_bar_height"
-
-                android:layout_alignParentBottom="true">
-                <ImageButton
-                    android:id="@+id/activity_main_audioButton3"
-                    android:layout_width="@dimen/play_button_diameter"
-                    android:layout_height="@dimen/play_button_diameter"
-
-
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/sound_icon_small_3"
-                    android:scaleType="fitCenter"
-                    android:background="#00000000"
-
-                    android:layout_marginBottom="@dimen/audio_button_margin_right"
-
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentLeft="false"
-                    android:layout_centerVertical="true" />
+                    android:orientation="vertical"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_weight="1">
 
-            </RelativeLayout>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="100dp"
+                        android:id="@+id/imageView"
+                        android:src="@drawable/micc_logo"
+                        android:adjustViewBounds="true" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Universitá di Firenze: Alberto Del Bimbo, Andrea Ferracani, Riccardo Del Chiaro, Franco Yang"
+                        android:id="@+id/textView3"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/imageView3"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/pmg_logo"
+                        android:layout_marginTop="30dp"
+                        android:adjustViewBounds="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PMG Italia: Anna Santucci, Matteo Innocenti"
+                        android:id="@+id/textView"
+                        android:layout_gravity="center_horizontal" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/imageView4"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/accademia_logo"
+                        android:layout_marginTop="30dp"
+                        android:adjustViewBounds="true"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Galleria dell&apos;Accademia: Angelo Tartuferi"
+                        android:id="@+id/textView4"
+                        android:layout_gravity="center_horizontal" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/footer_frag4"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/main_dots_progress_bar_height"
+
+                    android:layout_alignParentBottom="true">
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
         </RelativeLayout>
+
+
 
 
 

@@ -1,5 +1,6 @@
 package micc.theguardiansapp;
 
+import android.app.Activity;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.support.v7.app.ActionBarActivity;
@@ -25,7 +26,7 @@ import micc.theguardiansapp.scrollPager.MyScrollPager;
 import micc.theguardiansapp.scrollPager.ScrollPagerListener;
 
 
-public class NYCActivity extends ActionBarActivity implements ScrollPagerListener {
+public class NYCActivity extends Activity implements ScrollPagerListener {
 
 
     private static final int DRAWABLE_PLAY = R.drawable.sound_icon_small_3;
@@ -82,7 +83,16 @@ public class NYCActivity extends ActionBarActivity implements ScrollPagerListene
         setContentView(R.layout.activity_nyc_relative);
         setTitle("New York City");
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        android.app.ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayUseLogoEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(true);
+
+        actionBar.setLogo(null); // forgot why this one but it helped
+        View homeIcon = findViewById(android.R.id.home);
+        ((View) homeIcon).setVisibility(View.GONE);
+
 
         progressBar = (DotsProgressBar) findViewById(R.id.dotsProgressBarNY);
         progressBar.setDotsCount(nFragment);
@@ -121,10 +131,17 @@ public class NYCActivity extends ActionBarActivity implements ScrollPagerListene
         slideShow[1] = (SliderLayout) findViewById(R.id.slider_nyc_2);
         // slideShowInit();
         audioInit();
+    }
 
-
-
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

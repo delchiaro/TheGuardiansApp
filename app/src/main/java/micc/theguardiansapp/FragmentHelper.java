@@ -32,17 +32,17 @@ public class FragmentHelper {
 
 
 
-
-    //Metodo per lo swap di fragments
-    public static void swapFragment(int containerID, Fragment newFragment) {
-        if (containerID != newFragment.getId()) {
-            FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(containerID, newFragment);
-            //transaction.addToBackStack(null);
-            transaction.commitAllowingStateLoss();
-        }
-    }
+//
+//    //Metodo per lo swap di fragments
+//    public static void swapFragment(int containerID, Fragment newFragment) {
+//        if (containerID != newFragment.getId()) {
+//            FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
+//            FragmentTransaction transaction = fragmentManager.beginTransaction();
+//            transaction.replace(containerID, newFragment);
+//            //transaction.addToBackStack(null);
+//            transaction.commitAllowingStateLoss();
+//        }
+//    }
 
 
 

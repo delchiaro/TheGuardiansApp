@@ -1,5 +1,6 @@
 package micc.theguardiansapp;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -42,7 +44,7 @@ import java.util.List;
 
 
 public class MainActivity
-        extends ActionBarActivity
+        extends Activity
         implements MyBeaconListener, ScrollPagerListener
 {
 
@@ -90,9 +92,9 @@ public class MainActivity
 
     private final int nFragment = 5;
 
-    private AudioPlayer[] audioPlayer = new AudioPlayer[4];
-    private ImageButton[] audioButton = new ImageButton[4];
-    String audioTooltipText[] = new String[4];
+    private AudioPlayer[] audioPlayer = new AudioPlayer[nFragment];
+    private ImageButton[] audioButton = new ImageButton[nFragment];
+    String audioTooltipText[] = new String[nFragment];
 
 
     private int audioTooltipX = 0;
@@ -176,6 +178,17 @@ public class MainActivity
 
     Boolean hasBluetooth4 = false;
 
+
+
+
+
+
+
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -185,6 +198,13 @@ public class MainActivity
         setContentView(R.layout.activity_main_relative);
         setTitle("Hero");
 
+
+        android.app.ActionBar actionBar = getActionBar();
+        actionBar.setDisplayUseLogoEnabled(false);
+        ((View)findViewById(android.R.id.home).getParent()).setVisibility(View.GONE);
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+//        actionBar.setDisplayShowTitleEnabled(false);
+//        actionBar.setDisplayUseLogoEnabled(true);
 
 
         beaconManager = new ForegroundBeaconManager(this, this);
@@ -223,13 +243,13 @@ public class MainActivity
         setEventListeners();
         scrollView = (ScrollView) findViewById(R.id.scroll_view);
         contentView = (ViewGroup) findViewById(R.id.scrolledLayout);
-        fragContainer = new ViewGroup[4];
+        fragContainer = new ViewGroup[nFragment];
 
         fragContainer[0] = (ViewGroup) findViewById(R.id.fragContainer0);
         fragContainer[1] = (ViewGroup) findViewById(R.id.fragContainer1);
         fragContainer[2] = (ViewGroup) findViewById(R.id.fragContainer2);
         fragContainer[3] = (ViewGroup) findViewById(R.id.fragContainer3);
-        fragContainer[4] = (ViewGroup) findViewById(R.id.fragContainer3);
+        fragContainer[4] = (ViewGroup) findViewById(R.id.fragContainer4);
 
 
         scrollPager = new MyScrollPager(scrollView, contentView, fragContainer, this, true, false);
@@ -301,11 +321,14 @@ public class MainActivity
         audioButton[1] = (ImageButton) findViewById(R.id.activity_main_audioButton1);
         audioButton[2] = (ImageButton) findViewById(R.id.activity_main_audioButton2);
         audioButton[3] = (ImageButton) findViewById(R.id.activity_main_audioButton3);
+        audioButton[4] = null;
 
         audioPlayer[0] = null;
         audioPlayer[1] = new AudioPlayer(getBaseContext());
         audioPlayer[2] = new AudioPlayer(getBaseContext());
         audioPlayer[3] = new AudioPlayer(getBaseContext());
+       audioPlayer[4]= null;
+
         audioPlayer[1].loadAudio(R.raw.saracino_intro_1);
         audioPlayer[2].loadAudio(R.raw.saracino_intro_2);
         audioPlayer[3].loadAudio(R.raw.saracino_intro_3);
@@ -331,6 +354,7 @@ public class MainActivity
 
             tooltipManager.hide(i);
 
+            if(audioButton[i] != null)
             audioButton[i].setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -380,7 +404,8 @@ public class MainActivity
     }
     private void audioPlay(int index)
     {
-        if(index != 0 && index <= nFragment) {
+        if(index > 0 && index < nFragment && audioPlayer[index] != null) {
+
             audioPlayer[index].play();
             audioButton[index].setImageResource(DRAWABLE_STOP);
 

@@ -1,13 +1,15 @@
 package micc.theguardiansapp;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import micc.theguardiansapp.R;
 
-public class MiActivity extends ActionBarActivity {
+public class MiActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,9 +17,27 @@ public class MiActivity extends ActionBarActivity {
         setContentView(R.layout.activity_mi);
         setTitle("Milano");
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        android.app.ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayUseLogoEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(true);
+
+        actionBar.setLogo(null); // forgot why this one but it helped
+        View homeIcon = findViewById(android.R.id.home);
+        ((View) homeIcon).setVisibility(View.GONE);
 
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 //
