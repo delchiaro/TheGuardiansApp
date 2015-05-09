@@ -1,11 +1,14 @@
 package micc.theguardiansapp;
 
 import android.app.Activity;
+import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import micc.theguardiansapp.R;
 
@@ -18,15 +21,25 @@ public class MiActivity extends Activity {
         setTitle("Milano");
 
         android.app.ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setDisplayUseLogoEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(true);
 
-        actionBar.setLogo(null); // forgot why this one but it helped
-        View homeIcon = findViewById(android.R.id.home);
-        ((View) homeIcon).setVisibility(View.GONE);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
 
+            ViewGroup home = (ViewGroup) findViewById(android.R.id.home).getParent();
+            ( (ImageView) home.getChildAt(0) ) .setImageResource(R.drawable.ic_action_back);
+
+        }
+        else
+        {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setDisplayUseLogoEnabled(false);
+            actionBar.setDisplayShowTitleEnabled(true);
+
+            actionBar.setLogo(null); // forgot why this one but it helped
+            View homeIcon = findViewById(android.R.id.home);
+            ((View) homeIcon).setVisibility(View.GONE);
+        }
 
     }
     @Override

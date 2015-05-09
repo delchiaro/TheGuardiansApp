@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -49,7 +50,7 @@ public class MainActivity
 {
 
     private static final boolean DEV_MODE = false;
-    private static final boolean SIMULATE_BEACON = false;
+    private static final boolean SIMULATE_BEACON = true;
     private boolean beaconized = false;
 
     private final String qrCodeHeroString = "http://goo.gl/dqEN3V";
@@ -196,7 +197,11 @@ public class MainActivity
 
 
         setContentView(R.layout.activity_main_relative);
-        setTitle("Hero");
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            android.app.ActionBar actionBar = getActionBar();
+            setTitle("  Hero");
+        }
+        else setTitle("Hero");
 
 
         android.app.ActionBar actionBar = getActionBar();

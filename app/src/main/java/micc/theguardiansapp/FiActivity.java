@@ -100,17 +100,25 @@ public class FiActivity extends Activity implements ScrollPagerListener {
         setTitle("Florence");
 
         android.app.ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setDisplayUseLogoEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(true);
 
-        actionBar.setLogo(null); // forgot why this one but it helped
-        View homeIcon = findViewById(android.R.id.home);
-        ((View) homeIcon).setVisibility(View.GONE);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
 
-        //((View)findViewById(android.R.id.title).getParent()).setP
+            ViewGroup home = (ViewGroup) findViewById(android.R.id.home).getParent();
+            ( (ImageView) home.getChildAt(0) ) .setImageResource(R.drawable.ic_action_back);
 
+        }
+        else
+        {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setDisplayUseLogoEnabled(false);
+            actionBar.setDisplayShowTitleEnabled(true);
+
+            actionBar.setLogo(null); // forgot why this one but it helped
+            View homeIcon = findViewById(android.R.id.home);
+            ((View) homeIcon).setVisibility(View.GONE);
+        }
 
         progressBar = (DotsProgressBar) findViewById(R.id.dotsProgressBarFI);
         //progressBar.setDotsCount(nFragment+1);

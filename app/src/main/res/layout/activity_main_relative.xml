@@ -527,7 +527,8 @@
         android:layout_height="@dimen/main_dots_progress_bar_height"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="20dp" />
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentStart="false" />
 
 
 
