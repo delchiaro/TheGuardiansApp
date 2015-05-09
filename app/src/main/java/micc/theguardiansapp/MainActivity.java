@@ -785,7 +785,7 @@ public class MainActivity
     private void showBeaconTooltip(boolean beaconConnected)
     {
         tooltipManager.remove(999);
-        String notNearString = "Activate bluetooth, get closer to the Hero and enjoy additional content";
+        String notNearString = "Activate bluetooth, get closer to the Hero and enjoy the additional content";
         String nearString = "You are approaching the Hero! Enjoy additional app contents";
         String activeString = null;
 
