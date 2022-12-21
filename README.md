@@ -1,12 +1,25 @@
 # The Guardians App
-Android application made for the presentation of "The Guardians: Hero" (by Antonio Pio Saracino) in Galleria dell'Accademia, Firenze.
+*A show-case application for cultural content and expositions.*
+
+This Android app shows how a smartphone can be used as audio-guide to access audio, textual, and visual information using an innovative interaction:
+
+- A subset of the available content is provided to the user since the first start after installation.
+- Additional content is automatically unlocked once the exposition location is reached, thanks to a bluetooth beacon placed at the exposition site.
+
+
+This show-case was made for the exposition of "The Guardians: Hero" by Antonio Pio Saracino, at Galleria dell'Accademia in Florence (Italy).
+
+
+<p align="center">
+  <img src="docs/screenshot_hero_01.png" width="300" title="Main Activity">
+  <img src="docs/screenshot_hero_02.png" width="300" title="Main Activity">
+  <img src="docs/screenshot_hero_03.png" width="300" title="Main Activity">
+
+  <img src="docs/screenshot_hero_04.png" width="300" title="Main Activity">
+  <img src="docs/screenshot_hero_05.png" width="300" title="Main Activity">
+  <img src="docs/screenshot_hero_06.png" width="300" title="Main Activity">
+
+</p>
+
 
 http://www.micc.unifi.it/blog/mobile/hero-for-florence
-
-
-This is a concept application for accessing cultural content in expositions:
-base content is provided by the application once installed, but extra acontent can only be accessed once the exposition location is reached, 
-thanks to an in site bluetooth beacon.
-
-In this case, one can alternatively scan a specific QR-Code to unlock the extra content.
-
