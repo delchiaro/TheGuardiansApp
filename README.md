@@ -1,7 +1,7 @@
 # The Guardians App
-*A show-case application for cultural content and expositions.*
+*A showcase application for cultural content and expositions.*
 
-This Android app shows how a smartphone can be used as audio-guide to access audio, textual, and visual information using an innovative interaction:
+This Android app shows how a smartphone can be used to obtain additional information using an innovative interaction:
 
 - A subset of the available content is provided to the user since the first start after installation.
 - Additional content is automatically unlocked once the exposition location is reached, thanks to a bluetooth beacon placed at the exposition site.
